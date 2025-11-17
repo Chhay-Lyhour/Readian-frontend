@@ -1,0 +1,7 @@
+green1 : #C0FFB3
+green2 (text) : #00A819
+lime: #CEF17B
+Darkgreen: #1A5632
+peony: #FFD7DF
+silver: #CBCBCB
+gold: #FFC900

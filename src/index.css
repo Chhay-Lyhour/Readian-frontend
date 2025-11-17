@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Outfit:wght@100..900&display=swap');
+
+@import "tailwindcss";
+
+body {
+    font-family: "Outfit", "Geist Mono", sans-serif;
+};
+
+@utility geist {
+    font-family: "Geist Mono", sans-serif;
+}
+
+@utility outfit {
+    font-family: "Outfit", sans-serif;
+}
+
+@layer components {
+  .slider-thumb::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: white;
+    border: 3px solid black;
+    cursor: pointer;
+    /* margin-top: -13px; centers thumb on thin track */
+  }
+
+  .slider-thumb::-moz-range-thumb {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: white;
+    border: 3px solid black;
+    cursor: pointer;
+  }
+
+  /* Removes default styling on Firefox track */
+  .slider-thumb::-moz-range-track {
+    background: transparent;
+  }
+}
+
