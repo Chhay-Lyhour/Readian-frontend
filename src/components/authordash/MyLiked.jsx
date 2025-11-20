@@ -11,12 +11,12 @@ const MyLiked = () => {
     const likedBooks = allBooksData.filter(book => user.likedBooksIDs.includes(book.id))
 
   return (
-    <div className='flex flex-col items-center'>
+    <div className='flex flex-col items-center w-full'>
         <h1 className='geist text-[48px] font-semibold mb-6 self-start'>
             <span className='text-[#00A819]'>Liked</span> Works
         </h1>
         {/* display */}
-        <div className="grid grid-cols-2 gap-2 w-[100%]">
+        <div className="grid grid-cols-1 2xl:grid-cols-2 gap-6 2xl:gap-2 w-full place-items-center">
             {likedBooks.length > 0 ? (
                 likedBooks.map(book => <BookCard key={book.id} book={book} />)
             ) : (

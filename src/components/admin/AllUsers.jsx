@@ -65,7 +65,7 @@ function AllUsers() {
 
   return (
     <div>
-      <h1 className="text-5xl font-bold mb-8 text-green-700">All Users</h1>
+      <h1 className="geist text-5xl font-bold mb-8 text-[#00A819]">All Users</h1>
 
       {/* Filter Section */}
       <div className="flex gap-4 mb-6">

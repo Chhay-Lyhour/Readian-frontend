@@ -18,15 +18,15 @@ function AuthorDashboardPage({ currentUser }) {
   );
 
   return (
-    <div className="flex justify-between">
+    <div className="flex justify-between bg-[#FFFDEE]">
       <AuthDashSidebar currentUser={currentUser} />
 
       {/* Main Content */}
-      <main className="p-6 min-w-[1500px]">
+      <main className="p-6 w-full flex-1">
         <Outlet context={{user:currentUser}} />
       </main>
     </div>
-  );
+  )
 }
 
 export default AuthorDashboardPage;

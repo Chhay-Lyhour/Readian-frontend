@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <footer className='flex bg-[#FFFDEE] h-[280px] justify-center'>
+    <footer className='flex bg-[#FFFDEE] h-[280px] w-full justify-center'>
         <div className='flex self-end justify-between pt-[40px] pl-[100px] h-[190px] w-[80%] border-solid border-t-6 border-l-6 border-r-6 border-[#1A5632] bg-[#C0FFB3] rounded-t-[100px]'>
             <div className='w-[40%] '>
                 <h1 className='geist text-2xl font-semibold'>Reach Out Below!</h1>

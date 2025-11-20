@@ -8,7 +8,7 @@ const AuthDashSidebar = ({currentUser}) => {
   const unactiveLinkStyle = "flex flex-wrap text-[24px] font-semibold w-full h-[50px] place-content-center bg-none hover:bg-white/50"
 
   return (
-    <aside className='bg-[#C0FFB3] w-[320px] min-h-svh'>
+    <aside className='bg-[#C0FFB3] w-[320px] min-h-screen shrink-0 flex flex-col items-center py-8 sticky top-0 h-screen overflow-y-auto'>
         {/* pfp and username */}
         <div className='flex flex-col gap-2 items-center'>
           {currentUser.profileImage ? (
@@ -25,7 +25,7 @@ const AuthDashSidebar = ({currentUser}) => {
         </div>
 
         {/* nav */}
-        <nav className='mt-[50px] flex flex-col gap-4'>
+        <nav className='mt-[50px] flex flex-col gap-4 w-full'>
           <h3 className="text-[28px] text-center font-semibold text-[#1A5632] uppercase mt-4">My Content</h3>
 
           <NavLink to="works" className={({ isActive }) => isActive ? activeLinkStyle : unactiveLinkStyle}>

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const Navbar = ({signedIn, onAuthClick, currentUser}) => {
   return (
-    <header className='bg-[#C0FFB3] h-auto flex '>
+    <header className='bg-[#C0FFB3] h-auto w-full flex '>
         {/* Logo */}
         <div className='bg-none p-[20px] m-r-[20px] h-auto justify-start'>
             <Link to="/">

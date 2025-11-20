@@ -83,7 +83,7 @@ const BrowsePage = ({currentUser}) => {
     },[title,author,status,tags,minLikes,allBooksData]); //refilter when any of these change
 
   return (
-    <div className='bg-[#FFFDEE] flex'>
+    <div className='bg-[#FFFDEE] flex min-h-screen relative'>
         <BrowseSidebar 
             title = {title}
             setTitle = {setTitle}

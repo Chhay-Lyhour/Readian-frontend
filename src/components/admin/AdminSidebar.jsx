@@ -13,7 +13,7 @@ function AdminSidebar({ currentUser }) {
   const getLinkClass = ({ isActive }) => isActive ? activeLinkStyle : inactiveLinkStyle;
 
   return (
-    <aside className="w-[320px] bg-[#C0FFB3] min-h-svh">
+    <aside className="bg-[#C0FFB3] w-[320px] min-h-screen shrink-0 flex flex-col items-center py-8 sticky top-0 h-screen overflow-y-auto">
       
       {/* Profile Section */}
       <div className="flex flex-col gap-2 items-center ">
@@ -30,7 +30,7 @@ function AdminSidebar({ currentUser }) {
       </div>
       
       {/* Navigation */}
-      <nav className="mt-[50px] flex flex-col gap-4">
+      <nav className="mt-[50px] flex flex-col gap-4 w-full">
         
         {/* My Content Section */}
         <h3 className="text-[28px] text-center font-semibold text-gray-600 uppercase mt-4">My Content</h3>

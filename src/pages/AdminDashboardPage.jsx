@@ -16,16 +16,11 @@ function AdminDashboardPage({ currentUser }) {
   // -------------------------
 
   return (
-    // Uses the same background color as the author dashboard
     <div className="flex justify-between" >
       
       <AdminSidebar currentUser={currentUser} />
 
-      <main className="p-6 min-w-[1500px]">
-        {/* We pass the 'user' in context. This allows the reused
-          MyWorks, MyDrafts, and MyLiked components to
-          filter for the *admin's* content, not someone else's.
-        */}
+      <main className="p-6 w-full flex-1">
         <Outlet context={{ user: currentUser }} /> 
       </main>
 

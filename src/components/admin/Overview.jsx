@@ -10,7 +10,7 @@ function Overview() {
 
   return (
     <div className=''>
-      <h1 className="text-5xl font-bold mb-8 text-[#00A819]">Overview</h1>
+      <h1 className="geist text-5xl font-bold mb-8 text-[#00A819]">Overview</h1>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
         

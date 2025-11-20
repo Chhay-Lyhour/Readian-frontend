@@ -67,7 +67,7 @@ function AllWorks() {
 
   return (
     <div>
-      <h1 className="text-5xl font-bold mb-8 text-green-700">All Works</h1>
+      <h1 className="geist text-5xl font-bold mb-8 text-[#00A819]">All Works</h1>
       
       {/* Filter Section */}
       <div className="flex gap-4 mb-6">
@@ -88,7 +88,7 @@ function AllWorks() {
       </div>
 
       {/* Grid of All Works */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 2xl:grid-cols-2 gap-6 2xl:gap-2 w-full place-items-center">
         {filteredBooks.length > 0 ? (
           filteredBooks.map(book => 
             <AllWorksCard 

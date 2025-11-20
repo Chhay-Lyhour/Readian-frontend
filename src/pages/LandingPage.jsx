@@ -13,7 +13,7 @@ const LandingPage = ({signedIn, currentUser}) => {
 
 
   return (
-    <div>
+    <div className='w-full'>
         <Hero signedIn={signedIn} dashboardPath={dashboardPath}/>
         <Trending />
         <Tags />

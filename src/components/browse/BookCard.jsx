@@ -31,7 +31,7 @@ const BookCard = ({book, linkTo}) => {
   return (
     <Link 
         to={destination}
-        className='flex rounded-[10px] border-solid border-2 w-[650px] h-[250px] bg-white overflow-hidden hover:scale-110 transition-all duration-300'
+        className='flex rounded-[10px] border-solid border-2 w-full max-w-[650px] h-[250px] bg-white overflow-hidden hover:scale-110 transition-all duration-300'
     >
         {book.cover ? (
             <div className='bg-[#CEF17B] w-4/12 h-full rounded-l-[10px]'>
@@ -83,7 +83,7 @@ const BookCard = ({book, linkTo}) => {
                     {status}
                 </p>
                 <p 
-                className='text-[12px] w-[440px] wrap-break-word'
+                className='text-[12px] w-full wrap-break-word line-clamp-2'
                 title={description || "No description provided"}
                 >
                     {truncate(description, 100) || "No description provided"}

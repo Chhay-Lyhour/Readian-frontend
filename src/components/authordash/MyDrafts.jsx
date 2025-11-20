@@ -11,7 +11,7 @@ const MyDrafts = () => {
     const myDrafts = allBooksData.filter(book => book.authorId === user.id && book.pubStatus === "draft")
 
   return (
-    <div className='flex flex-col items-center'>
+    <div className='flex flex-col items-center w-full'>
         {/* Top */}
         <div className='mb-6 flex flex-col gap-6 self-start'>
             <h1 className='geist text-[48px] font-semibold'>
@@ -25,7 +25,7 @@ const MyDrafts = () => {
         </div>
 
         {/* display */}
-        <div className="grid grid-cols-2 gap-2 w-[100%]">
+        <div className="grid grid-cols-1 2xl:grid-cols-2 gap-6 2xl:gap-2 w-full place-items-center">
         {myDrafts.length > 0 ? (
           myDrafts.map(book => <BookCard key={book.id} book={book} linkTo={`/edit/${book.id}`} />)
         ) : (

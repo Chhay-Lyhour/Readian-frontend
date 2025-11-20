@@ -2,7 +2,7 @@ import React from 'react'
 
 const BrowseSidebar = ({title,setTitle,author,setAuthor,status,setStatus,tags,setTags,minLikes,setMinLikes}) => {
   return (
-    <aside className='sticky mt-[100px] mb-[100px] top-[150px] left-[0px] bg-[#C0FFB3] rounded-r-[50px] w-[320px] h-fit flex flex-col items-center gap-4 p-[50px]'>
+    <aside className='sticky top-24 shrink-0 bg-[#C0FFB3] rounded-r-[50px] w-[320px] h-fit flex flex-col items-center gap-4 p-[30px] py-[50px] my-10 z-20'>
         <h1 className='geist text-[24px] font-bold text-center'>
             Browse stories
         </h1>
