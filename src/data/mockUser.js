@@ -11,7 +11,7 @@ export const allUsersData = [
     isSubscribed: false,
     subscriptionTier: 'Basic',
     aboutMe: "Loves writing fantasy novels and reading sci-fi.",
-    role:"admin",
+    role:"author",
     profileImage:"/rubik.jpg",
     likedBooksIDs: [1],
     // We can add book IDs here, but it's better to...
