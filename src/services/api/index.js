@@ -8,4 +8,5 @@ export { default as ratingApi } from './ratingApi';
 export { default as downloadApi } from './downloadApi';
 export { default as analyticsApi } from './analyticsApi';
 export { default as adminApi } from './adminApi';
+export { default as healthApi } from './healthApi';
 

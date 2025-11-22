@@ -44,18 +44,14 @@ const BrowsePage = () => {
         let books = [...allBooks];
 
         //premium filter
-        const canSeePremium = user?.role === 'admin' || user?.subscriptionStatus === 'active';
+        const canSeePremium = user?.role === 'ADMIN' || user?.subscriptionStatus === 'active';
         if (!canSeePremium) {
-            books = books.filter(book => book.premiumStatus !== 'premium')
+            books = books.filter(book => !book.isPremium)
         }
 
-        //age restriction filter
-        if (user?.age) {
-            books = books.filter(book => !book.ageRestriction || user.age >= book.ageRestriction);
-        } else {
-            // If user age is not set, show only books with no age restriction
-            books = books.filter(book => !book.ageRestriction);
-        }
+        // NOTE: Age-based content filtering is handled by the backend API
+        // Backend filters based on contentType (kids/teen/adult) and user age
+        // No need for additional frontend filtering
 
         //title filter
         if (title) {
@@ -70,9 +66,9 @@ const BrowsePage = () => {
             });
         }
 
-        //status filter
+        //status filter (bookStatus from backend: ongoing, finished, hiatus)
         if (status !== 'All') {
-            books = books.filter(book => book.status === status);
+            books = books.filter(book => book.bookStatus === status);
         }
 
         //tag filter
@@ -85,13 +81,19 @@ const BrowsePage = () => {
         //apply tag filter
         if (filterTags.length > 0) {
             books = books.filter(book => {
-                const bookTags = (book.tags || []).map(t => t.toLowerCase());
+                // Handle tags as string (from backend) or array
+                const bookTagsStr = book.tags || "";
+                const bookTags = Array.isArray(book.tags)
+                    ? book.tags.map(t => t.toLowerCase())
+                    : bookTagsStr.toLowerCase().split(',').map(t => t.trim());
 
                 // hybrid filter (if 1 tag typed, search book with tag. If multiple typed, search book will all tags typed)
                 if (filterTags.length === 1) {
-                    return bookTags.includes(filterTags[0]);
+                    return bookTags.some(tag => tag.includes(filterTags[0]) || filterTags[0].includes(tag));
                 } else {
-                    return filterTags.every(tag => bookTags.includes(tag));
+                    return filterTags.every(filterTag =>
+                        bookTags.some(bookTag => bookTag.includes(filterTag) || filterTag.includes(bookTag))
+                    );
                 }
             })
         };

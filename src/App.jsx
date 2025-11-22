@@ -2,6 +2,7 @@ import './App.css';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './services/auth/authContext';
+import ErrorBoundary from './components/common/ErrorBoundary';
 import ProtectedRoute from './components/common/ProtectedRoute';
 import Navbar from './components/navbar/navbar';
 import Footer from './components/footer/footer';
@@ -21,39 +22,43 @@ import SubscriptionPage from './pages/SubscriptionPage';
 import ConfirmPaymentPage from './pages/ConfirmPaymentPage';
 import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
+import VerifyEmailPage from './pages/VerifyEmailPage';
+import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import AdminDashboardPage from './pages/AdminDashboardPage';
 import Overview from './components/admin/Overview';
 import AllWorks from './components/admin/AllWorks';
 import AllUsers from './components/admin/AllUsers';
 import AnalyticsPage from './pages/AnalyticsPage';
 import SettingsPage from './pages/SettingsPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
 
   return (
-    <AuthProvider>
-      <Toaster
-        position="top-right"
-        toastOptions={{
-          duration: 3000,
-          style: {
-            background: '#363636',
-            color: '#fff',
-          },
-          success: {
+    <ErrorBoundary>
+      <AuthProvider>
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            duration: 3000,
             style: {
-              background: '#1A5632',
+              background: '#363636',
+              color: '#fff',
             },
-          },
-          error: {
-            style: {
-              background: '#DC2626',
+            success: {
+              style: {
+                background: '#1A5632',
+              },
             },
-          },
-        }}
-      />
-      <Navbar />
-      <Routes>
+            error: {
+              style: {
+                background: '#DC2626',
+              },
+            },
+          }}
+        />
+        <Navbar />
+        <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/instruction" element={<InstructionPage />} />
         <Route path="/browse" element={<BrowsePage />} />
@@ -114,12 +119,18 @@ function App() {
         } />
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/verify-email" element={<VerifyEmailPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/subscribe" element={<SubscriptionPage />}/>
         <Route path="/confirm-payment" element={<ConfirmPaymentPage />}/>
-      </Routes>
-      
-      <Footer />
-    </AuthProvider>
+
+        {/* 404 Catch-all route */}
+        <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+
+        <Footer />
+      </AuthProvider>
+    </ErrorBoundary>
   )
 }
 

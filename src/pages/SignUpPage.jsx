@@ -55,8 +55,8 @@ function SignUpPage() {
         role,
       });
 
-      // Navigate to email verification page
-      navigate('/signin', { state: { message: 'Registration successful! Please check your email to verify your account.' } });
+      // Navigate to email verification page with email in state
+      navigate('/verify-email', { state: { email } });
     } catch (error) {
       handleApiError(error);
     } finally {

@@ -99,6 +99,14 @@ function SignInPage() {
             Make one here
           </Link>
         </p>
+
+        {/* Link to Verify Email */}
+        <p className="text-sm text-center mt-2">
+          Need to verify your email?
+          <Link to="/verify-email" className="font-semibold text-blue-600 hover:underline ml-1">
+            Verify here
+          </Link>
+        </p>
       </form>
     </div>
   );

@@ -106,6 +106,24 @@ export const AuthProvider = ({ children }) => {
     loadUser,
   };
 
+  // Show loading screen while checking authentication
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-[#C0FFB3] via-white to-[#FFFDEE]">
+        <div className="flex flex-col items-center gap-4">
+          <div className="h-16 w-16 relative">
+            <div className="absolute inset-0 border-4 border-[#C0FFB3] rounded-full"></div>
+            <div className="absolute inset-0 border-4 border-transparent border-t-[#1A5632] rounded-full animate-spin"></div>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="h-3 w-3 bg-[#00A819] rounded-full animate-pulse"></div>
+            </div>
+          </div>
+          <p className="text-xl font-semibold text-gray-700">Loading Readian...</p>
+        </div>
+      </div>
+    );
+  }
+
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
