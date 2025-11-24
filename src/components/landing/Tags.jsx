@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const Tags = () => {
     const tagsList = [
@@ -12,6 +12,7 @@ const Tags = () => {
         {id:6,name:"Fantasy"},
         {id:7,name:"Poetry"}
     ]
+    const navigate = useNavigate();
 
   return (
     <div className='min-h-[400px] py-12 bg-gradient-to-b from-[#FFFDEE] to-[#C0FFB3] flex flex-col items-center justify-center gap-8 px-4'>
@@ -23,16 +24,15 @@ const Tags = () => {
         {/* tags */}
         <div className='flex flex-wrap justify-center gap-4 sm:gap-6 max-w-7xl'>
             {tagsList.map((tag) => (
-                //link to browse page with set tag
-                <Link
-                  to={`/browse?tag=${tag.name.toLowerCase()}`}
+                <button
                   key={tag.id}
                   className='w-[140px] sm:w-[200px] md:w-[260px] h-[50px] sm:h-[60px] rounded-[10px] bg-[#1A5632] flex items-center justify-center hover:scale-110 transition-all duration-300'
+                  onClick={() => navigate(`/browse?tag=${encodeURIComponent(tag.name)}`)}
                 >
                     <h1 className='geist text-lg sm:text-xl md:text-[28px] font-semibold text-[#FFD7DF] text-center'>
                         {tag.name}
                     </h1>
-                </Link>
+                </button>
             ))}
         </div>
     </div>

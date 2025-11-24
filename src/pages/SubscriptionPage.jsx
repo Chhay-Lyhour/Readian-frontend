@@ -34,7 +34,6 @@ function SubscriptionPage() {
       features: [
         'All Free features',
         'Read premium books',
-        'Download up to 10 books/month',
         'Ad-free experience'
       ]
     },
@@ -43,8 +42,7 @@ function SubscriptionPage() {
       basePrice: 9.99,
       features: [
         'All Basic features',
-        'Unlimited downloads',
-        'Advanced search (genre & tags filters)',
+        '10 downloads per day',
         'Early access to new books',
         'Priority support'
       ]

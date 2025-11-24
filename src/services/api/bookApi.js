@@ -47,7 +47,7 @@ const bookApi = {
   // Upload book cover
   uploadBookCover: async (bookId, file) => {
     const formData = createFormData({ coverImage: file });
-    const response = await axiosInstance.post(`/books/${bookId}/cover`, formData, {
+    const response = await axiosInstance.post(`/books/${bookId}`, formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
     return response.data;

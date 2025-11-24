@@ -1,6 +1,7 @@
 import React from 'react'
 import Hero from '../components/landing/Hero'
 import Trending from '../components/landing/Trending';
+import TopAuthors from '../components/landing/TopAuthors';
 import Tags from '../components/landing/Tags';
 import AboutReadian from '../components/landing/AboutReadian';
 import Subscribe from '../components/landing/Subscribe';
@@ -17,6 +18,7 @@ const LandingPage = () => {
     <div className='w-full'>
         <Hero signedIn={isAuthenticated} dashboardPath={dashboardPath}/>
         <Trending />
+        <TopAuthors />
         <Tags />
         <AboutReadian />
         <Subscribe signedIn={isAuthenticated} />

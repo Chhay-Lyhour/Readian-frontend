@@ -8,8 +8,8 @@ const Footer = () => {
             <div className='w-full sm:w-[40%] mb-4 sm:mb-0'>
                 <h1 className='geist text-lg sm:text-xl md:text-2xl font-semibold mb-2'>Reach Out Below!</h1>
                 <p className='text-xs sm:text-sm md:text-base'>Email: ReadianSupport@gmail.com</p>
-                <p className='text-xs sm:text-sm md:text-base'>Phone: 000 000 000</p>
-                <p className='text-xs sm:text-sm md:text-base'>Address: We don&apos;t exist.</p>
+                <p className='text-xs sm:text-sm md:text-base'>Phone: 069 283 535</p>
+                <p className='text-xs sm:text-sm md:text-base'>Address: Kirirom mountain, Kampong Speu, Cambodia</p>
             </div>
             <div className='w-full sm:w-[30%] flex flex-col mb-4 sm:mb-0'>
                 <h1 className='geist text-lg sm:text-xl md:text-2xl font-semibold mb-2'>Navigate</h1>

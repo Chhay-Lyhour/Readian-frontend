@@ -125,6 +125,16 @@ const BookCard = ({book, linkTo, showLikeButton = false, onLikeChange}) => {
                     📖 ONGOING
                 </span>
             )}
+            {bookStatus === 'finished' && (
+                <span className='bg-green-600 text-white text-[10px] sm:text-xs font-bold px-2 py-1 rounded-md shadow-lg'>
+                    ✅ COMPLETED
+                </span>
+            )}
+            {bookStatus === 'hiatus' && (
+                <span className='bg-orange-600 text-white text-[10px] sm:text-xs font-bold px-2 py-1 rounded-md shadow-lg'>
+                    ⏸️ HIATUS
+                </span>
+            )}
             {status === 'draft' && (
                 <span className='bg-gray-600 text-white text-[10px] sm:text-xs font-bold px-2 py-1 rounded-md shadow-lg'>
                     ✏️ DRAFT

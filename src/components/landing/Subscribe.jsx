@@ -13,40 +13,37 @@ const Subscribe = ({signedIn}) => {
 
                 {/* tiers */}
                 <div className='flex flex-col lg:flex-row justify-center items-center lg:items-stretch gap-6 w-full max-w-6xl'>
-                    {/* Basic */}
+                    {/* Free */}
                     <div className='flex flex-col justify-evenly items-center min-h-[340px] w-full sm:w-[280px] p-4 bg-white border-solid border-2 border-[#1A5632] rounded-tl-[30px] rounded-br-[30px] gap-4'>
                         <div className='w-[150px] h-[50px] rounded-[10px] bg-[#CEF17B] flex items-center justify-center'>
-                            <h1 className='geist text-2xl sm:text-[32px] font-semibold text-center'>Basic</h1>
+                            <h1 className='geist text-2xl sm:text-[32px] font-semibold text-center'>Free</h1>
                         </div>
                         <p className='font-semibold text-sm sm:text-[16px]'>Access to public stories</p>
                         <p className='font-semibold text-sm sm:text-[16px]'>No downloads, read only</p>
-                        <p className='font-semibold text-sm sm:text-[16px]'>Basic search options</p>
                         <p className='font-semibold text-sm sm:text-[16px]'>Normal advertisements</p>
                         <p className='font-semibold text-sm sm:text-[16px]'>Free</p>
                     </div>
 
-                    {/* Silver */}
+                    {/* Basic */}
                     <div className='flex flex-col justify-evenly items-center min-h-[340px] w-full sm:w-[280px] p-4 bg-white border-solid border-2 border-[#1A5632] rounded-tl-[30px] rounded-br-[30px] gap-4'>
                         <div className='w-[150px] h-[50px] rounded-[10px] bg-[#CBCBCB] flex items-center justify-center'>
-                            <h1 className='geist text-2xl sm:text-[32px] font-semibold text-center'>Silver</h1>
+                            <h1 className='geist text-2xl sm:text-[32px] font-semibold text-center'>Basic</h1>
                         </div>
                         <p className='font-semibold text-sm sm:text-[16px]'>Access to public and premium stories</p>
-                        <p className='font-semibold text-sm sm:text-[16px]'>Maximum 20 downloads monthly</p>
-                        <p className='font-semibold text-sm sm:text-[16px]'>Advanced search options</p>
+                        <p className='font-semibold text-sm sm:text-[16px]'>No downloads, read only</p>
                         <p className='font-semibold text-sm sm:text-[16px]'>Less advertisements</p>
-                        <p className='font-semibold text-sm sm:text-[16px]'>5.99$/month</p>
+                        <p className='font-semibold text-sm sm:text-[16px]'>4.99$/month</p>
                     </div>
 
-                    {/* Gold */}
+                    {/* Premium */}
                     <div className='flex flex-col justify-evenly items-center min-h-[340px] w-full sm:w-[280px] p-4 bg-white border-solid border-2 border-[#1A5632] rounded-tl-[30px] rounded-br-[30px] gap-4'>
                         <div className='w-[150px] h-[50px] rounded-[10px] bg-[#FFC900] flex items-center justify-center'>
-                            <h1 className='geist text-2xl sm:text-[32px] font-semibold text-center'>Gold</h1>
+                            <h1 className='geist text-2xl sm:text-[32px] font-semibold text-center'>Premium</h1>
                         </div>
-                        <p className='font-semibold text-sm sm:text-[16px]'>Access to public and premium stories</p>
-                        <p className='font-semibold text-sm sm:text-[16px]'>Unlimited downloads</p>
-                        <p className='font-semibold text-sm sm:text-[16px]'>Advanced search options</p>
+                        <p className='font-semibold text-sm sm:text-[16px]'>Early access to public and premium stories</p>
+                        <p className='font-semibold text-sm sm:text-[16px]'>10 downloads per day</p>
                         <p className='font-semibold text-sm sm:text-[16px]'>No advertisements</p>
-                        <p className='font-semibold text-sm sm:text-[16px]'>12.99$/month</p>
+                        <p className='font-semibold text-sm sm:text-[16px]'>9.99$/month</p>
                     </div>
                 </div>
 
