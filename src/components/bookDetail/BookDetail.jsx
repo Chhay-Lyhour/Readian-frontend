@@ -65,10 +65,14 @@ const BookDetail = ({book,signedIn,currentUser}) => {
     }
 
     try {
-      await ratingApi.rateBook(book._id, rating);
+      // Send rating in correct format: { rating: value }
+      await ratingApi.rateBook(book._id, { rating: rating });
       setUserRating(rating);
       showSuccessToast(`Rated ${rating} stars!`);
-      // Optionally refresh book data to update average rating
+      // Refresh to show updated average rating
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     } catch (error) {
       handleApiError(error);
     }

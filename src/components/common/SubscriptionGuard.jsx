@@ -19,15 +19,36 @@ const SubscriptionGuard = ({
   const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
-  // If user is not authenticated, redirect to sign in
+  const bookStatus = book?.bookStatus?.toLowerCase() || 'finished';
+  const isPremiumBook = book?.isPremium || false;
+
+  // Allow non-logged-in users to read finished, non-premium books
   if (!isAuthenticated) {
+    // Check if this is a finished, non-premium book
+    const isFinished = bookStatus === 'finished';
+    const isFreeBook = !isPremiumBook;
+
+    if (isFinished && isFreeBook) {
+      // Allow access without authentication
+      return <>{children}</>;
+    }
+
+    // For premium or ongoing books, require sign in
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#FFFDEE] p-8">
         <div className="max-w-md w-full bg-white rounded-lg shadow-xl p-8 text-center border-2 border-[#1A5632]">
-          <div className="text-6xl mb-4">📚</div>
-          <h2 className="text-2xl font-bold mb-4">Sign In Required</h2>
+          <div className="text-6xl mb-4">
+            {isPremiumBook ? '👑' : '📚'}
+          </div>
+          <h2 className="text-2xl font-bold mb-4">
+            {isPremiumBook ? 'Premium Content' : 'Sign In Required'}
+          </h2>
           <p className="text-gray-700 mb-6">
-            Please sign in to read books on Readian.
+            {isPremiumBook
+              ? 'This is a premium book. Sign in and upgrade to read.'
+              : bookStatus === 'ongoing'
+              ? 'Sign in to read ongoing books.'
+              : 'Please sign in to continue reading.'}
           </p>
           <button
             onClick={() => navigate('/signin', { state: { from: window.location.pathname } })}
@@ -41,8 +62,6 @@ const SubscriptionGuard = ({
   }
 
   const userPlan = user?.plan?.toLowerCase() || 'free';
-  const bookStatus = book?.bookStatus?.toLowerCase() || 'finished';
-  const isPremiumBook = book?.isPremium || false;
 
   // Check if subscription is active
   const hasActiveSubscription = user?.subscriptionStatus === 'active';

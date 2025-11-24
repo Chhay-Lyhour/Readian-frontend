@@ -133,39 +133,6 @@ const ChapterNavigation = ({
               )}
             </div>
           </div>
-
-          {/* Bottom: Prev/Next Navigation */}
-          <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
-            <button
-              onClick={() => hasPrevious && navigate(`/book/${bookId}/chapter/${currentChapterNumber - 1}`)}
-              disabled={!hasPrevious}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
-                hasPrevious
-                  ? 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  : 'bg-gray-50 text-gray-400 cursor-not-allowed'
-              }`}
-            >
-              <ChevronLeft className="w-4 h-4" />
-              <span className="text-sm">Previous</span>
-            </button>
-
-            <span className="text-sm text-gray-500">
-              {currentChapterNumber} of {allChapters.length}
-            </span>
-
-            <button
-              onClick={() => hasNext && navigate(`/book/${bookId}/chapter/${currentChapterNumber + 1}`)}
-              disabled={!hasNext}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
-                hasNext
-                  ? 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  : 'bg-gray-50 text-gray-400 cursor-not-allowed'
-              }`}
-            >
-              <span className="text-sm">Next</span>
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
         </div>
       </div>
     </>
