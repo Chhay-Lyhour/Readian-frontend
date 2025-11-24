@@ -4,7 +4,6 @@ import ChapterContent from '../components/readChapter/ChapterContent';
 import ChapterNavigation from '../components/readChapter/ChapterNavigation';
 import { bookApi } from '../services/api';
 import { handleApiError } from '../services/utils/errorHandler';
-import AgeGuard from '../components/common/AgeGuard';
 import SubscriptionGuard from '../components/common/SubscriptionGuard';
 
 function ReadChapterPage() {
@@ -63,33 +62,31 @@ function ReadChapterPage() {
     );
   }
 
-  // Render the chapter content with guards
+  // Render the chapter content with subscription guard only
   return (
-    <AgeGuard contentType={book.contentType} bookTitle={book.title}>
-      <SubscriptionGuard book={book}>
-        <div className='bg-gradient-to-b from-[#C0FFB3] via-white to-[#FFFDEE] min-h-screen'>
-          {/* Chapter Navigation Bar */}
-          <ChapterNavigation
+    <SubscriptionGuard book={book}>
+      <div className='bg-gradient-to-b from-[#C0FFB3] via-white to-[#FFFDEE] min-h-screen'>
+        {/* Chapter Navigation Bar */}
+        <ChapterNavigation
+          bookId={bookId}
+          currentChapter={chapter}
+          allChapters={allChapters}
+          prevChapter={prevChapter}
+          nextChapter={nextChapter}
+        />
+
+        {/* Main Content */}
+        <div className='max-w-4xl mx-auto px-4 py-8'>
+          <ChapterContent
+            chapter={chapter}
             bookId={bookId}
-            currentChapter={chapter}
-            allChapters={allChapters}
+            book={book}
             prevChapter={prevChapter}
             nextChapter={nextChapter}
           />
-
-          {/* Main Content */}
-          <div className='max-w-4xl mx-auto px-4 py-8'>
-            <ChapterContent
-              chapter={chapter}
-              bookId={bookId}
-              book={book}
-              prevChapter={prevChapter}
-              nextChapter={nextChapter}
-            />
-          </div>
         </div>
-      </SubscriptionGuard>
-    </AgeGuard>
+      </div>
+    </SubscriptionGuard>
   );
 }
 
