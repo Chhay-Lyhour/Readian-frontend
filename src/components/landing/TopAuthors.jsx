@@ -40,7 +40,7 @@ const TopAuthors = () => {
       {/* Header */}
       <div>
         <h1 className='geist text-3xl sm:text-4xl md:text-[48px] font-semibold'>
-          ⭐ Top <span className='text-[#00A819]'>Authors</span>
+          Top <span className='text-[#00A819]'>Authors</span>
         </h1>
         <p className='text-gray-600 mt-2'>Discover the most popular writers on our platform</p>
       </div>

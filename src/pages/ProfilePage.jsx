@@ -13,7 +13,7 @@ function ProfilePage() {
   const { user, logout, updateUser } = useAuth();
   const navigate = useNavigate();
 
-  const handleUpdateProfile = async (updatedData, profileImage) => {
+  const handleUpdateProfile = async (updatedData, profileImage, passwordData) => {
     try {
       setLoading(true);
 
@@ -27,6 +27,13 @@ function ProfilePage() {
       if (profileImage) {
         const imageResponse = await userApi.updateAvatar(profileImage);
         updateUser(imageResponse.data);
+      }
+
+      // Change password if provided
+      if (passwordData) {
+        const { authApi } = await import('../services/api');
+        await authApi.changePassword(passwordData.currentPassword, passwordData.newPassword);
+        showSuccessToast('Password changed successfully!');
       }
 
       showSuccessToast('Profile updated successfully!');

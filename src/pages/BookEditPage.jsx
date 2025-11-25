@@ -23,21 +23,23 @@ const BookEditPage = () => {
     const [status, setStatus] = useState('ongoing');
     const [tags, setTags] = useState([]);
     const [genre, setGenre] = useState([]);
-    const [premiumStatus, setPremiumStatus] = useState('free');
-    const [ageRestriction, setAgeRestriction] = useState(null);
+    const [premiumStatus, setPremiumStatus] = useState(false);
+    const [ageRestriction, setAgeRestriction] = useState('kids');
     const [chapters, setChapters] = useState([]);
+    const [coverImage, setCoverImage] = useState(null);
+    const [existingCoverUrl, setExistingCoverUrl] = useState(null);
 
     // Load book data from API
     useEffect(() => {
         const fetchBook = async () => {
             if (isNew) {
                 setTitle('Untitled Book');
-                setDescription('');
+                setDescription('No description yet.');
                 setStatus('ongoing');
                 setTags([]);
                 setGenre([]);
                 setPremiumStatus('free');
-                setAgeRestriction(null);
+                setAgeRestriction('kids');
                 setChapters([]);
                 setLoading(false);
             } else {
@@ -49,12 +51,13 @@ const BookEditPage = () => {
                     setBookToEdit(book);
                     setTitle(book.title || '');
                     setDescription(book.description || '');
-                    setStatus(book.status || 'ongoing');
+                    setStatus(book.bookStatus || book.status || 'ongoing');
                     setTags(book.tags || []);
                     setGenre(book.genre || []);
-                    setPremiumStatus(book.premiumStatus || 'free');
-                    setAgeRestriction(book.ageRestriction || null);
+                    setPremiumStatus(book.isPremium || false);
+                    setAgeRestriction(book.contentType || 'kids');
                     setChapters(book.chapters || []);
+                    setExistingCoverUrl(book.image || null);
                 } catch (error) {
                     handleApiError(error);
                 } finally {
@@ -94,9 +97,14 @@ const BookEditPage = () => {
                 bookStatus: status, // API expects 'bookStatus' not 'status'
                 tags: Array.isArray(tags) ? tags.join(', ') : tags, // Convert array to comma-separated string
                 genre: Array.isArray(genre) ? genre.join(', ') : genre, // Convert array to comma-separated string
-                isPremium: premiumStatus === 'premium' || premiumStatus === true,
-                contentType: ageRestriction === '18+' ? 'adult' : 'kids',
+                isPremium: premiumStatus === true,
+                contentType: ageRestriction,
             };
+
+            // Add cover image if provided
+            if (coverImage) {
+                bookData.image = coverImage;
+            }
 
             // For new books, include chapters as JSON string (required by API)
             if (isNew && chapters.length > 0) {
@@ -119,7 +127,10 @@ const BookEditPage = () => {
                 await bookApi.updateBook(bookId, bookData);
                 showSuccessToast('Book updated successfully!');
                 // Refresh book data
-                window.location.reload();
+                const updatedResponse = await bookApi.getBookById(bookId);
+                setBookToEdit(updatedResponse.data);
+                setExistingCoverUrl(updatedResponse.data.image || null);
+                setCoverImage(null); // Clear the file input
             }
         } catch (error) {
             handleApiError(error);
@@ -206,12 +217,12 @@ const BookEditPage = () => {
     };
 
     return (
-        <div className='flex'>
+        <div className='flex flex-col lg:flex-row bg-[#FFFDEE] min-h-screen'>
             {/* sidebar */}
             <BookEditSidebar 
                 stats={{
-                    views: isNew ? 0 : (bookToEdit?.views || 0),
-                    likes: isNew ? 0 : (bookToEdit?.likesCount || 0),
+                    views: isNew ? 0 : (bookToEdit?.viewCount || bookToEdit?.views || 0),
+                    likes: isNew ? 0 : (bookToEdit?.likes || bookToEdit?.likesCount || 0),
                     premiumStatus: premiumStatus,
                     pubStatus: isNew ? 'draft' : (bookToEdit?.pubStatus || 'draft')
                 }}
@@ -222,7 +233,7 @@ const BookEditPage = () => {
             />
 
             {/* display section */}
-            <main className='w-[1500px] flex flex-col items-center gap-8 py-8'>
+            <main className='flex-1 w-full flex flex-col items-center gap-8 py-8 px-4'>
                 <BookEditForm
                     title={title}
                     setTitle={setTitle}
@@ -238,6 +249,9 @@ const BookEditPage = () => {
                     setPremiumStatus={setPremiumStatus}
                     ageRestriction={ageRestriction}
                     setAgeRestriction={setAgeRestriction}
+                    coverImage={coverImage}
+                    setCoverImage={setCoverImage}
+                    existingCoverUrl={existingCoverUrl}
                     onSave={handleSaveSubmit}
                 />
 

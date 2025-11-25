@@ -40,6 +40,8 @@ const Trending = () => {
             <h1 className='geist text-3xl sm:text-4xl md:text-[48px] font-semibold'>
                 See <span className='text-[#00A819]'>trending</span> works
             </h1>
+            <p className='text-gray-600 mt-2'>Discover the most popular books on our platform</p>
+
         </div>
 
         {/* Trending stories list */}

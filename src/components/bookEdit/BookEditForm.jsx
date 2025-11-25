@@ -1,9 +1,11 @@
 import React from 'react'
 import { useState } from 'react';
 
-const BookEditForm = ({title, setTitle, description, setDescription, status, setStatus, tags, setTags, premiumStatus, setPremiumStatus, onSave}) => {
+const BookEditForm = ({title, setTitle, description, setDescription, status, setStatus, tags, setTags, premiumStatus, setPremiumStatus, coverImage, setCoverImage, existingCoverUrl, onSave}) => {
 
     const [tagInput, setTagInput] = useState('');
+    const [coverPreview, setCoverPreview] = useState(existingCoverUrl || null);
+    const [uploadingCover, setUploadingCover] = useState(false);
 
     const handleAddTag = () => {
         const newTag = tagInput.trim().toLowerCase();
@@ -17,26 +19,67 @@ const BookEditForm = ({title, setTitle, description, setDescription, status, set
         setTags(tags.filter(tag => tag !== tagToRemove));
     };
 
+    const handleCoverUpload = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        // Validate file type
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/heic'];
+        if (!allowedTypes.includes(file.type.toLowerCase())) {
+            alert('Please upload a valid image file (JPEG, PNG, HEIC or WebP)');
+            return;
+        }
+
+        // Validate file size (max 5MB)
+        const maxSize = 5 * 1024 * 1024;
+        if (file.size > maxSize) {
+            alert('Image size must be less than 5MB');
+            return;
+        }
+
+        setCoverImage(file);
+        setCoverPreview(URL.createObjectURL(file));
+    };
+
     return (
-        <div className="flex flex-row gap-[50px] w-[910px]">
-      
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-[50px] w-full max-w-[910px] px-4 lg:px-0">
+
         {/* Cover Image */}
-        <div className="w-[220px]">
-            <div className="w-full h-[330px] bg-gray-300 rounded-[15px] flex items-center justify-center text-black mb-[20px]">
-                Cover Image
+        <div className="w-full lg:w-[220px]">
+            <div className="w-full h-[330px] bg-gray-300 rounded-[15px] flex items-center justify-center text-black mb-[20px] overflow-hidden">
+                {coverPreview ? (
+                    <img
+                        src={coverPreview}
+                        alt="Book Cover"
+                        className="w-full h-full object-cover"
+                    />
+                ) : (
+                    <span className="text-gray-600">No Cover Image</span>
+                )}
             </div>
-            <button className="w-full p-2 bg-black text-[#FFD7DF] rounded-[10px]">
-                Upload Image
-            </button>
+            <input
+                type="file"
+                accept="image/jpeg,image/png,image/webp,image/heic"
+                onChange={handleCoverUpload}
+                disabled={uploadingCover}
+                className="hidden"
+                id="cover-upload"
+            />
+            <label
+                htmlFor="cover-upload"
+                className={`w-full p-2 bg-black text-[#FFD7DF] rounded-[10px] cursor-pointer block text-center hover:bg-gray-800 transition-all ${uploadingCover ? 'opacity-50 cursor-not-allowed' : ''}`}
+            >
+                {uploadingCover ? 'Uploading...' : 'Upload Image'}
+            </label>
         </div>
 
         {/* Story Details Form */}
         <form 
-            className="w-[640px] bg-[#C0FFB3] p-6 rounded-[20px] border-b-2 border-r-2 border-black" 
+            className="w-full lg:w-[640px] bg-[#C0FFB3] p-4 sm:p-6 rounded-[20px] border-b-2 border-r-2 border-black"
             onSubmit={onSave}
         >
-            <h2 className="geist text-2xl font-bold mb-4">Story Details</h2>
-        
+            <h2 className="geist text-xl sm:text-2xl font-bold mb-4">Story Details</h2>
+
             {/* Title */}
             <label className="geist block font-semibold mb-1">Title</label>
             <input 
@@ -90,30 +133,31 @@ const BookEditForm = ({title, setTitle, description, setDescription, status, set
                 </label>
             </div>
 
-            {/* Premium Toggle */}
-            <label className="block font-semibold mb-1 mt-4">Premium Status</label>
-            <div className="mb-4">
-                <label className="mr-4">
-                    <input 
-                        type="radio" 
-                        value="free"
-                        checked={premiumStatus === 'free'}
-                        onChange={(e) => setPremiumStatus(e.target.value)}
-                        className="mr-1"
-                    />
-                    Free
-                </label>
-                <label>
-                    <input 
-                        type="radio" 
-                        value="premium"
-                        checked={premiumStatus === 'premium'}
-                        onChange={(e) => setPremiumStatus(e.target.value)}
-                        className="mr-1"
-                    />
-                    Premium
-                </label>
-            </div>
+{/* Premium Toggle */}
+<label className="block font-semibold mb-1 mt-4">Premium Status</label>
+<div className="mb-4">
+    <label className="mr-4">
+        <input
+            type="radio"
+            value={false}
+            checked={premiumStatus === false}
+            onChange={() => setPremiumStatus(false)}
+            className="mr-1"
+        />
+        Free
+    </label>
+    <label>
+        <input
+            type="radio"
+            value={true}
+            checked={premiumStatus === true}
+            onChange={() => setPremiumStatus(true)}
+            className="mr-1"
+        />
+        Premium
+    </label>
+</div>
+
         
             <button type="submit" className="w-full bg-[#1A5632] text-[#FFD7DF] p-3 rounded-lg font-bold hover:bg-[#FFD7DF] hover:text-[#1A5632] transition-all duration-300">
                 Save

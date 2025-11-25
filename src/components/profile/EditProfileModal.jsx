@@ -7,9 +7,11 @@ function EditProfileModal({ currentUser, onClose, onSave }) {
   const [age, setAge] = useState(currentUser.age || '');
   const [profileImage, setProfileImage] = useState(null); // File object for upload
 
-  // For password, you usually don't pre-fill it for security
-  const [password, setPassword] = useState('');
+  // For password change
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   // Handle image upload
   const handleImageUpload = (e) => {
@@ -21,9 +23,14 @@ function EditProfileModal({ currentUser, onClose, onSave }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Basic validation
-    if (password && password !== confirmPassword) {
-      alert("Passwords do not match!");
+    // Basic validation for password change
+    if (newPassword && newPassword !== confirmPassword) {
+      alert("New passwords do not match!");
+      return;
+    }
+
+    if (newPassword && !currentPassword) {
+      alert("Please enter your current password to change it.");
       return;
     }
 
@@ -35,7 +42,10 @@ function EditProfileModal({ currentUser, onClose, onSave }) {
     if (bio.trim()) updatedData.bio = bio.trim();
     if (age && !isNaN(age)) updatedData.age = parseInt(age);
 
-    onSave(updatedData, profileImage); // Send data and image separately
+    // Send password change separately if provided
+    const passwordData = currentPassword && newPassword ? { currentPassword, newPassword } : null;
+
+    onSave(updatedData, profileImage, passwordData); // Send data, image, and password separately
   };
 
   return (
@@ -102,12 +112,62 @@ function EditProfileModal({ currentUser, onClose, onSave }) {
                 className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm h-24 resize-none"
                 placeholder="Tell us about yourself..." />
             </div>
+
+            {/* Password Change Section */}
+            <div className="mt-6 pt-6 border-t border-gray-300">
+              <h3 className="text-lg font-semibold mb-4 text-gray-800">Change Password (Optional)</h3>
+
+              <div className="mb-4">
+                <label htmlFor="currentPassword" className="block text-sm font-medium text-gray-700">Current Password:</label>
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    id="currentPassword"
+                    value={currentPassword}
+                    onChange={(e) => setCurrentPassword(e.target.value)}
+                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm pr-10"
+                    placeholder="Enter current password"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                  >
+                    {showPassword ? '👁️' : '👁️‍🗨️'}
+                  </button>
+                </div>
+              </div>
+
+              <div className="mb-4">
+                <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700">New Password:</label>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="newPassword"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+                  placeholder="Enter new password"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">Confirm New Password:</label>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="confirmPassword"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+                  placeholder="Confirm new password"
+                />
+              </div>
+            </div>
           </div>
 
           {/* Save Button */}
           <div className="mt-8 text-center">
             <button type="submit" className="px-8 py-3 bg-[#1A5632] text-[#FFD7DF] rounded-[15px] font-bold hover:bg-[#FFD7DF] hover:text-[#1A5632] transition-all duration-300">
-              Save
+              Save Changes
             </button>
           </div>
         </form>
