@@ -27,7 +27,7 @@ const AllWorksCard = ({ book, onRemove }) => {
 
   return (
     <div className='group relative flex rounded-[10px] border-solid border-2 w-[650px] h-[250px] bg-white overflow-hidden transition-all duration-300'>
-      
+
       {/* --- Hover Overlay --- */}
       <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
         <button
