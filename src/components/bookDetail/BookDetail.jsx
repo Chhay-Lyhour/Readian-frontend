@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { bookApi, ratingApi, downloadApi } from '../../services/api';
 import { handleApiError, showSuccessToast } from '../../services/utils/errorHandler';
+import { Star, Heart, Download, BookOpen, Lock, Crown, Shield, Baby } from 'lucide-react';
 
 //truncate
 function truncate(str, n) {
@@ -129,9 +130,13 @@ const BookDetail = ({book,signedIn,currentUser}) => {
             onMouseEnter={() => isInteractive && setHoverRating(star)}
             onMouseLeave={() => isInteractive && setHoverRating(0)}
             disabled={!isInteractive}
-            className={`text-2xl ${!isInteractive && 'cursor-default'}`}
+            className={`${!isInteractive && 'cursor-default'}`}
           >
-            {(isInteractive ? (hoverRating || userRating) : rating) >= star ? '⭐' : '☆'}
+            <Star
+              size={24}
+              fill={(isInteractive ? (hoverRating || userRating) : rating) >= star ? 'currentColor' : 'none'}
+              className={(isInteractive ? (hoverRating || userRating) : rating) >= star ? 'text-yellow-400' : 'text-gray-300'}
+            />
           </button>
         ))}
       </div>
@@ -209,22 +214,23 @@ const BookDetail = ({book,signedIn,currentUser}) => {
                 </span>
               )}
               {book.bookStatus && (
-                <span className={`px-3 py-1 text-xs font-semibold rounded-full ${
+                <span className={`px-3 py-1 text-xs font-semibold rounded-full flex items-center gap-1 ${
                   book.bookStatus === 'finished' ? 'bg-blue-100 text-blue-800' : 'bg-yellow-100 text-yellow-800'
                 }`}>
+                  <BookOpen size={12} />
                   {book.bookStatus === 'finished' ? 'Completed' : 'Ongoing'}
                 </span>
               )}
               {book.isPremium && (
-                <span className='px-3 py-1 bg-purple-100 text-purple-800 text-xs font-semibold rounded-full'>
-                  ⭐ Premium
+                <span className='px-3 py-1 bg-purple-100 text-purple-800 text-xs font-semibold rounded-full flex items-center gap-1'>
+                  <Crown size={12} /> Premium
                 </span>
               )}
               {book.contentType && (
-                <span className={`px-3 py-1 text-xs font-semibold rounded-full ${
+                <span className={`px-3 py-1 text-xs font-semibold rounded-full flex items-center gap-1 ${
                   book.contentType === 'adult' ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'
                 }`}>
-                  {book.contentType === 'adult' ? '🔞 Adult' : '👶 Kids'}
+                  {book.contentType === 'adult' ? <><Shield size={12} /> Adult</> : <><Baby size={12} /> Kids</>}
                 </span>
               )}
             </div>
@@ -301,30 +307,31 @@ const BookDetail = ({book,signedIn,currentUser}) => {
           <div className='flex flex-wrap gap-3 my-8'>
             <Link
               to={`/book/${book._id}/chapter/1`}
-              className='flex-1 min-w-[200px] text-center py-3 px-6 bg-[#1A5632] text-white text-sm sm:text-base font-semibold rounded-lg hover:bg-[#FFD7DF] hover:text-[#1A5632] transition-all duration-300 shadow-md'
+              className='flex-1 min-w-[200px] text-center py-3 px-6 bg-[#1A5632] text-white text-sm sm:text-base font-semibold rounded-lg hover:bg-[#FFD7DF] hover:text-[#1A5632] transition-all duration-300 shadow-md flex items-center justify-center gap-2'
             >
-              📖 Start Reading
+              <BookOpen size={18} /> Start Reading
             </Link>
 
             {signedIn && (
               <>
                 <button
                   onClick={handleLike}
-                  className={`flex-1 min-w-[150px] py-3 px-6 text-sm sm:text-base font-semibold rounded-lg transition-all duration-300 shadow-md ${
+                  className={`flex-1 min-w-[150px] py-3 px-6 text-sm sm:text-base font-semibold rounded-lg transition-all duration-300 shadow-md flex items-center justify-center gap-2 ${
                     isLiked
                       ? 'bg-red-500 text-white hover:bg-red-600'
                       : 'bg-white text-[#1A5632] border-2 border-[#1A5632] hover:bg-[#1A5632] hover:text-white'
                   }`}
                 >
-                  {isLiked ? '❤️ Liked' : '🤍 Like'}
+                  <Heart size={18} fill={isLiked ? 'currentColor' : 'none'} />
+                  {isLiked ? 'Liked' : 'Like'}
                 </button>
 
                 {book.allowDownload && (
                   <button
                     onClick={handleDownload}
-                    className='flex-1 min-w-[150px] py-3 px-6 bg-white text-[#1A5632] border-2 border-[#1A5632] text-sm sm:text-base font-semibold rounded-lg hover:bg-[#1A5632] hover:text-white transition-all duration-300 shadow-md'
+                    className='flex-1 min-w-[150px] py-3 px-6 bg-white text-[#1A5632] border-2 border-[#1A5632] text-sm sm:text-base font-semibold rounded-lg hover:bg-[#1A5632] hover:text-white transition-all duration-300 shadow-md flex items-center justify-center gap-2'
                   >
-                    📥 Download
+                    <Download size={18} /> Download
                   </button>
                 )}
               </>
@@ -333,9 +340,9 @@ const BookDetail = ({book,signedIn,currentUser}) => {
             {!signedIn && (
               <Link
                 to="/signin"
-                className='flex-1 min-w-[150px] text-center py-3 px-6 bg-white text-[#1A5632] border-2 border-[#1A5632] text-sm sm:text-base font-semibold rounded-lg hover:bg-[#1A5632] hover:text-white transition-all duration-300 shadow-md'
+                className='flex-1 min-w-[150px] text-center py-3 px-6 bg-white text-[#1A5632] border-2 border-[#1A5632] text-sm sm:text-base font-semibold rounded-lg hover:bg-[#1A5632] hover:text-white transition-all duration-300 shadow-md flex items-center justify-center gap-2'
               >
-                🔐 Sign In to Like & Download
+                <Lock size={18} /> Sign In to Like & Download
               </Link>
             )}
           </div>
@@ -345,8 +352,8 @@ const BookDetail = ({book,signedIn,currentUser}) => {
       
       {/* Description Section */}
       <div className='py-6 sm:py-8 md:py-[50px] px-4 sm:px-8 md:px-16 lg:px-[100px] bg-[#FFD7DF]'>
-        <h2 className='geist text-[24px] sm:text-[28px] md:text-[32px] font-bold mb-4 text-[#1A5632]'>
-          📚 About This Book
+        <h2 className='geist text-[24px] sm:text-[28px] md:text-[32px] font-bold mb-4 text-[#1A5632] flex items-center gap-2'>
+          <BookOpen size={32} /> About This Book
         </h2>
         <p className='text-sm sm:text-base leading-relaxed text-gray-800 whitespace-pre-line'>
           {book.description || "No description provided for this book yet. Check back later for more details!"}

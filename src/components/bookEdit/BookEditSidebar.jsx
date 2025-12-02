@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, CheckCircle, Edit3, Megaphone, Trash2 } from 'lucide-react';
 
 const BookEditSidebar = ({ onPublish, onDelete, isPublished, isNew }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -58,12 +58,12 @@ const BookEditSidebar = ({ onPublish, onDelete, isPublished, isNew }) => {
           <div className='bg-white p-3 rounded-lg'>
             {isPublished ? (
               <div className='flex items-center gap-2'>
-                <span className='text-2xl'>✅</span>
+                <CheckCircle size={28} className='text-green-600' />
                 <span className='text-lg font-semibold text-green-600'>Published</span>
               </div>
             ) : (
               <div className='flex items-center gap-2'>
-                <span className='text-2xl'>📝</span>
+                <Edit3 size={28} className='text-orange-600' />
                 <span className='text-lg font-semibold text-orange-600'>Draft</span>
               </div>
             )}
@@ -86,9 +86,9 @@ const BookEditSidebar = ({ onPublish, onDelete, isPublished, isNew }) => {
               onPublish();
               setIsOpen(false);
             }}
-            className='self-center font-semibold bg-[#00A819] text-white w-full py-2 rounded-[15px] shadow-md hover:bg-[#1A5632] transition-all duration-300'
+            className='self-center font-semibold bg-[#00A819] text-white w-full py-2 rounded-[15px] shadow-md hover:bg-[#1A5632] transition-all duration-300 flex items-center justify-center gap-2'
           >
-            📢 Publish Book
+            <Megaphone size={18} /> Publish Book
           </button>
         )}
 
@@ -99,9 +99,9 @@ const BookEditSidebar = ({ onPublish, onDelete, isPublished, isNew }) => {
               onDelete();
               setIsOpen(false);
             }}
-            className='self-center font-semibold text-[#FF0000] bg-[#FFD7DF] w-full py-2 rounded-[15px] shadow-md hover:bg-[#FF0000] hover:text-white transition-all duration-300'
+            className='self-center font-semibold text-[#FF0000] bg-[#FFD7DF] w-full py-2 rounded-[15px] shadow-md hover:bg-[#FF0000] hover:text-white transition-all duration-300 flex items-center justify-center gap-2'
           >
-            🗑️ Delete Book
+            <Trash2 size={18} /> Delete Book
           </button>
         )}
       </aside>

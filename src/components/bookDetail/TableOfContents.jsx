@@ -58,8 +58,8 @@ const TableOfContents = ({ bookId, chapters = [], isPremium = false, canAccess =
 
       {isPremium && !canAccess && (
         <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-          <p className="text-sm text-yellow-800 font-semibold mb-2">
-            🔒 Premium Content
+          <p className="text-sm text-yellow-800 font-semibold mb-2 flex items-center gap-2">
+            <Lock size={16} /> Premium Content
           </p>
           <p className="text-xs text-yellow-700 mb-3">
             Subscribe to unlock all chapters of this book

@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { bookApi } from '../../services/api'
 import { useAuth } from '../../services/auth/authContext'
 import { handleApiError, showSuccessToast } from '../../services/utils/errorHandler'
+import { Crown, Shield, BookOpen, CheckCircle, PauseCircle, Edit3, Heart } from 'lucide-react'
 
 const BookCard = ({book, linkTo, showLikeButton = false, onLikeChange, disableHoverScale = false}) => {
     const { user, isAuthenticated } = useAuth();
@@ -18,6 +19,7 @@ const BookCard = ({book, linkTo, showLikeButton = false, onLikeChange, disableHo
         publishedDate,
         image,
         tags,
+        genre,
         bookStatus,
         description,
         totalChapters,
@@ -45,6 +47,11 @@ const BookCard = ({book, linkTo, showLikeButton = false, onLikeChange, disableHo
     const tagsDisplay = Array.isArray(tags)
         ? tags.join(", ")
         : (tags || "No tags provided");
+
+    // Handle genre - can be string or array
+    const genreDisplay = Array.isArray(genre)
+        ? genre.join(", ")
+        : (genre || "No genre provided");
 
     // Handle like/unlike
     const handleLikeClick = async (e) => {
@@ -93,7 +100,8 @@ const BookCard = ({book, linkTo, showLikeButton = false, onLikeChange, disableHo
                             : 'bg-white text-[#1A5632] hover:bg-[#C0FFB3]'
                     }`}
                 >
-                    {isLiked ? '❤️ Liked' : '🤍 Like'}
+                    <Heart size={16} fill={isLiked ? 'currentColor' : 'none'} />
+                    {isLiked ? 'Liked' : 'Like'}
                 </button>
                 <Link
                     to={destination}
@@ -108,39 +116,6 @@ const BookCard = ({book, linkTo, showLikeButton = false, onLikeChange, disableHo
             to={destination}
             className='flex w-full h-full relative'
         >
-        {/* Badges - Top right corner */}
-        <div className='absolute top-2 right-2 flex flex-col gap-1 z-10'>
-            {isPremium && (
-                <span className='bg-gradient-to-r from-yellow-400 to-yellow-600 text-white text-[10px] sm:text-xs font-bold px-2 py-1 rounded-md shadow-lg flex items-center gap-1'>
-                    <span>👑</span> PREMIUM
-                </span>
-            )}
-            {contentType === 'adult' && (
-                <span className='bg-red-600 text-white text-[10px] sm:text-xs font-bold px-2 py-1 rounded-md shadow-lg'>
-                    🔞 18+
-                </span>
-            )}
-            {bookStatus === 'ongoing' && (
-                <span className='bg-blue-600 text-white text-[10px] sm:text-xs font-bold px-2 py-1 rounded-md shadow-lg'>
-                    📖 ONGOING
-                </span>
-            )}
-            {bookStatus === 'finished' && (
-                <span className='bg-green-600 text-white text-[10px] sm:text-xs font-bold px-2 py-1 rounded-md shadow-lg'>
-                    ✅ COMPLETED
-                </span>
-            )}
-            {bookStatus === 'hiatus' && (
-                <span className='bg-orange-600 text-white text-[10px] sm:text-xs font-bold px-2 py-1 rounded-md shadow-lg'>
-                    ⏸️ HIATUS
-                </span>
-            )}
-            {status === 'draft' && (
-                <span className='bg-gray-600 text-white text-[10px] sm:text-xs font-bold px-2 py-1 rounded-md shadow-lg'>
-                    ✏️ DRAFT
-                </span>
-            )}
-        </div>
 
         {image ? (
             <div className='bg-[#CEF17B] w-[35%] sm:w-4/12 h-full rounded-l-[10px] flex-shrink-0'>
@@ -172,8 +147,11 @@ const BookCard = ({book, linkTo, showLikeButton = false, onLikeChange, disableHo
                 </p>
             </div>
 
-            {/* Tags */}
-            <div className='overflow-hidden'>
+            {/* Genre and Tags */}
+            <div className='overflow-hidden space-y-1'>
+                <p className='text-xs sm:text-sm md:text-base font-semibold truncate'>
+                    Genre: {genreDisplay}
+                </p>
                 <p className='text-xs sm:text-sm md:text-base font-semibold truncate'>
                     Tags: {tagsDisplay}
                 </p>
@@ -181,10 +159,7 @@ const BookCard = ({book, linkTo, showLikeButton = false, onLikeChange, disableHo
 
             {/* Middle section */}
             <div className='overflow-hidden'>
-                <p className='font-bold text-sm sm:text-base capitalize'>
-                    {bookStatus || "Status unavailable"}
-                </p>
-                <p 
+                <p
                 className='text-[10px] sm:text-xs w-full line-clamp-2'
                 title={description || "No description provided"}
                 >
@@ -192,17 +167,54 @@ const BookCard = ({book, linkTo, showLikeButton = false, onLikeChange, disableHo
                 </p>
             </div>
 
-            {/* Bottom section */}
-            <div className='flex gap-2 sm:gap-3 flex-wrap'>
-                <p className='text-[9px] sm:text-[10px]'>
-                    Chapters: {totalChapters || 0}
-                </p>
-                <p className='text-[9px] sm:text-[10px]'>
-                    Views: {viewCount || 0}
-                </p>
-                <p className='text-[9px] sm:text-[10px]'>
-                    Likes: {displayLikes}
-                </p>
+            {/* Bottom section - Stats and Badges */}
+            <div className='flex flex-col gap-2'>
+                {/* Stats row */}
+                <div className='flex gap-2 sm:gap-3 flex-wrap items-center'>
+                    <p className='text-[9px] sm:text-[10px]'>
+                        Chapters: {totalChapters || 0}
+                    </p>
+                    <p className='text-[9px] sm:text-[10px]'>
+                        Views: {viewCount || 0}
+                    </p>
+                    <p className='text-[9px] sm:text-[10px]'>
+                        Likes: {displayLikes}
+                    </p>
+                </div>
+
+                {/* Badges row */}
+                <div className='flex flex-wrap gap-1'>
+                    {isPremium && (
+                        <span className='bg-gradient-to-r from-yellow-400 to-yellow-600 text-white text-[8px] sm:text-[9px] font-bold px-1.5 py-0.5 rounded shadow-sm flex items-center gap-0.5'>
+                            <Crown size={9} /> PREMIUM
+                        </span>
+                    )}
+                    {contentType === 'adult' && (
+                        <span className='bg-red-600 text-white text-[8px] sm:text-[9px] font-bold px-1.5 py-0.5 rounded shadow-sm flex items-center gap-0.5'>
+                            <Shield size={9} /> ADULT
+                        </span>
+                    )}
+                    {bookStatus === 'ongoing' && (
+                        <span className='bg-blue-600 text-white text-[8px] sm:text-[9px] font-bold px-1.5 py-0.5 rounded shadow-sm flex items-center gap-0.5'>
+                            <BookOpen size={9} /> ONGOING
+                        </span>
+                    )}
+                    {bookStatus === 'finished' && (
+                        <span className='bg-green-600 text-white text-[8px] sm:text-[9px] font-bold px-1.5 py-0.5 rounded shadow-sm flex items-center gap-0.5'>
+                            <CheckCircle size={9} /> COMPLETED
+                        </span>
+                    )}
+                    {bookStatus === 'hiatus' && (
+                        <span className='bg-orange-600 text-white text-[8px] sm:text-[9px] font-bold px-1.5 py-0.5 rounded shadow-sm flex items-center gap-0.5'>
+                            <PauseCircle size={9} /> HIATUS
+                        </span>
+                    )}
+                    {status === 'draft' && (
+                        <span className='bg-gray-600 text-white text-[8px] sm:text-[9px] font-bold px-1.5 py-0.5 rounded shadow-sm flex items-center gap-0.5'>
+                            <Edit3 size={9} /> DRAFT
+                        </span>
+                    )}
+                </div>
             </div>
         </div>
 

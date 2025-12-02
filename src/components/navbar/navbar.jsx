@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../services/auth/authContext';
+import { Search, Crown } from 'lucide-react';
 
 const Navbar = () => {
   const { user, isAuthenticated, logout } = useAuth();
@@ -52,7 +53,7 @@ const Navbar = () => {
               className='absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#1A5632] transition-colors'
               aria-label="Search"
             >
-              🔍
+              <Search size={20} />
             </button>
           </div>
         </form>
@@ -77,12 +78,12 @@ const Navbar = () => {
             <Link to="/subscribe" className='hover:font-semibold transition-all flex items-center gap-2'>
               Subscribe
               {user.plan && user.plan !== 'free' && (
-                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 ${
                   user.plan === 'premium'
                     ? 'bg-gradient-to-r from-yellow-400 to-yellow-600 text-white'
                     : 'bg-blue-500 text-white'
                 }`}>
-                  {user.plan === 'premium' ? '👑 PREMIUM' : 'BASIC'}
+                  {user.plan === 'premium' ? <><Crown size={10} /> PREMIUM</> : 'BASIC'}
                 </span>
               )}
             </Link>
@@ -141,7 +142,7 @@ const Navbar = () => {
                 className='absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#1A5632] transition-colors'
                 aria-label="Search"
               >
-                🔍
+                <Search size={20} />
               </button>
             </form>
           </div>

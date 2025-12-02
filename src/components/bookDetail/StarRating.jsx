@@ -105,8 +105,8 @@ const StarRating = ({ bookId, averageRating = 0, totalRatings = 0 }) => {
         </div>
 
         {userRating && (
-          <span className="text-green-600 font-semibold text-xs sm:text-sm">
-            You rated: {userRating} ⭐
+          <span className="text-green-600 font-semibold text-xs sm:text-sm flex items-center gap-1">
+            You rated: {userRating} <Star size={14} fill="currentColor" className="text-yellow-400" />
           </span>
         )}
       </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAuth } from '../../services/auth/authContext';
 import { useNavigate } from 'react-router-dom';
+import { Crown, BookOpen, Clock, Lock } from 'lucide-react';
 
 /**
  * SubscriptionGuard Component
@@ -37,8 +38,8 @@ const SubscriptionGuard = ({
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#FFFDEE] p-8">
         <div className="max-w-md w-full bg-white rounded-lg shadow-xl p-8 text-center border-2 border-[#1A5632]">
-          <div className="text-6xl mb-4">
-            {isPremiumBook ? '👑' : '📚'}
+          <div className="flex justify-center mb-4">
+            {isPremiumBook ? <Crown size={64} className="text-yellow-500" /> : <BookOpen size={64} className="text-[#1A5632]" />}
           </div>
           <h2 className="text-2xl font-bold mb-4">
             {isPremiumBook ? 'Premium Content' : 'Sign In Required'}
@@ -73,7 +74,9 @@ const SubscriptionGuard = ({
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#FFFDEE] p-8">
         <div className="max-w-md w-full bg-white rounded-lg shadow-xl p-8 text-center border-2 border-yellow-500">
-          <div className="text-6xl mb-4">⏰</div>
+          <div className="flex justify-center mb-4">
+            <Clock size={64} className="text-yellow-600" />
+          </div>
           <h2 className="text-2xl font-bold mb-4 text-yellow-600">Subscription Expired</h2>
           <p className="text-gray-700 mb-6">
             Your {userPlan.toUpperCase()} subscription has expired.
@@ -101,7 +104,9 @@ const SubscriptionGuard = ({
       return (
         <div className="min-h-screen flex items-center justify-center bg-[#FFFDEE] p-8">
           <div className="max-w-md w-full bg-white rounded-lg shadow-xl p-8 text-center border-2 border-yellow-500">
-            <div className="text-6xl mb-4">👑</div>
+            <div className="flex justify-center mb-4">
+              <Crown size={64} className="text-yellow-500" />
+            </div>
             <h2 className="text-2xl font-bold mb-4">Premium Book</h2>
             <p className="text-gray-700 mb-6">
               This is a premium book. Upgrade to <strong>Basic</strong> or <strong>Premium</strong> to read.
@@ -129,7 +134,9 @@ const SubscriptionGuard = ({
       return (
         <div className="min-h-screen flex items-center justify-center bg-[#FFFDEE] p-8">
           <div className="max-w-md w-full bg-white rounded-lg shadow-xl p-8 text-center border-2 border-blue-500">
-            <div className="text-6xl mb-4">📖</div>
+            <div className="flex justify-center mb-4">
+              <BookOpen size={64} className="text-blue-600" />
+            </div>
             <h2 className="text-2xl font-bold mb-4">Ongoing Book - Early Access</h2>
             <p className="text-gray-700 mb-6">
               This book is still being written. Upgrade to <strong>Premium</strong> to read chapters as they're released!
@@ -160,7 +167,9 @@ const SubscriptionGuard = ({
       return (
         <div className="min-h-screen flex items-center justify-center bg-[#FFFDEE] p-8">
           <div className="max-w-md w-full bg-white rounded-lg shadow-xl p-8 text-center border-2 border-blue-500">
-            <div className="text-6xl mb-4">📖</div>
+            <div className="flex justify-center mb-4">
+              <BookOpen size={64} className="text-blue-600" />
+            </div>
             <h2 className="text-2xl font-bold mb-4">Ongoing Book - Premium Only</h2>
             <p className="text-gray-700 mb-6">
               This book is still being written. Upgrade to <strong>Premium</strong> for early access!

@@ -1,5 +1,6 @@
 import React from 'react'
 import SingleChapter from './SingleChapter'
+import { BookOpen } from 'lucide-react'
 
 const BookChapters = ({chapterList,bookId}) => {
   return (
@@ -48,7 +49,10 @@ const BookChapters = ({chapterList,bookId}) => {
         ) : (
             <div className='relative mt-[90px] sm:mt-[115px] px-4 sm:px-8 md:px-16 lg:px-[100px] py-8 sm:py-12 md:py-[50px] z-20 text-center'>
                 <div className='p-12 bg-white rounded-lg'>
-                    <p className='text-xl text-gray-500'>📖 No chapters available yet</p>
+                    <div className='flex justify-center mb-4'>
+                        <BookOpen size={48} className='text-gray-400' />
+                    </div>
+                    <p className='text-xl text-gray-500'>No chapters available yet</p>
                     <p className='text-sm text-gray-400 mt-2'>Check back later for updates!</p>
                 </div>
             </div>

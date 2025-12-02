@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { analyticsApi } from '../../services/api';
 import { handleApiError } from '../../services/utils/errorHandler';
+import { Crown, Shield, BookOpen, CheckCircle, PauseCircle, Eye, Heart, Star } from 'lucide-react';
 
 const Trending = () => {
     const [topBooks, setTopBooks] = useState([]);
@@ -56,27 +57,64 @@ const Trending = () => {
                 <Link 
                   to={`/book/${book._id}`}
                   key={book._id}
-                  className='w-[210px] h-[340px] bg-none flex flex-col justify-between hover:scale-110 transition-all duration-300 cursor-pointer relative z-10'
+                  className='w-[210px] min-h-[420px] bg-none flex flex-col gap-2 hover:scale-110 transition-all duration-300 cursor-pointer relative z-10'
                   style={{ pointerEvents: 'auto' }}
                 >
                     {/* cover img */}
                     {book.image ? (
-                        <div className='w-full h-[280px] bg-[#CEF17B] rounded-[20px] shadow-[4px_4px_4px_0px_rgba(0,0,0,0.25)]'>
+                        <div className='w-full h-[280px] bg-[#CEF17B] rounded-[20px] shadow-[4px_4px_4px_0px_rgba(0,0,0,0.25)] relative'>
                             <img src={book.image} alt={book.title || "Book cover"} className='w-full h-full object-cover rounded-[20px]'/>
                         </div>
                     ) : (
-                        <div className='w-full h-[280px] bg-[#CEF17B] rounded-[20px] shadow-[4px_4px_4px_0px_rgba(0,0,0,0.25)] flex items-center justify-center text-center'>
+                        <div className='w-full h-[280px] bg-[#CEF17B] rounded-[20px] shadow-[4px_4px_4px_0px_rgba(0,0,0,0.25)] flex items-center justify-center text-center relative'>
                             Preview unavailable
                         </div>
                     )}
-                    <h1 
+
+                    {/* Title */}
+                    <h1
                       title={book.title || "Title unavailable"}
                       className='text-[20px] font-semibold text-center h-[30px] overflow-hidden'
                     >
                         {book.title || "Title unavailable"}
                     </h1>
-                    <div className='text-xs text-center text-gray-600'>
-                        👁️ {book.viewCount} | ❤️ {book.totalLikes} | ⭐ {book.averageRating > 0 ? book.averageRating.toFixed(1) : '-'}
+
+                    {/* Stats */}
+                    <div className='text-xs text-center text-gray-600 flex flex-wrap items-center justify-center gap-1 px-2'>
+                        <span className='flex items-center gap-0.5'><Eye size={12} /> {book.viewCount}</span>
+                        <span>|</span>
+                        <span className='flex items-center gap-0.5'><Heart size={12} /> {book.totalLikes}</span>
+                        <span>|</span>
+                        <span className='flex items-center gap-0.5'><Star size={12} /> {book.averageRating > 0 ? book.averageRating.toFixed(1) : '-'}</span>
+                    </div>
+
+                    {/* Badges */}
+                    <div className='flex flex-wrap gap-1 justify-center px-2 min-h-[20px]'>
+                        {book.isPremium && (
+                            <span className='bg-gradient-to-r from-yellow-400 to-yellow-600 text-white text-[8px] font-bold px-1.5 py-0.5 rounded shadow-sm flex items-center gap-0.5 whitespace-nowrap'>
+                                <Crown size={8} /> PREMIUM
+                            </span>
+                        )}
+                        {book.contentType === 'adult' && (
+                            <span className='bg-red-600 text-white text-[8px] font-bold px-1.5 py-0.5 rounded shadow-sm flex items-center gap-0.5 whitespace-nowrap'>
+                                <Shield size={8} /> ADULT
+                            </span>
+                        )}
+                        {book.bookStatus === 'ongoing' && (
+                            <span className='bg-blue-600 text-white text-[8px] font-bold px-1.5 py-0.5 rounded shadow-sm flex items-center gap-0.5 whitespace-nowrap'>
+                                <BookOpen size={8} /> ONGOING
+                            </span>
+                        )}
+                        {book.bookStatus === 'finished' && (
+                            <span className='bg-green-600 text-white text-[8px] font-bold px-1.5 py-0.5 rounded shadow-sm flex items-center gap-0.5 whitespace-nowrap'>
+                                <CheckCircle size={8} /> COMPLETED
+                            </span>
+                        )}
+                        {book.bookStatus === 'hiatus' && (
+                            <span className='bg-orange-600 text-white text-[8px] font-bold px-1.5 py-0.5 rounded shadow-sm flex items-center gap-0.5 whitespace-nowrap'>
+                                <PauseCircle size={8} /> HIATUS
+                            </span>
+                        )}
                     </div>
                 </Link>
 

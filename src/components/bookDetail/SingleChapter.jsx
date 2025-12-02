@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { Calendar, Clock, FileText, ChevronRight } from 'lucide-react'
 
 const SingleChapter = ({chapter, bookId, chapterNumber}) => {
   // Format date
@@ -37,25 +38,25 @@ const SingleChapter = ({chapter, bookId, chapterNumber}) => {
       {/* Chapter Metadata */}
       <div className='flex flex-wrap sm:flex-col items-start sm:items-end gap-2 text-sm text-gray-600'>
         {chapter.publishedDate && (
-          <span className='text-xs'>
-            📅 {formatDate(chapter.publishedDate)}
+          <span className='text-xs flex items-center gap-1'>
+            <Calendar size={12} /> {formatDate(chapter.publishedDate)}
           </span>
         )}
         {chapter.readingTime && (
-          <span className='text-xs'>
-            ⏱️ {chapter.readingTime}
+          <span className='text-xs flex items-center gap-1'>
+            <Clock size={12} /> {chapter.readingTime}
           </span>
         )}
         {chapter.wordCount && (
-          <span className='text-xs'>
-            📝 {chapter.wordCount} words
+          <span className='text-xs flex items-center gap-1'>
+            <FileText size={12} /> {chapter.wordCount} words
           </span>
         )}
       </div>
 
       {/* Arrow Indicator */}
       <div className='hidden sm:block flex-shrink-0 text-[#1A5632] group-hover:translate-x-2 transition-transform'>
-        →
+        <ChevronRight size={20} />
       </div>
     </Link>
   )

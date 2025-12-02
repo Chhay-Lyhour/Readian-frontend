@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import SettingsSidebar from '../components/common/SettingsSidebar';
 import { downloadApi } from '../services/api';
 import { handleApiError, showSuccessToast } from '../services/utils/errorHandler';
+import { BarChart3, Download, Calendar, CalendarDays, Clock } from 'lucide-react';
 
 function DownloadHistoryPage() {
   const [downloads, setDownloads] = useState([]);
@@ -104,13 +105,13 @@ function DownloadHistoryPage() {
           {!loadingStats && stats && (
             <div className="bg-gradient-to-r from-[#C0FFB3] to-[#A0DF93] rounded-lg shadow-lg p-6 mb-8 border-2 border-[#1A5632]">
               <h2 className="text-2xl font-bold text-[#1A5632] mb-4 flex items-center gap-2">
-                📊 Download Statistics
+                <BarChart3 size={28} /> Download Statistics
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {/* Total Downloads */}
                 <div className="bg-white rounded-lg p-4 shadow-md">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-2xl">📥</span>
+                    <Download size={24} className="text-[#1A5632]" />
                     <h3 className="text-sm font-semibold text-gray-600">Total Downloads</h3>
                   </div>
                   <p className="text-3xl font-bold text-[#1A5632]">{stats.totalDownloads || 0}</p>
@@ -119,7 +120,7 @@ function DownloadHistoryPage() {
                 {/* Downloads Today */}
                 <div className="bg-white rounded-lg p-4 shadow-md">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-2xl">📅</span>
+                    <Calendar size={24} className="text-[#00A819]" />
                     <h3 className="text-sm font-semibold text-gray-600">Downloads Today</h3>
                   </div>
                   <p className="text-3xl font-bold text-[#00A819]">{stats.downloadsToday || 0}</p>
@@ -128,7 +129,7 @@ function DownloadHistoryPage() {
                 {/* Downloads This Month */}
                 <div className="bg-white rounded-lg p-4 shadow-md">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-2xl">📆</span>
+                    <CalendarDays size={24} className="text-blue-600" />
                     <h3 className="text-sm font-semibold text-gray-600">This Month</h3>
                   </div>
                   <p className="text-3xl font-bold text-blue-600">{stats.downloadsThisMonth || 0}</p>
@@ -137,7 +138,7 @@ function DownloadHistoryPage() {
                 {/* Remaining Today */}
                 <div className="bg-white rounded-lg p-4 shadow-md">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-2xl">⏱️</span>
+                    <Clock size={24} className="text-orange-600" />
                     <h3 className="text-sm font-semibold text-gray-600">Remaining Today</h3>
                   </div>
                   <p className="text-3xl font-bold text-orange-600">
@@ -192,7 +193,9 @@ function DownloadHistoryPage() {
             </div>
           ) : (
             <div className="bg-white rounded-lg shadow-md p-12 text-center">
-              <div className="text-6xl mb-4">📥</div>
+              <div className="flex justify-center mb-4">
+                <Download size={64} className="text-gray-400" />
+              </div>
               <h2 className="text-2xl font-bold text-gray-700 mb-2">No Downloads Yet</h2>
               <p className="text-gray-500 mb-6">
                 You haven't downloaded any books. Start exploring and download your favorites!

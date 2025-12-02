@@ -48,54 +48,8 @@ const BookDetailPage = () => {
     );
   }
 
-  // Check age restriction
-  if (book.ageRestriction && user) {
-    const userAge = user.age || 0;
-    if (userAge < book.ageRestriction) {
-      return (
-        <div className="bg-[#CEF17B] min-h-screen p-8 text-center">
-          <h1 className="text-3xl font-bold mb-4">Age Restriction</h1>
-          <p className="text-xl mb-6">
-            This book has an age restriction of {book.ageRestriction}+ years.
-            Your current age ({userAge}) does not meet the requirement.
-          </p>
-          <Link
-            to="/browse"
-            className="bg-[#FFD7DF] text-[#1A5632] font-bold py-3 px-6 rounded-lg hover:bg-[#1A5632] hover:text-[#FFD7DF] transition-all duration-300"
-          >
-            Browse Other Books
-          </Link>
-        </div>
-      );
-    }
-  }
-
-  // Check premium access
-  const isPremium = book.isPremium;
-  const canSeePremium = user?.role === 'admin' || (
-    user?.subscriptionStatus === 'active' &&
-    user?.plan === 'premium' &&
-    user?.subscriptionExpiresAt &&
-    new Date(user.subscriptionExpiresAt) > new Date()
-  );
-
-  if (isPremium && !canSeePremium) {
-    return (
-      <div className="bg-[#CEF17B] min-h-screen p-8 text-center">
-        <h1 className="text-3xl font-bold mb-4">Access Denied</h1>
-        <p className="text-xl mb-6">
-          This content requires an active premium subscription.
-        </p>
-        <Link 
-          to="/subscribe"
-          className="bg-[#FFD7DF] text-[#1A5632] font-bold py-3 px-6 rounded-lg hover:bg-[#1A5632] hover:text-[#FFD7DF] transition-all duration-300"
-        >
-          Subscribe Now
-        </Link>
-      </div>
-    );
-  }
-
+  // Allow access to book details without restrictions
+  // Guards will be applied when trying to read chapters
   return (
     <div className='bg-[#1A5632] min-h-screen py-8 px-4'>
       <div className='flex flex-col gap-8 max-w-7xl mx-auto items-center'>

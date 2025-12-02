@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../services/auth/authContext';
 import { useNavigate } from 'react-router-dom';
+import { Shield, AlertTriangle } from 'lucide-react';
 
 /**
  * AgeGuard Component
@@ -22,7 +23,9 @@ const AgeGuard = ({ children, contentType, bookTitle = 'this book' }) => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#FFFDEE] p-8">
         <div className="max-w-md w-full bg-white rounded-lg shadow-xl p-8 text-center border-2 border-red-500">
-          <div className="text-6xl mb-4">🔞</div>
+          <div className="flex justify-center mb-4">
+            <Shield size={64} className="text-red-600" />
+          </div>
           <h2 className="text-2xl font-bold mb-4 text-red-600">Age Restricted Content</h2>
           <p className="text-gray-700 mb-6">
             You must be signed in and 18 years or older to access this content.
@@ -43,7 +46,9 @@ const AgeGuard = ({ children, contentType, bookTitle = 'this book' }) => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#FFFDEE] p-8">
         <div className="max-w-md w-full bg-white rounded-lg shadow-xl p-8 text-center border-2 border-yellow-500">
-          <div className="text-6xl mb-4">⚠️</div>
+          <div className="flex justify-center mb-4">
+            <AlertTriangle size={64} className="text-yellow-600" />
+          </div>
           <h2 className="text-2xl font-bold mb-4 text-yellow-600">Age Verification Required</h2>
           <p className="text-gray-700 mb-6">
             To access adult content, please add your age to your profile.
@@ -64,7 +69,9 @@ const AgeGuard = ({ children, contentType, bookTitle = 'this book' }) => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#FFFDEE] p-8">
         <div className="max-w-md w-full bg-white rounded-lg shadow-xl p-8 text-center border-2 border-red-500">
-          <div className="text-6xl mb-4">🔞</div>
+          <div className="flex justify-center mb-4">
+            <Shield size={64} className="text-red-600" />
+          </div>
           <h2 className="text-2xl font-bold mb-4 text-red-600">Access Denied</h2>
           <p className="text-gray-700 mb-6">
             You must be 18 years or older to access this content.

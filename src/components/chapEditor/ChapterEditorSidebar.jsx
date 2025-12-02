@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Trash2 } from 'lucide-react';
 
 const ChapterEditorSidebar = ({ onDelete, onBackToBook, isNew }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -80,9 +80,9 @@ const ChapterEditorSidebar = ({ onDelete, onBackToBook, isNew }) => {
               onDelete();
               setIsOpen(false);
             }}
-            className='self-center font-semibold text-[#FF0000] bg-[#FFD7DF] w-full py-2 rounded-[15px] shadow-md hover:bg-[#FF0000] hover:text-white transition-all duration-300'
+            className='self-center font-semibold text-[#FF0000] bg-[#FFD7DF] w-full py-2 rounded-[15px] shadow-md hover:bg-[#FF0000] hover:text-white transition-all duration-300 flex items-center justify-center gap-2'
           >
-            🗑️ Delete Chapter
+            <Trash2 size={18} /> Delete Chapter
           </button>
         )}
       </aside>

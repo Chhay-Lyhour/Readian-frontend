@@ -37,25 +37,12 @@ const AuthorCard = ({ author, bookCount = 0 }) => {
           <h4 className="text-2xl font-bold text-gray-800 mb-2">
             {authorData.name}
           </h4>
-          {authorData.email && (
-            <p className="text-gray-600 mb-4 leading-relaxed">
-              {authorData.email}
-            </p>
-          )}
 
-          {!authorData.email && (
-            <p className="text-gray-500 italic mb-4">
-              No email available
-            </p>
-          )}
-
-          {authorData.bio && (
+          {authorData.bio ? (
             <p className="text-gray-600 mb-4 leading-relaxed">
               {authorData.bio}
             </p>
-          )}
-
-          {!authorData.bio && (
+          ) : (
             <p className="text-gray-500 italic mb-4">
               No bio available
             </p>
