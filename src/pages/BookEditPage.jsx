@@ -292,8 +292,6 @@ const BookEditPage = () => {
   return (
     <div className='flex min-h-screen bg-[#FFFDEE]'>
       <BookEditSidebar
-        onPublish={status === 'draft' ? handlePublish : null}
-        onDelete={!isNew ? handleDelete : null}
         isPublished={status === 'published'}
         isNew={isNew}
       />
@@ -327,6 +325,8 @@ const BookEditPage = () => {
             onSave={handleSave}
             saving={saving}
             user={user}
+            onDelete={!isNew ? handleDelete : null}
+            isNew={isNew}
           />
 
           {/* Chapter Management for NEW books */}

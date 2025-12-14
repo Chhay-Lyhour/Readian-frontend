@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Trash2 } from 'lucide-react';
 
 const BookEditForm = ({
   title, setTitle,
@@ -14,7 +15,9 @@ const BookEditForm = ({
   uploadingImage,
   onSave,
   saving,
-  user // Add user prop to check age
+  user, // User prop to check age
+  onDelete, // Delete handler
+  isNew // Check if creating new book
 }) => {
   const [tagInput, setTagInput] = useState('');
   const [genreInput, setGenreInput] = useState('');
@@ -285,13 +288,29 @@ const BookEditForm = ({
           </label>
         </div>
 
-        <button
-          type="submit"
-          disabled={saving || uploadingImage}
-          className="w-full bg-[#1A5632] text-[#FFD7DF] p-3 rounded-lg font-bold hover:bg-[#FFD7DF] hover:text-[#1A5632] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {saving ? 'Saving...' : 'Save Book'}
-        </button>
+        {/* Action Buttons */}
+        <div className="flex gap-2 items-center">
+          <button
+            type="submit"
+            disabled={saving || uploadingImage}
+            className="flex-1 bg-[#1A5632] text-[#FFD7DF] p-3 rounded-lg font-bold hover:bg-[#FFD7DF] hover:text-[#1A5632] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {saving ? 'Saving...' : 'Save Book'}
+          </button>
+
+          {/* Delete button - only show for existing books */}
+          {onDelete && !isNew && (
+            <button
+              type="button"
+              onClick={onDelete}
+              disabled={saving}
+              className="bg-red-600 text-white p-3 rounded-lg hover:bg-red-700 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              title="Delete Book"
+            >
+              <Trash2 size={20} />
+            </button>
+          )}
+        </div>
       </form>
     </div>
   );
