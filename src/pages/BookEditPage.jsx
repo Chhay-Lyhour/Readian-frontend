@@ -6,7 +6,6 @@ import BookEditChapters from '../components/bookEdit/BookEditChapters';
 import { useAuth } from '../services/auth/authContext';
 import { bookApi } from '../services/api';
 import { handleApiError, showSuccessToast } from '../services/utils/errorHandler';
-import { uploadToCloudinary } from '../services/utils/imageUpload';
 
 const BookEditPage = () => {
   const { bookId } = useParams();
@@ -80,7 +79,7 @@ const BookEditPage = () => {
     return <Navigate to="/authordash" replace />;
   }
 
-  // NEW APPROACH: Upload to Cloudinary first, then send URL to backend
+  // Handle image file selection
   const handleImageUpload = async (event) => {
     const file = event.target.files?.[0];
     if (!file) {
@@ -109,33 +108,45 @@ const BookEditPage = () => {
 
     console.log('✅ File validation passed');
 
-    try {
-      setUploadingImage(true);
+    // Store the file to be uploaded with the book data
+    setCoverImage(file);
 
-      // Step 1: Upload to Cloudinary and get URL
-      console.log('☁️ Step 1: Uploading to Cloudinary...');
-      const cloudinaryUrl = await uploadToCloudinary(file);
-      console.log('✅ Cloudinary URL:', cloudinaryUrl);
+    // Create preview URL
+    const previewUrl = URL.createObjectURL(file);
+    setCoverImageUrl(previewUrl);
 
-      // Show preview immediately
-      setCoverImageUrl(cloudinaryUrl);
-
-      // Step 2: Update book with the URL
-      if (!isNew && bookId) {
-        console.log('📝 Step 2: Updating book with image URL...');
-        await bookApi.updateBookImage(bookId, cloudinaryUrl);
+    // For existing books, upload immediately
+    if (!isNew && bookId) {
+      try {
+        setUploadingImage(true);
+        console.log('📝 Uploading image for existing book...');
+        await bookApi.updateBook(bookId, {}, file);
         showSuccessToast('Cover image updated successfully!');
-        console.log('✅ Book updated with new image');
-      } else {
-        // For new books, just store URL to use when creating
-        console.log('💾 Storing URL for new book creation');
-        showSuccessToast('Image uploaded! It will be saved with the book.');
+        console.log('✅ Book image updated');
+
+        // Refresh book data to get the Cloudinary URL
+        const updatedResponse = await bookApi.getBookById(bookId);
+        setCoverImageUrl(updatedResponse.data.image || previewUrl);
+
+        // Clear the file state since it's already uploaded
+        setCoverImage(null);
+        console.log('🧹 Cleared coverImage state - image already uploaded');
+      } catch (error) {
+        console.error('❌ Upload failed:', error);
+        handleApiError(error);
+        // Revert to original URL on error
+        if (bookToEdit?.image) {
+          setCoverImageUrl(bookToEdit.image);
+        }
+        // Clear the failed file
+        setCoverImage(null);
+      } finally {
+        setUploadingImage(false);
       }
-    } catch (error) {
-      console.error('❌ Upload failed:', error);
-      handleApiError(error);
-    } finally {
-      setUploadingImage(false);
+    } else {
+      // For new books, just show preview and upload when creating
+      console.log('💾 Image will be uploaded when book is created');
+      showSuccessToast('Image selected! It will be uploaded when you save the book.');
     }
   };
 
@@ -153,15 +164,14 @@ const BookEditPage = () => {
         genre: Array.isArray(genre) ? genre.join(', ') : genre,
         isPremium: premiumStatus,
         status,
-        image: coverImageUrl, // Include the Cloudinary URL
         contentType,
         bookStatus,
         chapters: isNew ? chapters : undefined
       };
 
       if (isNew) {
-        console.log('📚 Creating new book with image:', coverImageUrl);
-        const response = await bookApi.createBook(bookData);
+        console.log('📚 Creating new book with image file');
+        const response = await bookApi.createBook(bookData, coverImage);
         const newBookId = response.data._id || response.data.id || response.data.data?._id;
         console.log('✅ Book created with ID:', newBookId);
 
@@ -169,12 +179,15 @@ const BookEditPage = () => {
         navigate(`/edit/${newBookId}`, { replace: true });
       } else {
         console.log('📝 Updating existing book...');
-        await bookApi.updateBook(bookId, bookData);
+        // Only pass coverImage if it's a new file (not already uploaded)
+        await bookApi.updateBook(bookId, bookData, coverImage instanceof File ? coverImage : null);
         showSuccessToast('Book updated successfully!');
 
         // Refresh book data
         const updatedResponse = await bookApi.getBookById(bookId);
         setBookToEdit(updatedResponse.data);
+        setCoverImageUrl(updatedResponse.data.image || '');
+        setCoverImage(null); // Clear the file after successful upload
       }
     } catch (error) {
       console.error('❌ Save error:', error);
