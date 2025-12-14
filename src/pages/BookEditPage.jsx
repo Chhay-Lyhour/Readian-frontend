@@ -326,6 +326,7 @@ const BookEditPage = () => {
             uploadingImage={uploadingImage}
             onSave={handleSave}
             saving={saving}
+            user={user}
           />
 
           {/* Chapter Management for NEW books */}

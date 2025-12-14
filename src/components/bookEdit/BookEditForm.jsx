@@ -13,16 +13,28 @@ const BookEditForm = ({
   onImageUpload,
   uploadingImage,
   onSave,
-  saving
+  saving,
+  user // Add user prop to check age
 }) => {
   const [tagInput, setTagInput] = useState('');
   const [genreInput, setGenreInput] = useState('');
+
+  // Check if user is underage (less than 18)
+  const isUnderage = user?.age !== null && user?.age !== undefined && user?.age < 18;
 
   useEffect(() => {
     if (premiumStatus === undefined) {
       setPremiumStatus(false);
     }
   }, [premiumStatus, setPremiumStatus]);
+
+  // If user is underage and contentType is set to adult, force it to kids
+  useEffect(() => {
+    if (isUnderage && contentType === 'adult') {
+      console.log('⚠️ Underage author detected - forcing content type to kids');
+      setContentType('kids');
+    }
+  }, [isUnderage, contentType, setContentType]);
 
   const handleAddTag = () => {
     const newTag = tagInput.trim().toLowerCase();
@@ -192,6 +204,12 @@ const BookEditForm = ({
 
         {/* Content Type (Age Restriction) */}
         <label className="block font-semibold mb-1">Content Type</label>
+        {isUnderage && (
+          <div className="mb-2 p-3 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 text-sm rounded">
+            <p className="font-semibold">⚠️ Age Restriction Notice</p>
+            <p>Authors under 18 years old can only create Kids Friendly content. You must be 18 or older to create Adult (18+) content.</p>
+          </div>
+        )}
         <div className="mb-4">
           <label className="mr-4">
             <input
@@ -203,15 +221,17 @@ const BookEditForm = ({
             />
             Kids Friendly
           </label>
-          <label>
+          <label className={isUnderage ? 'opacity-50 cursor-not-allowed' : ''}>
             <input
               type="radio"
               value="adult"
               checked={contentType === 'adult'}
               onChange={(e) => setContentType(e.target.value)}
               className="mr-1"
+              disabled={isUnderage}
             />
             Adult (18+)
+            {isUnderage && <span className="text-xs text-red-600 ml-1">(Restricted)</span>}
           </label>
         </div>
 
