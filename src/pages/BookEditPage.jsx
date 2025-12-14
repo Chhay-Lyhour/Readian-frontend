@@ -115,11 +115,12 @@ const BookEditPage = () => {
     const previewUrl = URL.createObjectURL(file);
     setCoverImageUrl(previewUrl);
 
-    // For existing books, upload immediately
-    if (!isNew && bookId) {
+    // For existing books (not 'new'), upload immediately
+    // Check bookId is valid and not the string 'new'
+    if (bookId && bookId !== 'new') {
       try {
         setUploadingImage(true);
-        console.log('📝 Uploading image for existing book...');
+        console.log('📝 Uploading image for existing book ID:', bookId);
         await bookApi.updateBook(bookId, {}, file);
         showSuccessToast('Cover image updated successfully!');
         console.log('✅ Book image updated');
@@ -176,7 +177,33 @@ const BookEditPage = () => {
         console.log('✅ Book created with ID:', newBookId);
 
         showSuccessToast('Book created successfully!');
+
+        // Navigate to the new book's edit page
         navigate(`/edit/${newBookId}`, { replace: true });
+
+        // Immediately fetch the newly created book data
+        // This allows image upload to work right away without refresh
+        try {
+          const newBookResponse = await bookApi.getBookById(newBookId);
+          const newBook = newBookResponse.data;
+
+          setBookToEdit(newBook);
+          setTitle(newBook.title || '');
+          setDescription(newBook.description || '');
+          setStatus(newBook.status || 'draft');
+          setTags(Array.isArray(newBook.tags) ? newBook.tags : (newBook.tags ? newBook.tags.split(',').map(t => t.trim()) : []));
+          setGenre(Array.isArray(newBook.genre) ? newBook.genre : (newBook.genre ? newBook.genre.split(',').map(g => g.trim()) : []));
+          setPremiumStatus(newBook.isPremium || false);
+          setContentType(newBook.contentType || 'kids');
+          setBookStatus(newBook.bookStatus || 'ongoing');
+          setChapters(newBook.chapters || []);
+          setCoverImageUrl(newBook.image || '');
+          setCoverImage(null); // Clear any pending image
+
+          console.log('✅ Book data loaded - ready for image upload');
+        } catch (error) {
+          console.error('Failed to load new book data:', error);
+        }
       } else {
         console.log('📝 Updating existing book...');
         // Only pass coverImage if it's a new file (not already uploaded)

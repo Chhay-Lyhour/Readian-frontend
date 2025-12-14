@@ -12,34 +12,54 @@ const bookApi = {
   },
 
   createBook: async (bookData, imageFile = null) => {
-    const formData = new FormData();
-
-    // Add book fields
-    formData.append('title', bookData.title);
-    if (bookData.description) formData.append('description', bookData.description);
-    if (bookData.tags) formData.append('tags', bookData.tags);
-    if (bookData.genre) formData.append('genre', bookData.genre);
-    formData.append('isPremium', bookData.isPremium || false);
-    formData.append('status', bookData.status || 'draft');
-    formData.append('contentType', bookData.contentType || 'kids');
-    formData.append('bookStatus', bookData.bookStatus || 'ongoing');
-
-    // Add chapters if any
-    if (bookData.chapters && bookData.chapters.length > 0) {
-      formData.append('chapters', JSON.stringify(bookData.chapters));
-    }
-
-    // Add image file if provided
+    // If there's an image file, use FormData
     if (imageFile) {
-      formData.append('image', imageFile);
-    }
+      const formData = new FormData();
 
-    const response = await axiosInstance.post('/books', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-    return response.data;
+      // Add book fields
+      formData.append('title', bookData.title);
+      if (bookData.description) formData.append('description', bookData.description);
+      if (bookData.tags) formData.append('tags', bookData.tags);
+      if (bookData.genre) formData.append('genre', bookData.genre);
+      formData.append('isPremium', bookData.isPremium || false);
+      formData.append('status', bookData.status || 'draft');
+      formData.append('contentType', bookData.contentType || 'kids');
+      formData.append('bookStatus', bookData.bookStatus || 'ongoing');
+
+      // Add chapters if any
+      if (bookData.chapters && bookData.chapters.length > 0) {
+        formData.append('chapters', JSON.stringify(bookData.chapters));
+      }
+
+      // Add image file
+      formData.append('image', imageFile);
+
+      const response = await axiosInstance.post('/books', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return response.data;
+    } else {
+      // No image file, use regular JSON payload
+      const payload = {
+        title: bookData.title,
+        isPremium: bookData.isPremium || false,
+        status: bookData.status || 'draft',
+        contentType: bookData.contentType || 'kids',
+        bookStatus: bookData.bookStatus || 'ongoing'
+      };
+
+      if (bookData.description) payload.description = bookData.description;
+      if (bookData.tags) payload.tags = bookData.tags;
+      if (bookData.genre) payload.genre = bookData.genre;
+      if (bookData.chapters && bookData.chapters.length > 0) {
+        payload.chapters = bookData.chapters;
+      }
+
+      const response = await axiosInstance.post('/books', payload);
+      return response.data;
+    }
   },
 
   updateBook: async (bookId, bookData, imageFile = null) => {
