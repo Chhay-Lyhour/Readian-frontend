@@ -8,7 +8,7 @@ import { handleApiError, showSuccessToast } from '../services/utils/errorHandler
 function SubscriptionPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const { user } = useAuth();
+  const { user, refreshUser } = useAuth();
 
   // Get pre-selected plan from URL
   const preSelectedPlan = searchParams.get('plan') || null;
@@ -77,6 +77,10 @@ function SubscriptionPage() {
       });
 
       showSuccessToast(`Successfully subscribed to ${plans[selectedPlan].name}!`);
+
+      // ✅ Refresh user data to update subscription status immediately
+      await refreshUser();
+      console.log('✅ User data refreshed after subscription');
 
       // Redirect to management page or home
       setTimeout(() => {

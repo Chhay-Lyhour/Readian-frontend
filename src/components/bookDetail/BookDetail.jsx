@@ -9,7 +9,7 @@ function truncate(str, n) {
     return str?.length > n ? str.substring(0, n-1) + "..." : str;
 }
 
-const BookDetail = ({book,signedIn,currentUser}) => {
+const BookDetail = ({book, signedIn, currentUser, onRatingUpdate}) => {
   const [userRating, setUserRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
   const [isLiked, setIsLiked] = useState(book?.likedBy?.includes(currentUser?._id));
@@ -70,7 +70,11 @@ const BookDetail = ({book,signedIn,currentUser}) => {
       await ratingApi.rateBook(book._id, { rating: rating });
       setUserRating(rating);
       showSuccessToast(`Rated ${rating} stars!`);
-      // Note: Average rating will update on next page load
+
+      // ✅ Refresh book data to get updated averageRating and totalRatings
+      if (onRatingUpdate) {
+        await onRatingUpdate();
+      }
     } catch (error) {
       handleApiError(error);
     }

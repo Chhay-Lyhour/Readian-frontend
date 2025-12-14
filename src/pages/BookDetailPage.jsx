@@ -15,22 +15,33 @@ const BookDetailPage = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchBook = async () => {
-      try {
-        setLoading(true);
-        const response = await bookApi.getBookById(id);
-        setBook(response.data);
-        console.log('Fetched book:', response.data);
-      } catch (err) {
-        setError(err.response?.data?.message || 'Failed to load book');
-        handleApiError(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchBook();
   }, [id]);
+
+  const fetchBook = async () => {
+    try {
+      setLoading(true);
+      const response = await bookApi.getBookById(id);
+      setBook(response.data);
+      console.log('Fetched book:', response.data);
+    } catch (err) {
+      setError(err.response?.data?.message || 'Failed to load book');
+      handleApiError(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Refresh book data (for rating updates)
+  const refreshBook = async () => {
+    try {
+      const response = await bookApi.getBookById(id);
+      setBook(response.data);
+      console.log('✅ Book data refreshed after rating');
+    } catch (err) {
+      console.error('Failed to refresh book data:', err);
+    }
+  };
 
   if (loading) {
     return (
@@ -54,7 +65,7 @@ const BookDetailPage = () => {
     <div className='bg-[#1A5632] min-h-screen py-8 px-4'>
       <div className='flex flex-col gap-8 max-w-7xl mx-auto items-center'>
         {/* Book Detail - Includes all book info, stats, rating, and download */}
-        <BookDetail book={book} signedIn={isAuthenticated} currentUser={user}/>
+        <BookDetail book={book} signedIn={isAuthenticated} currentUser={user} onRatingUpdate={refreshBook} />
 
 
         {/* Author Card */}

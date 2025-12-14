@@ -4,7 +4,7 @@ import { ratingApi } from '../../services/api';
 import { useAuth } from '../../services/auth/authContext';
 import { handleApiError, showSuccessToast } from '../../services/utils/errorHandler';
 
-const StarRating = ({ bookId, averageRating = 0, totalRatings = 0 }) => {
+const StarRating = ({ bookId, averageRating = 0, totalRatings = 0, onRatingUpdate }) => {
   const { user, isAuthenticated } = useAuth();
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
@@ -55,7 +55,10 @@ const StarRating = ({ bookId, averageRating = 0, totalRatings = 0 }) => {
       setRating(value);
       showSuccessToast('Rating submitted successfully!');
 
-      // No page reload - rating updates in place
+      // ✅ Refresh book data to get updated averageRating and totalRatings
+      if (onRatingUpdate) {
+        await onRatingUpdate();
+      }
     } catch (error) {
       console.error('❌ Rating error:', error); // Debug log
       handleApiError(error);

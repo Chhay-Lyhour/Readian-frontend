@@ -266,6 +266,24 @@ return newUser;
 });
 };
 
+// Refresh user data from server (for subscription updates, etc.)
+const refreshUser = async () => {
+try {
+const accessToken = localStorage.getItem("accessToken");
+if (accessToken) {
+const response = await authApi.getCurrentUser();
+const userData = response.data.user || response.data;
+localStorage.setItem("user", JSON.stringify(userData));
+setUser(userData);
+console.log('✅ User data refreshed');
+return userData;
+}
+} catch (error) {
+console.error('Failed to refresh user data:', error);
+throw error;
+}
+};
+
 const value = {
 user,
 loading,
@@ -275,6 +293,7 @@ login,
 logout,
 updateUser,
 loadUser,
+refreshUser,
 };
 
 // Show loading screen while checking authentication
