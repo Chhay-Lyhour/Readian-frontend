@@ -79,18 +79,18 @@ const BookEditSidebar = ({ onPublish, onDelete, isPublished, isNew }) => {
           Back to Dashboard
         </Link>
 
-        {/* Publish button - only show if draft */}
-        {onPublish && !isPublished && (
-          <button
-            onClick={() => {
-              onPublish();
-              setIsOpen(false);
-            }}
-            className='self-center font-semibold bg-[#00A819] text-white w-full py-2 rounded-[15px] shadow-md hover:bg-[#1A5632] transition-all duration-300 flex items-center justify-center gap-2'
-          >
-            <Megaphone size={18} /> Publish Book
-          </button>
-        )}
+{/*          */}{/* Publish button - only show if draft */}
+{/*         {onPublish && !isPublished && ( */}
+{/*           <button */}
+{/*             onClick={() => { */}
+{/*               onPublish(); */}
+{/*               setIsOpen(false); */}
+{/*             }} */}
+{/*             className='self-center font-semibold bg-[#00A819] text-white w-full py-2 rounded-[15px] shadow-md hover:bg-[#1A5632] transition-all duration-300 flex items-center justify-center gap-2' */}
+{/*           > */}
+{/*             <Megaphone size={18} /> Publish Book */}
+{/*           </button> */}
+{/*         )} */}
 
         {/* Delete button - only show for existing books */}
         {onDelete && !isNew && (

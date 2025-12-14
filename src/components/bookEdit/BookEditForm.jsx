@@ -184,10 +184,10 @@ const BookEditForm = ({
             <input type="radio" value="finished" checked={bookStatus === 'finished'} onChange={(e) => setBookStatus(e.target.value)} className="mr-1" />
             Finished
           </label>
-          <label className="mr-4">
-            <input type="radio" value="hiatus" checked={bookStatus === 'hiatus'} onChange={(e) => setBookStatus(e.target.value)} className="mr-1" />
-            Hiatus
-          </label>
+{/*           <label className="mr-4"> */}
+{/*             <input type="radio" value="hiatus" checked={bookStatus === 'hiatus'} onChange={(e) => setBookStatus(e.target.value)} className="mr-1" /> */}
+{/*             Hiatus */}
+{/*           </label> */}
         </div>
 
         {/* Content Type (Age Restriction) */}
