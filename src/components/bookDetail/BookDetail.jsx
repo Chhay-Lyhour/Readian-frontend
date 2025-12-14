@@ -273,7 +273,7 @@ const BookDetail = ({book,signedIn,currentUser}) => {
             </div>
             <div className='p-3 bg-gray-50 rounded-lg'>
               <p className='text-xs text-gray-600 mb-1'>Published</p>
-              <p className='font-semibold text-[#1A5632] text-sm'>{formatDate(book.publishedDate)}</p>
+              <p className='font-semibold text-[#1A5632] text-sm'>{formatDate(book.publishedDate || book.createdAt)}</p>
             </div>
             <div className='p-3 bg-gray-50 rounded-lg hidden lg:block'>
               <p className='text-xs text-gray-600 mb-1'>Views</p>

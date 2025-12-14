@@ -17,6 +17,7 @@ const BookCard = ({book, linkTo, showLikeButton = false, onLikeChange, disableHo
         id,
         title,
         publishedDate,
+        createdAt,
         image,
         tags,
         genre,
@@ -38,6 +39,9 @@ const BookCard = ({book, linkTo, showLikeButton = false, onLikeChange, disableHo
 
     // Handle author name
     const authorName = book.authorName || author?.name || 'Unknown Author';
+
+    // Handle date - use publishedDate if available, otherwise createdAt
+    const displayDate = publishedDate || createdAt;
 
     // defnie linkTo - use _id or id from backend
     const bookId = _id || id;
@@ -143,7 +147,7 @@ const BookCard = ({book, linkTo, showLikeButton = false, onLikeChange, disableHo
                     </p>
                 </div>
                 <p className='text-[9px] sm:text-[10px] flex-shrink-0 whitespace-nowrap'>
-                    {publishedDate ? new Date(publishedDate).toLocaleDateString() : "N/A"}
+                    {displayDate ? new Date(displayDate).toLocaleDateString() : "N/A"}
                 </p>
             </div>
 
