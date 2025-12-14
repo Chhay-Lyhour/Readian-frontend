@@ -45,13 +45,13 @@ const chapterApi = {
   reorderChapters: async (bookId, chapterOrder) => {
     console.log('🚀 Sending chapter reorder:', {
       url: `/books/${bookId}/chapters/reorder`,
-      method: 'PATCH',
+      method: 'POST',
       chapterOrder: chapterOrder,
       isArray: Array.isArray(chapterOrder),
       format: 'array [2, 1, 3]'
     });
 
-    const response = await axiosInstance.patch(`/books/${bookId}/chapters/reorder`, {
+    const response = await axiosInstance.post(`/books/${bookId}/chapters/reorder`, {
       chapterOrder: chapterOrder // Send as array
     });
 

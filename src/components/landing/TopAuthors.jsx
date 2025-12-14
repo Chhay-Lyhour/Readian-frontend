@@ -49,9 +49,10 @@ const TopAuthors = () => {
       {/* Authors Grid */}
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6'>
         {topAuthors.map((author) => (
-          <div
+          <Link
             key={author.authorId}
-            className='bg-[#C0FFB3] rounded-xl p-6 flex flex-col items-center gap-4 hover:scale-105 transition-all duration-300 shadow-lg'
+            to={`/author/${author.authorId}`}
+            className='bg-[#C0FFB3] rounded-xl p-6 flex flex-col items-center gap-4 hover:scale-105 transition-all duration-300 shadow-lg cursor-pointer'
           >
             {/* Avatar */}
             <div className='w-24 h-24 rounded-full overflow-hidden bg-gray-200'>
@@ -97,15 +98,7 @@ const TopAuthors = () => {
                 </span>
               </div>
             </div>
-
-{/*              */}{/* View Profile Button */}
-{/*             <Link */}
-{/*               to={`/profile/${author.authorId}`} */}
-{/*               className='mt-2 px-4 py-2 bg-[#1A5632] text-[#FFD7DF] rounded-lg hover:bg-[#FFD7DF] hover:text-[#1A5632] transition-all duration-300 text-sm font-semibold' */}
-{/*             > */}
-{/*               View Profile */}
-{/*             </Link> */}
-          </div>
+          </Link>
         ))}
       </div>
     </div>

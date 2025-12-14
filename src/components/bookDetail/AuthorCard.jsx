@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { User, BookOpen, Award } from 'lucide-react';
 
 const AuthorCard = ({ author, bookCount = 0 }) => {
@@ -67,15 +68,13 @@ const AuthorCard = ({ author, bookCount = 0 }) => {
             )}
           </div>
 
-          {/* View Profile Link (future feature) */}
-          {/*
+          {/* View Profile Link */}
           <Link
             to={`/author/${authorData._id}`}
-            className="inline-block mt-4 text-blue-600 hover:text-blue-800 font-semibold text-sm"
+            className="inline-block mt-4 px-4 py-2 bg-[#1A5632] text-[#FFD7DF] rounded-lg hover:bg-[#FFD7DF] hover:text-[#1A5632] transition-all duration-300 text-sm font-semibold"
           >
             View Author Profile →
           </Link>
-          */}
         </div>
       </div>
     </div>

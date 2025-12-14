@@ -111,7 +111,24 @@ const BookEditChapters = ({ bookId }) => {
     try {
       setLoading(true);
       const response = await bookApi.getBookChapters(bookId);
-      setChapters(response.data.chapters || []);
+      const chaptersData = response.data.chapters || [];
+
+      // Ensure each chapter has an id field and sort by chapterNumber
+      const processedChapters = chaptersData
+        .map((chapter, index) => ({
+          ...chapter,
+          id: chapter._id || chapter.id,
+          chapterNumber: chapter.chapterNumber || index + 1
+        }))
+        .sort((a, b) => a.chapterNumber - b.chapterNumber);
+
+      console.log('📚 Loaded chapters:', processedChapters.map(ch => ({
+        id: ch.id,
+        number: ch.chapterNumber,
+        title: ch.title
+      })));
+
+      setChapters(processedChapters);
     } catch (error) {
       handleApiError(error);
     } finally {
@@ -144,29 +161,52 @@ const BookEditChapters = ({ bookId }) => {
   const handleDragEnd = async (event) => {
     const { active, over } = event;
 
+    if (!over) {
+      console.log('❌ Invalid drop target');
+      return;
+    }
+
     if (active.id !== over.id) {
       const oldIndex = chapters.findIndex((ch) => (ch.id || ch._id) === active.id);
       const newIndex = chapters.findIndex((ch) => (ch.id || ch._id) === over.id);
 
+      if (oldIndex === -1 || newIndex === -1) {
+        console.error('❌ Invalid chapter indices:', { oldIndex, newIndex });
+        handleApiError({ message: 'Failed to reorder: Invalid chapter position' });
+        return;
+      }
+
+      // Update UI immediately for better UX
       const newChapters = arrayMove(chapters, oldIndex, newIndex);
       setChapters(newChapters);
 
-      // Create chapter order ARRAY: [2, 1, 3, 5, 4]
-      // This represents the new chapter order by chapter number
-      const chapterOrder = newChapters.map((chapter, index) =>
-        chapter.chapterNumber || (index + 1)
+      // Create chapter order array: [chapterNumber1, chapterNumber2, ...]
+      // This represents the new order by chapter numbers
+      const chapterOrder = newChapters.map((chapter) =>
+        chapter.chapterNumber || chapter._id || chapter.id
       );
 
-      console.log('📋 Reordering chapters (array format):', chapterOrder);
+      console.log('📋 Reordering chapters:', {
+        oldIndex,
+        newIndex,
+        chapterOrder,
+        chaptersData: newChapters.map(ch => ({
+          id: ch._id || ch.id,
+          number: ch.chapterNumber,
+          title: ch.title
+        }))
+      });
 
       try {
         await chapterApi.reorderChapters(bookId, chapterOrder);
         showSuccessToast('Chapters reordered successfully!');
-        fetchChapters();
+        // Refresh to get updated chapter numbers from backend
+        await fetchChapters();
       } catch (error) {
         console.error('❌ Reorder error:', error);
         handleApiError(error);
-        fetchChapters();
+        // Revert to original order on error
+        await fetchChapters();
       }
     }
   };

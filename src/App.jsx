@@ -36,6 +36,7 @@ import SettingsPage from './pages/SettingsPage';
 import NotFoundPage from './pages/NotFoundPage';
 import DownloadHistoryPage from './pages/DownloadHistoryPage';
 import BecomeAuthorPage from './pages/BecomeAuthorPage';
+import AuthorProfilePage from './pages/AuthorProfilePage';
 
 function App() {
 
@@ -68,6 +69,7 @@ function App() {
         <Route path="/instruction" element={<InstructionPage />} />
         <Route path="/browse" element={<BrowsePage />} />
         <Route path="/book/:id" element={<BookDetailPage />}/>
+        <Route path="/author/:authorId" element={<AuthorProfilePage />} />
         <Route path="/book/:bookId/chapter/:chapterNumber" element={<ReadChapterPage />} />
         <Route path="/edit/:bookId" element={
           <ProtectedRoute requiredRole="author">

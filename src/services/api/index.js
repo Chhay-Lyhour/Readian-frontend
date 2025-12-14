@@ -9,4 +9,5 @@ export { default as downloadApi } from './downloadApi';
 export { default as analyticsApi } from './analyticsApi';
 export { default as adminApi } from './adminApi';
 export { default as healthApi } from './healthApi';
+export { default as authorApi } from './authorApi';
 
