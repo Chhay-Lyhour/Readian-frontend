@@ -28,9 +28,9 @@ import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 import AdminDashboardPage from './pages/AdminDashboardPage';
 import SubscriptionManagementPage from './pages/SubscriptionManagementPage';
-import Overview from './components/admin/Overview';
 import AllWorks from './components/admin/AllWorks';
 import AllUsers from './components/admin/AllUsers';
+import AdminAnalytics from './components/admin/AdminAnalytics';
 import AnalyticsPage from './pages/AnalyticsPage';
 import SettingsPage from './pages/SettingsPage';
 import NotFoundPage from './pages/NotFoundPage';
@@ -101,8 +101,8 @@ function App() {
             <AdminDashboardPage />
           </ProtectedRoute>
         } >
-          <Route index element={<Navigate to="overview" replace />} />
-          <Route path="overview" element={<Overview />} />
+          <Route index element={<Navigate to="adminanalytics" replace />} />
+          <Route path="adminanalytics" element={<AdminAnalytics />} />
           <Route path="allworks" element={<AllWorks />} />
           <Route path="allusers" element={<AllUsers />} />
           <Route path="works" element={<MyWorks />} />

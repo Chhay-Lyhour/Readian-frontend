@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Menu, X, BookOpen, FileText, Heart, BarChart3, Library, Users } from 'lucide-react';
+import { Menu, X, BookOpen, FileText, Heart, BarChart3, Library, Users, TrendingUp } from 'lucide-react';
 
 function AdminSidebar({ currentUser }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,7 +22,7 @@ function AdminSidebar({ currentUser }) {
   ];
 
   const adminLinks = [
-    { to: 'overview', label: 'Overview', icon: BarChart3 },
+    { to: 'adminanalytics', label: 'Admin Analytics', icon: TrendingUp },
     { to: 'allworks', label: 'All Works', icon: Library },
     { to: 'allusers', label: 'All Users', icon: Users },
   ];

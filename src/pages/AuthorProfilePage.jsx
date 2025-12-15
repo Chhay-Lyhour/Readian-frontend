@@ -65,11 +65,11 @@ const AuthorProfilePage = () => {
       <div className="relative bg-gradient-to-r from-[#1A5632] to-[#00A819] text-white">
         {author.coverImage && (
           <div className="absolute inset-0 opacity-20">
-            <img
-              src={author.coverImage}
-              alt="Cover"
-              className="w-full h-full object-cover"
-            />
+{/*             <img */}
+{/*               src={author.coverImage} */}
+{/*               alt="Cover" */}
+{/*               className="w-full h-full object-cover" */}
+{/*             /> */}
           </div>
         )}
 
