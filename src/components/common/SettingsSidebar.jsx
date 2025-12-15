@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { User, Edit, CreditCard, Download } from 'lucide-react';
+import { User, Edit, CreditCard, Download, Heart } from 'lucide-react';
 
 function SettingsSidebar() {
   const [isOpen, setIsOpen] = useState(false);
 
   const menuItems = [
     { to: '/profile', label: 'My Account', icon: User },
-    { to: '/become-author', label: 'Become Author', icon: Edit },
+    { to: '/liked', label: 'My Liked', icon: Heart },
     { to: '/subscription/manage', label: 'Manage Subscription', icon: CreditCard },
     { to: '/downloads', label: 'Downloads History', icon: Download },
+    { to: '/become-author', label: 'Become Author', icon: Edit },
   ];
 
   const baseLinkStyle = "flex items-center gap-3 text-[20px] md:text-[22px] lg:text-[24px] font-semibold w-full h-[50px] px-4 transition-colors";

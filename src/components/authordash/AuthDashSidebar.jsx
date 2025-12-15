@@ -15,7 +15,6 @@ const AuthDashSidebar = ({currentUser}) => {
   const navLinks = [
     { to: 'works', label: 'My Works', icon: BookOpen },
     { to: 'drafts', label: 'My Drafts', icon: FileText },
-    { to: 'liked', label: 'My Liked', icon: Heart },
     { to: 'analytics', label: 'Analytics', icon: BarChart3 },
   ];
 

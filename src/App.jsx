@@ -37,6 +37,7 @@ import NotFoundPage from './pages/NotFoundPage';
 import DownloadHistoryPage from './pages/DownloadHistoryPage';
 import BecomeAuthorPage from './pages/BecomeAuthorPage';
 import AuthorProfilePage from './pages/AuthorProfilePage';
+import MyLikedPage from './pages/MyLikedPage';
 
 function App() {
 
@@ -114,6 +115,11 @@ function App() {
         <Route path="/profile" element={
           <ProtectedRoute>
             <ProfilePage />
+          </ProtectedRoute>
+        } />
+        <Route path="/liked" element={
+          <ProtectedRoute>
+            <MyLikedPage />
           </ProtectedRoute>
         } />
 {/*         <Route path="/settings" element={ */}
