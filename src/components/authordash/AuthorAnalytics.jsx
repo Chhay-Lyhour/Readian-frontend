@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { userApi, analyticsApi } from '../../services/api';
 import { handleApiError } from '../../services/utils/errorHandler';
 import { Link } from 'react-router-dom';
+import { Eye, Heart, Star, Download } from 'lucide-react';
 
 function AuthorAnalytics() {
   const [analytics, setAnalytics] = useState(null);
@@ -100,7 +101,7 @@ function AuthorAnalytics() {
       {topBooks && topBooks.length > 0 && (
         <div className="bg-white p-6 rounded-lg shadow-md border-2 border-green-700">
           <h2 className="text-2xl font-bold mb-4 text-[#00A819]">Your Top Books</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
             {topBooks.map((book) => (
               <Link
                 key={book._id}
@@ -108,12 +109,12 @@ function AuthorAnalytics() {
                 className="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300"
               >
                 {/* Book Cover */}
-                <div className="aspect-[2/3] overflow-hidden bg-gray-200">
+                <div className="aspect-[3/4] overflow-hidden bg-gray-200">
                   {book.image ? (
                     <img
                       src={book.image}
                       alt={book.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-gray-400">
@@ -123,20 +124,27 @@ function AuthorAnalytics() {
                 </div>
 
                 {/* Book Info Overlay */}
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-4 text-white">
-                  <h3 className="font-bold text-lg mb-2 line-clamp-2">{book.title}</h3>
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-3 text-white">
+                  <h3 className="font-bold text-sm mb-1 line-clamp-2">{book.title}</h3>
                   <div className="text-xs space-y-1">
                     <div className="flex items-center justify-between">
-                      <span>👁️ {book.viewCount} views</span>
-                      <span>❤️ {book.likes} likes</span>
+                      <span className="flex items-center gap-1">
+                        <Eye size={12} /> {book.viewCount}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Heart size={12} /> {book.likes}
+                      </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span>
+                      <span className="flex items-center gap-1">
+                        <Star size={12} />
                         {book.averageRating > 0
-                          ? `⭐ ${book.averageRating.toFixed(1)} (${book.totalRatings})`
-                          : '⭐ No ratings'}
+                          ? book.averageRating.toFixed(1)
+                          : 'N/A'}
                       </span>
-                      <span>📥 {book.downloadCount}</span>
+                      <span className="flex items-center gap-1">
+                        <Download size={12} /> {book.downloadCount}
+                      </span>
                     </div>
                   </div>
                 </div>
