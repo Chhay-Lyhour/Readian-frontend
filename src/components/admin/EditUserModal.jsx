@@ -11,7 +11,8 @@ const EditUserModal = ({ user, onClose, onSuccess }) => {
     plan: user.plan || user.subscriptionPlan || 'free',
     subscriptionStatus: user.subscriptionStatus || 'inactive',
     age: user.age || '',
-    subscriptionDuration: user.subscriptionDuration || ''
+    subscriptionDuration: user.subscriptionDuration || '',
+    bio: user.bio || ''
   });
   const [loading, setLoading] = useState(false);
 
@@ -22,7 +23,21 @@ const EditUserModal = ({ user, onClose, onSuccess }) => {
       setLoading(true);
       // Use id or _id, whichever is available
       const userId = user.id || user._id;
-      await adminApi.updateUser(userId, formData);
+
+      // Prepare data with proper types
+      const dataToSend = {
+        name: formData.name,
+        email: formData.email,
+        role: formData.role,
+        plan: formData.plan,
+        subscriptionStatus: formData.subscriptionStatus,
+        age: formData.age ? parseInt(formData.age) : null,
+        subscriptionDuration: formData.subscriptionDuration ? parseInt(formData.subscriptionDuration) : null,
+        bio: formData.bio
+      };
+
+      console.log('Sending update data:', dataToSend);
+      await adminApi.updateUser(userId, dataToSend);
       showSuccessToast('User updated successfully!');
       onSuccess();
       onClose();
@@ -154,6 +169,20 @@ const EditUserModal = ({ user, onClose, onSuccess }) => {
                 placeholder="e.g., 30, 365"
               />
               <p className="text-xs text-gray-500 mt-1">Leave empty for no duration</p>
+            </div>
+
+            {/* Bio */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Bio
+              </label>
+              <textarea
+                value={formData.bio}
+                onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
+                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
+                rows="3"
+                placeholder="User bio..."
+              />
             </div>
 
             {/* Buttons */}
