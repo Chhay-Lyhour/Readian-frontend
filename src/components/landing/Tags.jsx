@@ -14,6 +14,11 @@ const Tags = () => {
     ]
     const navigate = useNavigate();
 
+    const handleTagClick = (tagName) => {
+        // Navigate to browse page with tag in state
+        navigate('/browse', { state: { filterTag: tagName } });
+    };
+
   return (
     <div className='min-h-[400px] py-12 bg-gradient-to-b from-[#FFFDEE] to-[#C0FFB3] flex flex-col items-center justify-center gap-8 px-4'>
         {/* text */}
@@ -27,7 +32,7 @@ const Tags = () => {
                 <button
                   key={tag.id}
                   className='w-[140px] sm:w-[200px] md:w-[260px] h-[50px] sm:h-[60px] rounded-[10px] bg-[#1A5632] flex items-center justify-center hover:scale-110 transition-all duration-300'
-                  onClick={() => navigate(`/browse?tag=${encodeURIComponent(tag.name)}`)}
+                  onClick={() => handleTagClick(tag.name)}
                 >
                     <h1 className='geist text-lg sm:text-xl md:text-[28px] font-semibold text-[#FFD7DF] text-center'>
                         {tag.name}
