@@ -7,9 +7,11 @@ const EditUserModal = ({ user, onClose, onSuccess }) => {
   const [formData, setFormData] = useState({
     name: user.name || '',
     email: user.email || '',
-    role: user.role || 'BUYER',
-    plan: user.plan || 'free',
-    subscriptionStatus: user.subscriptionStatus || 'inactive'
+    role: user.role || 'READER',
+    plan: user.plan || user.subscriptionPlan || 'free',
+    subscriptionStatus: user.subscriptionStatus || 'inactive',
+    age: user.age || '',
+    subscriptionDuration: user.subscriptionDuration || ''
   });
   const [loading, setLoading] = useState(false);
 
@@ -18,7 +20,9 @@ const EditUserModal = ({ user, onClose, onSuccess }) => {
 
     try {
       setLoading(true);
-      await adminApi.updateUser(user._id, formData);
+      // Use id or _id, whichever is available
+      const userId = user.id || user._id;
+      await adminApi.updateUser(userId, formData);
       showSuccessToast('User updated successfully!');
       onSuccess();
       onClose();
@@ -30,7 +34,7 @@ const EditUserModal = ({ user, onClose, onSuccess }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <div className="p-6">
           {/* Header */}
@@ -73,6 +77,21 @@ const EditUserModal = ({ user, onClose, onSuccess }) => {
               />
             </div>
 
+            {/* Age */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Age
+              </label>
+              <input
+                type="number"
+                value={formData.age}
+                onChange={(e) => setFormData({ ...formData, age: e.target.value })}
+                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
+                min="1"
+                max="120"
+              />
+            </div>
+
             {/* Role */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -83,7 +102,7 @@ const EditUserModal = ({ user, onClose, onSuccess }) => {
                 onChange={(e) => setFormData({ ...formData, role: e.target.value })}
                 className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
               >
-                <option value="BUYER">Buyer</option>
+                <option value="READER">Reader</option>
                 <option value="AUTHOR">Author</option>
                 <option value="ADMIN">Admin</option>
               </select>
@@ -119,6 +138,22 @@ const EditUserModal = ({ user, onClose, onSuccess }) => {
                 <option value="active">Active</option>
                 <option value="cancelled">Cancelled</option>
               </select>
+            </div>
+
+            {/* Subscription Duration */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Subscription Duration (days)
+              </label>
+              <input
+                type="number"
+                value={formData.subscriptionDuration}
+                onChange={(e) => setFormData({ ...formData, subscriptionDuration: e.target.value })}
+                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
+                min="0"
+                placeholder="e.g., 30, 365"
+              />
+              <p className="text-xs text-gray-500 mt-1">Leave empty for no duration</p>
             </div>
 
             {/* Buttons */}

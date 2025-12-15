@@ -24,7 +24,14 @@ function AllUsers() {
     try {
       setLoading(true);
       const response = await adminApi.getAllUsers();
-      setUsers(response.data.users || []);
+      // Transform backend data to match frontend expectations
+      const transformedUsers = (response.data.data || response.data.users || []).map(user => ({
+        ...user,
+        id: user._id || user.id, // Map _id to id
+        subscriptionPlan: user.plan, // Map plan to subscriptionPlan
+        publishedBooksCount: user.publishedBooksCount || 0
+      }));
+      setUsers(transformedUsers);
     } catch (error) {
       handleApiError(error);
     } finally {
@@ -104,71 +111,105 @@ function AllUsers() {
         />
       </div>
 
-      {/* User Table - Responsive with horizontal scroll */}
-      <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md border-2 border-green-700 overflow-x-auto">
-        <table className="w-full text-left table-auto min-w-[800px]">
-          <thead>
-            <tr className="border-b-2 border-gray-300">
-              <th className="p-2 text-sm">User ID</th>
-              <th className="p-2 text-sm">Username</th>
-              <th className="p-2 text-sm">Email</th>
-              <th className="p-2 text-sm">Join Date</th>
-              <th className="p-2 text-sm">Subscription</th>
-              <th className="p-2 text-sm">Plan</th>
-              <th className="p-2 text-sm">Works</th>
-              <th className="p-2 text-center text-sm">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {displayUsers.map((user) => (
-              <tr key={user.id} className="border-b border-gray-200 hover:bg-gray-50">
-                <td className="p-2 text-xs sm:text-sm">{user.id?.toString().slice(0, 8)}...</td>
-                <td className="p-2 text-sm font-medium">{user.name}</td>
-                <td className="p-2 text-xs sm:text-sm">{user.email}</td>
-                <td className="p-2 text-xs sm:text-sm">
-                  {new Date(user.createdAt).toLocaleDateString()}
-                </td>
-                <td className="p-2">
-                  {user.subscriptionStatus === 'active' ? (
-                    <span className="text-xs sm:text-sm font-semibold text-green-600 capitalize">Active</span>
-                  ) : (
-                    <span className="text-xs sm:text-sm text-gray-500">Inactive</span>
-                  )}
-                </td>
-                <td className="p-2">
-                  {user.subscriptionPlan ? (
-                    <span className="text-xs sm:text-sm font-semibold text-blue-600 capitalize">
-                      {user.subscriptionPlan}
-                    </span>
-                  ) : (
-                    <span className="text-xs sm:text-sm text-gray-400">Free</span>
-                  )}
-                </td>
-                <td className="p-2 text-sm font-semibold">{user.publishedBooksCount || 0}</td>
-                <td className="p-2 text-center">
-                  <div className="flex gap-2 justify-center">
-                    <button
-                      onClick={() => setUserToEdit(user)}
-                      className="bg-blue-500 text-white text-sm py-1 px-3 rounded hover:bg-blue-600 transition-colors flex items-center gap-1"
-                    >
-                      <Edit className="w-4 h-4" />
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => handleRemoveClick(user)}
-                      className="bg-red-500 text-white text-sm py-1 px-3 rounded hover:bg-red-600 transition-colors flex items-center gap-1"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                      Remove
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      {/* User Cards - Detailed View */}
+      <div className="grid grid-cols-1 2xl:grid-cols-2 gap-6 2xl:gap-2 w-full place-items-center space-y-4">
+        {displayUsers.map((user) => (
+          <div key={user.id} className="bg-white p-6 rounded-lg shadow-md border-2 border-green-700">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {/* User ID */}
+              <div>
+                <p className="text-xs font-semibold text-gray-500 uppercase mb-1">User ID</p>
+                <p className="text-sm font-mono">{user.id}</p>
+              </div>
+
+              {/* Username */}
+              <div>
+                <p className="text-xs font-semibold text-gray-500 uppercase mb-1">Username</p>
+                <p className="text-sm font-semibold">{user.name}</p>
+              </div>
+
+              {/* Email */}
+              <div>
+                <p className="text-xs font-semibold text-gray-500 uppercase mb-1">Email</p>
+                <p className="text-sm">{user.email}</p>
+              </div>
+
+              {/* Age */}
+              <div>
+                <p className="text-xs font-semibold text-gray-500 uppercase mb-1">Age</p>
+                <p className="text-sm">{user.age || 'N/A'}</p>
+              </div>
+
+              {/* Join Date */}
+              <div>
+                <p className="text-xs font-semibold text-gray-500 uppercase mb-1">Join Date</p>
+                <p className="text-sm">{new Date(user.createdAt).toLocaleDateString()}</p>
+              </div>
+
+              {/* Role */}
+              <div>
+                <p className="text-xs font-semibold text-gray-500 uppercase mb-1">Role</p>
+                <p className="text-sm font-semibold text-purple-600 capitalize">{user.role}</p>
+              </div>
+
+              {/* Subscription Plan */}
+              <div>
+                <p className="text-xs font-semibold text-gray-500 uppercase mb-1">Subscription Plan</p>
+                <p className="text-sm font-semibold text-blue-600 capitalize">
+                  {user.subscriptionPlan || 'Free'}
+                </p>
+              </div>
+
+              {/* Subscription Status */}
+              <div>
+                <p className="text-xs font-semibold text-gray-500 uppercase mb-1">Subscription Status</p>
+                {user.subscriptionStatus === 'active' ? (
+                  <span className="text-sm font-semibold text-green-600 capitalize">Active</span>
+                ) : (
+                  <span className="text-sm text-gray-500 capitalize">{user.subscriptionStatus || 'Inactive'}</span>
+                )}
+              </div>
+
+              {/* Subscription Duration */}
+              <div>
+                <p className="text-xs font-semibold text-gray-500 uppercase mb-1">Subscription Duration (days)</p>
+                <p className="text-sm">{user.subscriptionDuration || 'N/A'}</p>
+              </div>
+
+{/*                */}{/* Works */}
+{/*               <div> */}
+{/*                 <p className="text-xs font-semibold text-gray-500 uppercase mb-1">Published Works</p> */}
+{/*                 <p className="text-sm font-semibold">{user.publishedBooksCount || 0}</p> */}
+{/*               </div> */}
+            </div>
+
+            {/* Action Buttons */}
+            <div className="mt-6 pt-4 border-t border-gray-200">
+              <p className="text-xs font-semibold text-gray-500 uppercase mb-3">Actions</p>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setUserToEdit(user)}
+                  className="bg-blue-500 text-white text-sm py-2 px-4 rounded hover:bg-blue-600 transition-colors flex items-center gap-2"
+                >
+                  <Edit className="w-4 h-4" />
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleRemoveClick(user)}
+                  className="bg-red-500 text-white text-sm py-2 px-4 rounded hover:bg-red-600 transition-colors flex items-center gap-2"
+                >
+                  <Trash2 className="w-4 h-4" />
+                  Remove
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+
         {displayUsers.length === 0 && (
-          <p className="text-center p-4">No users match your criteria.</p>
+          <div className="bg-white p-8 rounded-lg shadow-md border-2 border-gray-300 text-center">
+            <p className="text-gray-500">No users match your criteria.</p>
+          </div>
         )}
       </div>
 
