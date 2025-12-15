@@ -232,8 +232,11 @@ const BookEditChapters = ({ bookId }) => {
       </div>
 
       {chapters.length === 0 ? (
-        <div className='text-center py-8 text-gray-500'>
-          <p className='text-lg mb-4'>No chapters yet</p>
+        <div className='text-center py-8'>
+          <div className='mb-4 p-4 bg-yellow-50 border-l-4 border-yellow-500 rounded'>
+            <p className='text-yellow-800 font-semibold mb-1'>⚠️ At least one chapter is required</p>
+            <p className='text-yellow-700 text-sm'>You must create at least one chapter before saving your book.</p>
+          </div>
           <button
             onClick={handleAddChapter}
             className='px-6 py-3 bg-[#1A5632] text-white rounded-lg hover:bg-[#00A819] transition-all font-semibold'

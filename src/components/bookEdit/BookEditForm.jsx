@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Trash2 } from 'lucide-react';
+import { showErrorToast, showWarningToast } from '../../services/utils/errorHandler';
 
 const BookEditForm = ({
   title, setTitle,
@@ -21,6 +22,7 @@ const BookEditForm = ({
 }) => {
   const [tagInput, setTagInput] = useState('');
   const [genreInput, setGenreInput] = useState('');
+  const [errors, setErrors] = useState({});
 
   // Check if user is underage (less than 18)
   const isUnderage = user?.age !== null && user?.age !== undefined && user?.age < 18;
@@ -38,6 +40,106 @@ const BookEditForm = ({
       setContentType('kids');
     }
   }, [isUnderage, contentType, setContentType]);
+
+  // Validate form according to backend schema
+  const validateForm = () => {
+    const newErrors = {};
+
+    // Title validation (required, min 1 character)
+    if (!title || title.trim().length === 0) {
+      newErrors.title = '📝 Title is required';
+      showErrorToast('📝 Title is required');
+      return false;
+    }
+
+    // Description validation (min 10, max 1000 characters if provided)
+    if (description && description.trim().length > 0) {
+      if (description.trim().length < 10) {
+        newErrors.description = '📄 Description must be at least 10 characters';
+        showErrorToast('📄 Description must be at least 10 characters');
+        return false;
+      }
+      if (description.trim().length > 1000) {
+        newErrors.description = '📄 Description cannot exceed 1000 characters';
+        showErrorToast('📄 Description cannot exceed 1000 characters');
+        return false;
+      }
+    }
+
+    // Content type validation (must be kids or adult)
+    if (!contentType || !['kids', 'adult'].includes(contentType)) {
+      newErrors.contentType = '🔞 Content type must be either Kids Friendly or Adult (18+)';
+      showErrorToast('🔞 Content type must be either Kids Friendly or Adult (18+)');
+      return false;
+    }
+
+    // Age restriction validation
+    if (isUnderage && contentType === 'adult') {
+      newErrors.contentType = '⚠️ Authors under 18 cannot create Adult (18+) content';
+      showErrorToast('⚠️ Authors under 18 cannot create Adult (18+) content');
+      return false;
+    }
+
+    // Book status validation
+    if (!bookStatus) {
+      newErrors.bookStatus = '📖 Please select a book status (Ongoing or Finished)';
+      showWarningToast('📖 Please select a book status (Ongoing or Finished)');
+      return false;
+    }
+
+    // Tags validation (optional but if provided, should be valid)
+    if (tags && tags.length > 0) {
+      const invalidTags = tags.filter(tag => !tag || tag.trim().length === 0);
+      if (invalidTags.length > 0) {
+        newErrors.tags = '🏷️ All tags must have valid content';
+        showErrorToast('🏷️ All tags must have valid content');
+        return false;
+      }
+    }
+
+    // Genre validation (optional but if provided, should be valid)
+    if (genre && genre.length > 0) {
+      const invalidGenres = genre.filter(g => !g || g.trim().length === 0);
+      if (invalidGenres.length > 0) {
+        newErrors.genre = '📚 All genres must have valid content';
+        showErrorToast('📚 All genres must have valid content');
+        return false;
+      }
+    }
+
+    // Premium status validation (must be boolean)
+    if (premiumStatus !== true && premiumStatus !== false) {
+      newErrors.premiumStatus = '💎 Premium status must be selected';
+      showWarningToast('💎 Premium status must be selected');
+      return false;
+    }
+
+    // Publication status validation
+    if (!status || !['draft', 'published'].includes(status)) {
+      newErrors.status = '📤 Publication status must be either Draft or Published';
+      showErrorToast('📤 Publication status must be either Draft or Published');
+      return false;
+    }
+
+    setErrors({});
+    return true;
+  };
+
+  // Enhanced save handler with validation
+  const handleSaveWithValidation = (e) => {
+    e.preventDefault();
+
+    // Clear previous errors
+    setErrors({});
+
+    // Validate form
+    if (!validateForm()) {
+      return; // Stop if validation fails
+    }
+
+    // If validation passes, call the original onSave
+    onSave(e);
+  };
 
   const handleAddTag = () => {
     const newTag = tagInput.trim().toLowerCase();
@@ -118,7 +220,7 @@ const BookEditForm = ({
       {/* Story Details Form */}
       <form
         className="w-full lg:w-[640px] bg-[#C0FFB3] p-4 sm:p-6 rounded-[20px] border-b-2 border-r-2 border-black"
-        onSubmit={onSave}
+        onSubmit={handleSaveWithValidation}
       >
         <h2 className="geist text-xl sm:text-2xl font-bold mb-4">Story Details</h2>
 
@@ -127,18 +229,35 @@ const BookEditForm = ({
         <input
           type="text"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="w-full p-2 border rounded-[10px] mb-4 bg-white"
+          onChange={(e) => {
+            setTitle(e.target.value);
+            if (errors.title) setErrors({...errors, title: null});
+          }}
+          className={`w-full p-2 border rounded-[10px] mb-4 bg-white ${errors.title ? 'border-red-500 border-2' : ''}`}
           required
         />
+        {errors.title && (
+          <p className="text-red-600 text-sm -mt-3 mb-3">⚠️ {errors.title}</p>
+        )}
 
         {/* Description */}
         <label className="geist block font-semibold mb-1">Description</label>
         <textarea
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          className="w-full p-2 border rounded-[10px] mb-4 h-32 bg-white"
+          onChange={(e) => {
+            setDescription(e.target.value);
+            if (errors.description) setErrors({...errors, description: null});
+          }}
+          className={`w-full p-2 border rounded-[10px] mb-2 h-32 bg-white ${errors.description ? 'border-red-500 border-2' : ''}`}
         />
+        {description && (
+          <p className={`text-xs mb-2 ${description.length > 1000 ? 'text-red-600' : 'text-gray-600'}`}>
+            {description.length}/1000 characters {description.length < 10 && '(minimum 10)'}
+          </p>
+        )}
+        {errors.description && (
+          <p className="text-red-600 text-sm -mt-1 mb-3">⚠️ {errors.description}</p>
+        )}
 
         {/* Tags */}
         <label className="geist block font-semibold mb-1">Tags</label>
@@ -146,16 +265,19 @@ const BookEditForm = ({
           <input
             type="text"
             value={tagInput}
-            onChange={(e) => setTagInput(e.target.value)}
+            onChange={(e) => {
+              setTagInput(e.target.value);
+              if (errors.tags) setErrors({...errors, tags: null});
+            }}
             onKeyPress={(e) => handleKeyPress(e, handleAddTag)}
-            className="w-full p-2 border rounded-[10px] bg-white"
+            className={`w-full p-2 border rounded-[10px] bg-white ${errors.tags ? 'border-red-500 border-2' : ''}`}
             placeholder="Add a tag and press Enter"
           />
           <button type="button" onClick={handleAddTag} className="bg-gray-700 text-[#FFD7DF] px-4 rounded-[10px]">
             Add
           </button>
         </div>
-        <div className="flex flex-wrap gap-2 mb-4">
+        <div className="flex flex-wrap gap-2 mb-2">
           {tags.map((tag) => (
             <span key={tag} className="bg-white px-2 py-1 rounded-full text-sm border-2 border-white hover:border-black">
               {tag}
@@ -163,6 +285,9 @@ const BookEditForm = ({
             </span>
           ))}
         </div>
+        {errors.tags && (
+          <p className="text-red-600 text-sm mb-3">⚠️ {errors.tags}</p>
+        )}
 
         {/* Genre */}
         <label className="geist block font-semibold mb-1">Genre</label>
@@ -170,16 +295,19 @@ const BookEditForm = ({
           <input
             type="text"
             value={genreInput}
-            onChange={(e) => setGenreInput(e.target.value)}
+            onChange={(e) => {
+              setGenreInput(e.target.value);
+              if (errors.genre) setErrors({...errors, genre: null});
+            }}
             onKeyPress={(e) => handleKeyPress(e, handleAddGenre)}
-            className="w-full p-2 border rounded-[10px] bg-white"
+            className={`w-full p-2 border rounded-[10px] bg-white ${errors.genre ? 'border-red-500 border-2' : ''}`}
             placeholder="Add a genre and press Enter"
           />
           <button type="button" onClick={handleAddGenre} className="bg-gray-700 text-[#FFD7DF] px-4 rounded-[10px]">
             Add
           </button>
         </div>
-        <div className="flex flex-wrap gap-2 mb-4">
+        <div className="flex flex-wrap gap-2 mb-2">
           {genre.map((g) => (
             <span key={g} className="bg-white px-2 py-1 rounded-full text-sm border-2 border-white hover:border-black">
               {g}
@@ -187,16 +315,37 @@ const BookEditForm = ({
             </span>
           ))}
         </div>
+        {errors.genre && (
+          <p className="text-red-600 text-sm mb-3">⚠️ {errors.genre}</p>
+        )}
 
         {/* Book Status */}
-        <label className="block font-semibold mb-1">Book Status</label>
-        <div className="mb-4">
+        <label className="block font-semibold mb-1">Book Status *</label>
+        <div className={`mb-2 ${errors.bookStatus ? 'p-2 border-2 border-red-500 rounded-lg' : ''}`}>
           <label className="mr-4">
-            <input type="radio" value="ongoing" checked={bookStatus === 'ongoing'} onChange={(e) => setBookStatus(e.target.value)} className="mr-1" />
+            <input
+              type="radio"
+              value="ongoing"
+              checked={bookStatus === 'ongoing'}
+              onChange={(e) => {
+                setBookStatus(e.target.value);
+                if (errors.bookStatus) setErrors({...errors, bookStatus: null});
+              }}
+              className="mr-1"
+            />
             Ongoing
           </label>
           <label className="mr-4">
-            <input type="radio" value="finished" checked={bookStatus === 'finished'} onChange={(e) => setBookStatus(e.target.value)} className="mr-1" />
+            <input
+              type="radio"
+              value="finished"
+              checked={bookStatus === 'finished'}
+              onChange={(e) => {
+                setBookStatus(e.target.value);
+                if (errors.bookStatus) setErrors({...errors, bookStatus: null});
+              }}
+              className="mr-1"
+            />
             Finished
           </label>
 {/*           <label className="mr-4"> */}
@@ -204,22 +353,28 @@ const BookEditForm = ({
 {/*             Hiatus */}
 {/*           </label> */}
         </div>
+        {errors.bookStatus && (
+          <p className="text-red-600 text-sm mb-3">⚠️ {errors.bookStatus}</p>
+        )}
 
         {/* Content Type (Age Restriction) */}
-        <label className="block font-semibold mb-1">Content Type</label>
+        <label className="block font-semibold mb-1">Content Type *</label>
         {isUnderage && (
           <div className="mb-2 p-3 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 text-sm rounded">
             <p className="font-semibold">⚠️ Age Restriction Notice</p>
             <p>Authors under 18 years old can only create Kids Friendly content. You must be 18 or older to create Adult (18+) content.</p>
           </div>
         )}
-        <div className="mb-4">
+        <div className={`mb-2 ${errors.contentType ? 'p-2 border-2 border-red-500 rounded-lg' : ''}`}>
           <label className="mr-4">
             <input
               type="radio"
               value="kids"
               checked={contentType === 'kids'}
-              onChange={(e) => setContentType(e.target.value)}
+              onChange={(e) => {
+                setContentType(e.target.value);
+                if (errors.contentType) setErrors({...errors, contentType: null});
+              }}
               className="mr-1"
             />
             Kids Friendly
@@ -229,7 +384,10 @@ const BookEditForm = ({
               type="radio"
               value="adult"
               checked={contentType === 'adult'}
-              onChange={(e) => setContentType(e.target.value)}
+              onChange={(e) => {
+                setContentType(e.target.value);
+                if (errors.contentType) setErrors({...errors, contentType: null});
+              }}
               className="mr-1"
               disabled={isUnderage}
             />
@@ -237,6 +395,9 @@ const BookEditForm = ({
             {isUnderage && <span className="text-xs text-red-600 ml-1">(Restricted)</span>}
           </label>
         </div>
+        {errors.contentType && (
+          <p className="text-red-600 text-sm mb-3">⚠️ {errors.contentType}</p>
+        )}
 
         {/* Premium Status */}
         <label className="block font-semibold mb-1 mt-4">Premium Status</label>

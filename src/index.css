@@ -40,5 +40,21 @@ body {
   .slider-thumb::-moz-range-track {
     background: transparent;
   }
+
+  /* Content Guard Modal Animation */
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(100px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
 }
 

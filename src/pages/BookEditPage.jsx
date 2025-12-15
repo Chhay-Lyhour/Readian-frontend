@@ -5,7 +5,7 @@ import BookEditForm from '../components/bookEdit/BookEditForm';
 import BookEditChapters from '../components/bookEdit/BookEditChapters';
 import { useAuth } from '../services/auth/authContext';
 import { bookApi } from '../services/api';
-import { handleApiError, showSuccessToast } from '../services/utils/errorHandler';
+import { handleApiError, showSuccessToast, showErrorToast } from '../services/utils/errorHandler';
 
 const BookEditPage = () => {
   const { bookId } = useParams();
@@ -158,6 +158,33 @@ const BookEditPage = () => {
     try {
       setSaving(true);
 
+      // Chapter validation (only for new books)
+      if (isNew) {
+        // Check if at least one chapter exists
+        if (!chapters || chapters.length === 0) {
+          showErrorToast('📖 At least one chapter is required to create a book');
+          setSaving(false);
+          return;
+        }
+
+        // Validate each chapter
+        const invalidChapters = [];
+        chapters.forEach((chapter, index) => {
+          if (!chapter.title || chapter.title.trim().length === 0) {
+            invalidChapters.push(`Chapter ${index + 1}: Title is required`);
+          }
+          if (!chapter.content || chapter.content.trim().length === 0) {
+            invalidChapters.push(`Chapter ${index + 1}: Content is required`);
+          }
+        });
+
+        if (invalidChapters.length > 0) {
+          showErrorToast(`❌ Chapter validation failed:\n${invalidChapters.join('\n')}`);
+          setSaving(false);
+          return;
+        }
+      }
+
       const bookData = {
         title,
         description,
@@ -189,7 +216,7 @@ const BookEditPage = () => {
 
           setBookToEdit(newBook);
           setTitle(newBook.title || '');
-          setDescription(newBook.description || '');
+          setDescription(newBook.description || 'atleast 10 characters');
           setStatus(newBook.status || 'draft');
           setTags(Array.isArray(newBook.tags) ? newBook.tags : (newBook.tags ? newBook.tags.split(',').map(t => t.trim()) : []));
           setGenre(Array.isArray(newBook.genre) ? newBook.genre : (newBook.genre ? newBook.genre.split(',').map(g => g.trim()) : []));
@@ -333,7 +360,7 @@ const BookEditPage = () => {
           {isNew && (
             <div className='mt-8 bg-white rounded-lg p-6 shadow-md'>
               <div className='flex justify-between items-center mb-4'>
-                <h2 className='text-2xl font-bold text-[#1A5632]'>Initial Chapters (Optional)</h2>
+                <h2 className='text-2xl font-bold text-[#1A5632]'>Initial Chapters (Atleast one chapter)</h2>
                 <button
                   onClick={handleAddChapter}
                   type="button"

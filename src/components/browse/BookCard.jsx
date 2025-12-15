@@ -57,6 +57,7 @@ const BookCard = ({book, linkTo, showLikeButton = false, onLikeChange, disableHo
         ? genre.join(", ")
         : (genre || "No genre provided");
 
+
     // Handle like/unlike
     const handleLikeClick = async (e) => {
         e.preventDefault();

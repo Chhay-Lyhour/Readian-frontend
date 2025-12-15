@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { bookApi, ratingApi, downloadApi } from '../../services/api';
 import { handleApiError, showSuccessToast } from '../../services/utils/errorHandler';
 import { Star, Heart, Download, BookOpen, Lock, Crown, Shield, Baby } from 'lucide-react';
+import ContentGuardModal from '../common/ContentGuardModal';
 
 //truncate
 function truncate(str, n) {
@@ -10,11 +11,14 @@ function truncate(str, n) {
 }
 
 const BookDetail = ({book, signedIn, currentUser, onRatingUpdate}) => {
+  const navigate = useNavigate();
   const [userRating, setUserRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
   const [isLiked, setIsLiked] = useState(book?.likedBy?.includes(currentUser?._id));
   const [localLikes, setLocalLikes] = useState(book?.likes || 0);
   const [localDownloads, setLocalDownloads] = useState(book?.downloadCount || 0);
+  const [showGuardModal, setShowGuardModal] = useState(false);
+  const [guardModalType, setGuardModalType] = useState(null);
 
   // Load user's existing rating on mount
   useEffect(() => {
@@ -33,6 +37,53 @@ const BookDetail = ({book, signedIn, currentUser, onRatingUpdate}) => {
     };
     loadUserRating();
   }, [currentUser, book?._id]);
+
+  // Handle Start Reading - Check age, subscription, and book status
+  const handleStartReading = (e) => {
+    e.preventDefault();
+
+    // Check age restrictions for adult content
+    if (book.contentType === 'adult') {
+      if (!signedIn) {
+        setGuardModalType('age_not_logged_in');
+        setShowGuardModal(true);
+        return;
+      }
+
+      if (!currentUser?.age) {
+        setGuardModalType('age_not_set');
+        setShowGuardModal(true);
+        return;
+      }
+
+      if (currentUser.age < 18) {
+        setGuardModalType('age_under_18');
+        setShowGuardModal(true);
+        return;
+      }
+    }
+
+    // Check subscription for premium content OR ongoing books
+    if (book.isPremium || book.bookStatus === 'ongoing') {
+      if (!signedIn) {
+        setGuardModalType('subscription_not_logged_in');
+        setShowGuardModal(true);
+        return;
+      }
+
+      const hasActiveSubscription = currentUser?.subscriptionStatus === 'active' &&
+                                    (currentUser?.plan === 'basic' || currentUser?.plan === 'premium');
+
+      if (!hasActiveSubscription) {
+        setGuardModalType('subscription_required');
+        setShowGuardModal(true);
+        return;
+      }
+    }
+
+    // All checks passed, navigate to first chapter
+    navigate(`/book/${book._id}/chapter/1`);
+  };
 
   // Handle like/unlike
   const handleLike = async () => {
@@ -65,6 +116,33 @@ const BookDetail = ({book, signedIn, currentUser, onRatingUpdate}) => {
       return;
     }
 
+    // Check age restrictions for adult content
+    if (book.contentType === 'adult') {
+      if (!currentUser?.age) {
+        setGuardModalType('age_not_set');
+        setShowGuardModal(true);
+        return;
+      }
+
+      if (currentUser.age < 18) {
+        setGuardModalType('age_under_18');
+        setShowGuardModal(true);
+        return;
+      }
+    }
+
+    // Check subscription for premium or ongoing books
+    if (book.isPremium || book.bookStatus === 'ongoing') {
+      const hasActiveSubscription = currentUser?.subscriptionStatus === 'active' &&
+                                    (currentUser?.plan === 'basic' || currentUser?.plan === 'premium');
+
+      if (!hasActiveSubscription) {
+        setGuardModalType('subscription_required');
+        setShowGuardModal(true);
+        return;
+      }
+    }
+
     try {
       // Send rating in correct format: { rating: value }
       await ratingApi.rateBook(book._id, { rating: rating });
@@ -90,6 +168,33 @@ const BookDetail = ({book, signedIn, currentUser, onRatingUpdate}) => {
     if (!book.allowDownload) {
       alert("Downloads are not allowed for this book");
       return;
+    }
+
+    // Check age restrictions for adult content
+    if (book.contentType === 'adult') {
+      if (!currentUser?.age) {
+        setGuardModalType('age_not_set');
+        setShowGuardModal(true);
+        return;
+      }
+
+      if (currentUser.age < 18) {
+        setGuardModalType('age_under_18');
+        setShowGuardModal(true);
+        return;
+      }
+    }
+
+    // Check subscription for premium or ongoing books
+    if (book.isPremium || book.bookStatus === 'ongoing') {
+      const hasActiveSubscription = currentUser?.subscriptionStatus === 'active' &&
+                                    (currentUser?.plan === 'basic' || currentUser?.plan === 'premium');
+
+      if (!hasActiveSubscription) {
+        setGuardModalType('subscription_required');
+        setShowGuardModal(true);
+        return;
+      }
     }
 
     try {
@@ -309,12 +414,12 @@ const BookDetail = ({book, signedIn, currentUser, onRatingUpdate}) => {
 
           {/* Action Buttons */}
           <div className='flex flex-wrap gap-3 my-8'>
-            <Link
-              to={`/book/${book._id}/chapter/1`}
+            <button
+              onClick={handleStartReading}
               className='flex-1 min-w-[200px] text-center py-3 px-6 bg-[#1A5632] text-white text-sm sm:text-base font-semibold rounded-lg hover:bg-[#FFD7DF] hover:text-[#1A5632] transition-all duration-300 shadow-md flex items-center justify-center gap-2'
             >
               <BookOpen size={18} /> Start Reading
-            </Link>
+            </button>
 
             {signedIn && (
               <>
@@ -401,6 +506,15 @@ const BookDetail = ({book, signedIn, currentUser, onRatingUpdate}) => {
           </div>
         </div>
       </div>
+
+      {/* Content Guard Modal */}
+      {showGuardModal && (
+        <ContentGuardModal
+          type={guardModalType}
+          onClose={() => setShowGuardModal(false)}
+          bookTitle={book.title}
+        />
+      )}
 
     </div>
   )
