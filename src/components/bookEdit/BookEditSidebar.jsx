@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, CheckCircle, Edit3 } from 'lucide-react';
+import { useAuth } from '../../services/auth/authContext';
 
 const BookEditSidebar = ({ isPublished, isNew }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { user } = useAuth();
+
+  // Determine dashboard path based on user role
+  const dashboardPath = user?.role === 'ADMIN' ? '/admindash/works' : '/authordash/works';
 
   return (
     <>
@@ -72,7 +77,7 @@ const BookEditSidebar = ({ isPublished, isNew }) => {
 
         {/* Back to dashboard */}
         <Link
-          to='/authordash/works'
+          to={dashboardPath}
           className='self-center text-center font-semibold bg-white w-full py-2 rounded-[15px] shadow-md hover:bg-black hover:text-white transition-all duration-300'
           onClick={() => setIsOpen(false)}
         >

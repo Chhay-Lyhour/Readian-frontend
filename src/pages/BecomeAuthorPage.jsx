@@ -30,10 +30,10 @@ const BecomeAuthorPage = () => {
                 Start creating amazing stories for your readers.
               </p>
               <button
-                onClick={() => navigate('/authordash')}
+                onClick={() => navigate(user?.role === 'ADMIN' ? '/admindash' : '/authordash')}
                 className="px-8 py-4 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-semibold text-lg"
               >
-                Go to Author Dashboard
+                Go to {user?.role === 'ADMIN' ? 'Admin' : 'Author'} Dashboard
               </button>
             </div>
           </div>
@@ -52,9 +52,9 @@ const BecomeAuthorPage = () => {
 
       showSuccessToast('Welcome to the author community!');
 
-      // Redirect to author dashboard
+      // Redirect to dashboard based on role
       setTimeout(() => {
-        navigate('/authordash');
+        navigate(user?.role === 'ADMIN' ? '/admindash' : '/authordash');
       }, 1500);
     } catch (error) {
       handleApiError(error);
