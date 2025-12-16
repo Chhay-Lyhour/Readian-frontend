@@ -126,7 +126,7 @@ const AdminAnalytics = () => {
               <Heart size={12} className="text-[#FF1493]" />
               {stats?.books?.totalLikes?.toLocaleString() || 0} Likes
             </div>
-            <div>⭐ {stats?.books?.averageRating?.toFixed(1) || '0.0'} Avg Rating</div>
+{/*             <div>⭐ {stats?.books?.averageRating?.toFixed(1) || '0.0'} Avg Rating</div> */}
           </div>
         </div>
       </div>

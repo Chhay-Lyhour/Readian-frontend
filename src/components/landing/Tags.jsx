@@ -22,7 +22,7 @@ const Tags = () => {
   return (
     <div className='min-h-[400px] py-12 bg-gradient-to-b from-[#FFFDEE] to-[#C0FFB3] flex flex-col items-center justify-center gap-8 px-4'>
         {/* text */}
-        <h1 className='geist text-3xl sm:text-4xl md:text-[48px] text-center font-bold'>
+        <h1 className='geist text-3xl sm:text-4xl text-center font-bold'>
           Browse through various tags
         </h1>
 
@@ -34,9 +34,9 @@ const Tags = () => {
                   className='w-[140px] sm:w-[200px] md:w-[260px] h-[50px] sm:h-[60px] rounded-[10px] bg-[#1A5632] flex items-center justify-center hover:scale-110 transition-all duration-300'
                   onClick={() => handleTagClick(tag.name)}
                 >
-                    <h1 className='geist text-lg sm:text-xl md:text-[28px] font-semibold text-[#FFD7DF] text-center'>
+                    <p className='geist text-lg sm:text-xl font-semibold text-[#FFD7DF] text-center'>
                         {tag.name}
-                    </h1>
+                    </p>
                 </button>
             ))}
         </div>

@@ -37,7 +37,7 @@ const TopAuthors = () => {
   }
 
   return (
-    <div className='bg-[#FFFDEE] min-h-[400px] px-4 sm:px-8 md:px-16 lg:px-[100px] py-12 flex flex-col gap-8'>
+    <div className='bg-gradient-to-b from-[#FFFDEE] to-[#C0FFB3] min-h-[400px] px-4 sm:px-8 md:px-16 lg:px-[100px] py-12 flex flex-col gap-8'>
       {/* Header */}
       <div>
         <h1 className='geist text-3xl sm:text-4xl md:text-[48px] font-semibold'>

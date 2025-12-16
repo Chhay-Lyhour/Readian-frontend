@@ -48,7 +48,7 @@ const Subscribe = ({signedIn}) => {
                 </div>
 
                 <Link to="/subscribe">
-                <button className='w-[160px] sm:w-[200px] h-[50px] sm:h-[60px] rounded-[15px] bg-[#1A5632] text-[#FFD7DF] text-xl sm:text-[28px] hover:text-[#1A5632] hover:bg-[#FFD7DF] transition-all duration-300'>
+                <button className='w-[160px] sm:w-[200px] h-[50px] sm:h-[60px] rounded-[15px] bg-[#1A5632] text-[#FFD7DF] text-xl hover:text-[#1A5632] hover:bg-[#FFD7DF] transition-all duration-300'>
                     Subscribe
                 </button>
                 </Link>
@@ -57,16 +57,16 @@ const Subscribe = ({signedIn}) => {
         ) : (
             //show sign in option
             <div className='flex flex-col justify-center items-center text-center min-h-[400px] py-12 px-4 sm:px-8 md:px-16 bg-gradient-to-b from-[#C0FFB3] to-[#FFFDEE] gap-6'>
-                <h1 className='geist text-3xl sm:text-4xl md:text-[48px] font-semibold'>
+                <h1 className='geist text-3xl sm:text-4xl font-semibold'>
                     Sign in to access more features
                 </h1>
 
-                <p className='text-lg sm:text-xl md:text-[32px] max-w-4xl'>
+                <p className='text-lg sm:text-xl max-w-4xl'>
                     With an account, you can start writing your own stories, leave likes on other people&apos;s works, and more!
                 </p>
 
                 <Link to="/signin">
-                <button className='w-[160px] sm:w-[200px] h-[50px] sm:h-[60px] rounded-[15px] bg-[#1A5632] text-[#FFD7DF] text-xl sm:text-[28px] hover:text-[#1A5632] hover:bg-[#FFD7DF] transition-all duration-300'>
+                <button className='w-[160px] sm:w-[200px] h-[50px] sm:h-[60px] rounded-[15px] bg-[#1A5632] text-[#FFD7DF] text-xl hover:text-[#1A5632] hover:bg-[#FFD7DF] transition-all duration-300'>
                     Sign In
                 </button>
                 </Link>

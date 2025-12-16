@@ -22,7 +22,7 @@ const Genres = () => {
   return (
     <div className='min-h-[400px] py-12 bg-gradient-to-b from-[#C0FFB3] to-[#FFFDEE] flex flex-col items-center justify-center gap-8 px-4'>
         {/* text */}
-        <h1 className='geist text-3xl sm:text-4xl md:text-[48px] text-center font-bold'>
+        <h1 className='geist text-3xl sm:text-4xl text-center font-bold'>
           Explore different genres
         </h1>
 
@@ -31,12 +31,12 @@ const Genres = () => {
             {genresList.map((genre) => (
                 <button
                   key={genre.id}
-                  className='w-[140px] sm:w-[200px] md:w-[260px] h-[50px] sm:h-[60px] rounded-[10px] bg-[#00A819] flex items-center justify-center hover:scale-110 transition-all duration-300'
+                  className='w-[140px] sm:w-[200px] md:w-[260px] h-[50px] sm:h-[60px] rounded-[10px] bg-[#1A5632] flex items-center justify-center hover:scale-110 transition-all duration-300'
                   onClick={() => handleGenreClick(genre.name)}
                 >
-                    <h1 className='geist text-lg sm:text-xl md:text-[28px] font-semibold text-white text-center'>
+                    <p className='geist text-lg sm:text-xl font-semibold text-[#FFD7DF] text-center'>
                         {genre.name}
-                    </h1>
+                    </p>
                 </button>
             ))}
         </div>
