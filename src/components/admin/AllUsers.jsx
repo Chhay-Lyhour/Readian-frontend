@@ -5,8 +5,10 @@ import EditUserModal from './EditUserModal';
 import { Edit, Trash2, User, Mail, Calendar } from 'lucide-react';
 import { adminApi } from '../../services/api';
 import { handleApiError, showSuccessToast } from '../../services/utils/errorHandler';
+import { useAuth } from '../../services/auth/authContext';
 
 function AllUsers() {
+  const { user: currentUser, refreshUser } = useAuth();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [usernameFilter, setUsernameFilter] = useState('');
@@ -249,7 +251,14 @@ function AllUsers() {
         <EditUserModal
           user={userToEdit}
           onClose={() => setUserToEdit(null)}
-          onSuccess={fetchUsers}
+          onSuccess={async () => {
+            await fetchUsers();
+            // If admin edited their own account, refresh current user data
+            if (userToEdit.id === currentUser?.id || userToEdit._id === currentUser?._id || userToEdit.id === currentUser?._id) {
+              await refreshUser();
+              console.log('✅ Refreshed current user data after self-edit');
+            }
+          }}
         />
       )}
     </div>
