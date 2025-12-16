@@ -39,16 +39,16 @@ const Hero = ({ signedIn, dashboardPath }) => {
               Or start writing your own!
             </p>
 
-            <div className='flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center lg:justify-start animate-fade-in animation-delay-400'>
-              <Link to="/browse">
-                <button className='group px-8 py-3 bg-gradient-to-r from-[#1A5632] to-[#00A819] rounded-xl text-white font-semibold hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center gap-2'>
+            <div className='flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-6 justify-center lg:justify-start animate-fade-in animation-delay-400'>
+              <Link to="/browse" className='w-full sm:w-auto'>
+                <button className='group w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-3 bg-gradient-to-r from-[#1A5632] to-[#00A819] rounded-xl text-white text-sm sm:text-base font-semibold hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2'>
                   Browse Stories
-                  <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                 </button>
               </Link>
               
-              <Link to={dashboardPath}>
-                <button className='px-8 py-3 bg-white border-2 border-[#1A5632] rounded-xl text-[#1A5632] font-semibold hover:bg-[#1A5632] hover:text-white transition-all duration-300 shadow-md hover:shadow-lg'>
+              <Link to={dashboardPath} className='w-full sm:w-auto'>
+                <button className='w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-3 bg-white border-2 border-[#1A5632] rounded-xl text-[#1A5632] text-sm sm:text-base font-semibold hover:bg-[#1A5632] hover:text-white transition-all duration-300 shadow-md hover:shadow-lg'>
                   Start Writing
                 </button>
               </Link>
@@ -62,10 +62,10 @@ const Hero = ({ signedIn, dashboardPath }) => {
             </p>
             
             <div className='flex justify-center lg:justify-start animate-fade-in animation-delay-400'>
-              <Link to="/browse">
-                <button className='group px-8 py-4 bg-gradient-to-r from-[#1A5632] to-[#00A819] rounded-xl text-white font-semibold hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl flex items-center gap-2 animate-pulse-slow'>
+              <Link to="/browse" className='w-full sm:w-auto'>
+                <button className='group w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-[#1A5632] to-[#00A819] rounded-xl text-white text-sm sm:text-base font-semibold hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl flex items-center justify-center gap-2 animate-pulse-slow'>
                   <span>Explore Now</span>
-                  <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                 </button>
               </Link>
             </div>
