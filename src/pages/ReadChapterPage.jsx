@@ -153,7 +153,7 @@ function ReadChapterPage() {
       />
 
       {/* Main Content */}
-      <div className='max-w-4xl mx-auto px-4 py-8'>
+      <div className='max-w-5xl mx-auto px-2 sm:px-4 py-4 sm:py-6 md:py-8'>
         <ChapterContent
           chapter={chapter}
           bookId={bookId}

@@ -12,46 +12,46 @@ const ChapterContent = ({chapter,bookId,book,prevChapter,nextChapter}) => {
 
 
   return (
-    <div className='relative w-full max-w-[1200px] mx-4 md:mx-auto min-h-8/12 bg-[#FFD7DF] rounded-tr-[50px] md:rounded-tr-[100px] rounded-bl-[50px] md:rounded-bl-[100px]'>
+    <div className='relative w-full max-w-[1200px] mx-2 sm:mx-4 md:mx-auto min-h-8/12 bg-[#FFD7DF] rounded-tr-[30px] sm:rounded-tr-[40px] md:rounded-tr-[60px] lg:rounded-tr-[100px] rounded-bl-[30px] sm:rounded-bl-[40px] md:rounded-bl-[60px] lg:rounded-bl-[100px] overflow-hidden'>
 
         {/* Corner Section */}
-        <div className='absolute top-0 left-0 bg-[#1A5632] w-[230px] h-[115px] rounded-br-[50px] flex justify-center items-center'>
+        <div className='absolute top-0 left-0 bg-[#1A5632] w-[160px] sm:w-[200px] md:w-[230px] h-[80px] sm:h-[100px] md:h-[115px] rounded-br-[30px] sm:rounded-br-[40px] md:rounded-br-[50px] flex justify-center items-center'>
             {/* text */}
-            <h1 className='bg-none border-2 border-solid border-[#FFD7DF] rounded-[30px] h-[40px] pr-5 pl-5 text-[24px] text-[#FFD7DF]'>
+            <h1 className='bg-none border-2 border-solid border-[#FFD7DF] rounded-[20px] sm:rounded-[25px] md:rounded-[30px] h-[32px] sm:h-[36px] md:h-[40px] px-3 sm:px-4 md:px-5 text-[18px] sm:text-[20px] md:text-[24px] text-[#FFD7DF] flex items-center justify-center'>
                 Reading
             </h1>
             {/* top right rectangles */}
             <div 
-                className='absolute bg-[#FFD7DF] w-[150px] h-[115px] rounded-tl-[50px] z-10 top-0 left-[230px]'
+                className='absolute bg-[#FFD7DF] w-[100px] sm:w-[130px] md:w-[150px] h-[80px] sm:h-[100px] md:h-[115px] rounded-tl-[30px] sm:rounded-tl-[40px] md:rounded-tl-[50px] z-10 top-0 left-[160px] sm:left-[200px] md:left-[230px]'
             />
             <div 
-                className='absolute bg-[#1A5632] w-[50px] h-[50px] z-0 top-0 left-[230px]'
+                className='absolute bg-[#1A5632] w-[35px] sm:w-[45px] md:w-[50px] h-[35px] sm:h-[45px] md:h-[50px] z-0 top-0 left-[160px] sm:left-[200px] md:left-[230px]'
             />
-            {/* bottom left rctangles */}
-            <div 
-                className='absolute bg-[#FFD7DF] w-[150px] h-[115px] rounded-tl-[50px] z-10 top-[115px] left-0'
+            {/* bottom left rectangles */}
+            <div
+                className='absolute bg-[#FFD7DF] w-[100px] sm:w-[130px] md:w-[150px] h-[80px] sm:h-[100px] md:h-[115px] rounded-tl-[30px] sm:rounded-tl-[40px] md:rounded-tl-[50px] z-10 top-[80px] sm:top-[100px] md:top-[115px] left-0'
             />
             <div 
-                className='absolute bg-[#1A5632] w-[50px] h-[50px] z-0 top-[115px] left-0'
+                className='absolute bg-[#1A5632] w-[35px] sm:w-[45px] md:w-[50px] h-[35px] sm:h-[45px] md:h-[50px] z-0 top-[80px] sm:top-[100px] md:top-[115px] left-0'
             />
         </div>
 
         {/* Chapter detail */}
-        <div className='relative pb-8 sm:pb-12 md:pb-[50px] pt-[90px] sm:pt-[115px] px-4 sm:px-8 md:px-16 lg:px-[250px] flex flex-col items-center text-center z-20'>
-            <h1 className='geist text-3xl sm:text-4xl font-bold text-gray-900 mb-4'>
+        <div className='relative pb-6 sm:pb-8 md:pb-12 pt-[90px] sm:pt-[110px] px-4 sm:px-6 md:px-12 lg:px-[200px] xl:px-[250px] flex flex-col items-center text-center z-20'>
+            <h1 className='geist text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight'>
                 {chapter.title || "No Title"}
             </h1>
             <div className='flex justify-center w-full'>
-                <p className='text-base md:text-lg text-gray-600 font-medium'>
+                <p className='text-sm sm:text-base md:text-lg text-gray-600 font-medium'>
                     by <span className='text-[#1A5632] font-semibold'>{book.author?.name || "Unknown Author"}</span>
                 </p>
             </div>
         </div>
 
         {/* Chapter content */}
-        <div className='bg-white py-8 sm:py-12 px-6 pr-8 rounded-bl-[50px] md:rounded-bl-[100px] flex flex-col gap-8 md:gap-[50px]'>
-            <article className='prose prose-lg md:prose-xl max-w-none'>
-                <p className='geist md:text-lg leading-relaxed md:leading-loose text-gray-800 whitespace-pre-wrap font-serif'>
+        <div className='bg-white py-6 sm:py-8 md:py-10 lg:py-12 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 rounded-bl-[30px] sm:rounded-bl-[40px] md:rounded-bl-[50px] lg:rounded-bl-[100px] flex flex-col gap-6 sm:gap-8 md:gap-[50px]'>
+            <article className='prose prose-base sm:prose-lg md:prose-xl max-w-none'>
+                <p className='text-base sm:text-lg md:text-xl lg:text-[21px] leading-relaxed sm:leading-relaxed md:leading-loose text-gray-800 whitespace-pre-wrap font-serif break-words'>
                     {chapter.content || "This chapter has no content."}
                 </p>
             </article>
