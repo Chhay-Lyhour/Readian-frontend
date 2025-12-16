@@ -6,7 +6,7 @@ const AuthDashSidebar = ({currentUser}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   //Nav link styles
-  const baseLinkStyle = "flex items-center gap-3 text-[20px] md:text-[22px] lg:text-[24px] font-semibold w-full h-[50px] px-4 transition-colors";
+  const baseLinkStyle = "flex items-center gap-3 text-lg w-full h-[30px] px-4 transition-colors";
   const activeLinkStyle = `${baseLinkStyle} bg-white text-black`;
   const unactiveLinkStyle = `${baseLinkStyle} text-black hover:bg-white/50`;
 
@@ -63,17 +63,17 @@ const AuthDashSidebar = ({currentUser}) => {
             <div className='w-[100px] h-[100px] md:w-[110px] md:h-[110px] lg:w-[120px] lg:h-[120px] rounded-full bg-gray-500 border-2 border-solid border-black' />
           )}
 
-          <h1 className='geist text-[18px] md:text-[19px] lg:text-[20px] font-semibold text-center'>
+          <h1 className='geist text-lg font-semibold text-center'>
             Welcome, {currentUser?.name || "User"}
           </h1>
-          <p className='text-[16px] md:text-[17px] lg:text-[18px] font-semibold text-[#1A5632]'>
+          <p className='text-lg font-semibold text-[#1A5632]'>
             {currentUser?.role?.toUpperCase() || 'AUTHOR'}
           </p>
         </div>
 
         {/* nav */}
         <nav className='mt-[30px] md:mt-[40px] lg:mt-[50px] flex flex-col gap-4 w-full'>
-          <h3 className="text-[24px] md:text-[26px] lg:text-[28px] text-center font-semibold text-[#1A5632] uppercase mt-4">
+          <h3 className="text-4xl text-center font-semibold text-[#1A5632] uppercase mt-4">
             My Content
           </h3>
 

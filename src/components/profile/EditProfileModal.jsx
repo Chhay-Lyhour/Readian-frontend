@@ -51,14 +51,15 @@ function EditProfileModal({ currentUser, onClose, onSave }) {
 
   return (
     // Overlay for the modal
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 w-full">
-      <div className="bg-white px-8 py-4 rounded-lg shadow-xl w-[600px] relative max-h-[90vh] overflow-y-auto">
-        <h2 className="text-3xl font-bold mb-6 text-center">Edit My Account</h2>
-        
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 w-full p-4 animate-fade-in">
+      <div className="bg-white px-8 py-6 rounded-xl shadow-2xl w-full max-w-[600px] relative max-h-[90vh] overflow-y-auto animate-scale-in">
+        <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Edit My Account</h2>
+
         {/* Close Button */}
         <button 
           onClick={onClose} 
-          className="absolute top-4 right-4 text-gray-600 text-2xl hover:text-gray-800"
+          className="absolute top-4 right-4 text-gray-600 text-2xl hover:text-gray-800 hover:scale-110 transition-all focus:outline-none focus:ring-2 focus:ring-gray-400 rounded-full p-1"
+          aria-label="Close modal"
         >
           &times;
         </button>
@@ -84,7 +85,7 @@ function EditProfileModal({ currentUser, onClose, onSave }) {
             />
             <label 
               htmlFor="profile-pic-upload" 
-              className="cursor-pointer bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300"
+              className="cursor-pointer bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 hover:scale-105 transition-all duration-300 font-semibold focus-within:ring-2 focus-within:ring-gray-400"
             >
               Upload Photo
             </label>
@@ -94,23 +95,23 @@ function EditProfileModal({ currentUser, onClose, onSave }) {
           {/* Form Fields */}
           <div className="space-y-4">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name:</label>
+              <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">Name:</label>
               <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)}
-                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+                className="block w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#00A819] focus:ring-2 focus:ring-[#00A819] focus:ring-opacity-20 transition-all"
                 placeholder="Enter your name" />
             </div>
             <div>
-              <label htmlFor="age" className="block text-sm font-medium text-gray-700">Age:</label>
+              <label htmlFor="age" className="block text-sm font-semibold text-gray-700 mb-2">Age:</label>
               <input type="number" id="age" value={age} onChange={(e) => setAge(e.target.value)}
-                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+                className="block w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#00A819] focus:ring-2 focus:ring-[#00A819] focus:ring-opacity-20 transition-all"
                 placeholder="Enter your age"
                 min="1"
                 max="150" />
             </div>
             <div>
-              <label htmlFor="bio" className="block text-sm font-medium text-gray-700">Bio:</label>
+              <label htmlFor="bio" className="block text-sm font-semibold text-gray-700 mb-2">Bio:</label>
               <textarea id="bio" value={bio} onChange={(e) => setBio(e.target.value)}
-                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm h-24 resize-none"
+                className="block w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#00A819] focus:ring-2 focus:ring-[#00A819] focus:ring-opacity-20 transition-all h-24 resize-none"
                 placeholder="Tell us about yourself..." />
             </div>
 
@@ -119,20 +120,21 @@ function EditProfileModal({ currentUser, onClose, onSave }) {
               <h3 className="text-lg font-semibold mb-4 text-gray-800">Change Password (Optional)</h3>
 
               <div className="mb-4">
-                <label htmlFor="currentPassword" className="block text-sm font-medium text-gray-700">Current Password:</label>
+                <label htmlFor="currentPassword" className="block text-sm font-semibold text-gray-700 mb-2">Current Password:</label>
                 <div className="relative">
                   <input
                     type={showPassword ? "text" : "password"}
                     id="currentPassword"
                     value={currentPassword}
                     onChange={(e) => setCurrentPassword(e.target.value)}
-                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm pr-10"
+                    className="block w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#00A819] focus:ring-2 focus:ring-[#00A819] focus:ring-opacity-20 transition-all pr-12"
                     placeholder="Enter current password"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 rounded p-1"
+                    aria-label={showPassword ? "Hide password" : "Show password"}
                   >
                     {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
                   </button>
@@ -140,25 +142,25 @@ function EditProfileModal({ currentUser, onClose, onSave }) {
               </div>
 
               <div className="mb-4">
-                <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700">New Password:</label>
+                <label htmlFor="newPassword" className="block text-sm font-semibold text-gray-700 mb-2">New Password:</label>
                 <input
                   type={showPassword ? "text" : "password"}
                   id="newPassword"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
-                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+                  className="block w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#00A819] focus:ring-2 focus:ring-[#00A819] focus:ring-opacity-20 transition-all"
                   placeholder="Enter new password"
                 />
               </div>
 
               <div>
-                <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">Confirm New Password:</label>
+                <label htmlFor="confirmPassword" className="block text-sm font-semibold text-gray-700 mb-2">Confirm New Password:</label>
                 <input
                   type={showPassword ? "text" : "password"}
                   id="confirmPassword"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+                  className="block w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#00A819] focus:ring-2 focus:ring-[#00A819] focus:ring-opacity-20 transition-all"
                   placeholder="Confirm new password"
                 />
               </div>
@@ -167,7 +169,7 @@ function EditProfileModal({ currentUser, onClose, onSave }) {
 
           {/* Save Button */}
           <div className="mt-8 text-center">
-            <button type="submit" className="px-8 py-3 bg-[#1A5632] text-[#FFD7DF] rounded-[15px] font-bold hover:bg-[#FFD7DF] hover:text-[#1A5632] transition-all duration-300">
+            <button type="submit" className="px-8 py-3 bg-[#1A5632] text-white rounded-lg font-semibold hover:bg-[#00A819] hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#00A819] focus:ring-offset-2">
               Save Changes
             </button>
           </div>

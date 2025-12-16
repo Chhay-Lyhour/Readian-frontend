@@ -6,7 +6,7 @@ function AdminSidebar({ currentUser }) {
   const [isOpen, setIsOpen] = useState(false);
 
   // Define styles for NavLink
-  const baseLinkStyle = "flex items-center gap-3 text-[20px] md:text-[22px] lg:text-[24px] font-semibold w-full h-[50px] px-4 transition-colors";
+  const baseLinkStyle = "flex items-center gap-3 text-lg w-full h-[30px] px-4 transition-colors";
   const activeLinkStyle = `${baseLinkStyle} bg-white text-black`;
   const inactiveLinkStyle = `${baseLinkStyle} text-black hover:bg-white/50`; 
 
@@ -84,7 +84,7 @@ function AdminSidebar({ currentUser }) {
         <nav className="mt-[30px] md:mt-[40px] lg:mt-[50px] flex flex-col gap-4 w-full">
 
           {/* My Content Section */}
-          <h3 className="text-[24px] md:text-[26px] lg:text-[28px] text-center font-semibold text-[#1A5632] uppercase mt-4">
+          <h3 className="text-2xl text-center font-semibold text-[#1A5632] uppercase mt-4">
             My Content
           </h3>
           {myContentLinks.map((link) => (
@@ -100,7 +100,7 @@ function AdminSidebar({ currentUser }) {
           ))}
 
           {/* Admin Section */}
-          <h3 className="text-[24px] md:text-[26px] lg:text-[28px] text-center font-semibold text-[#1A5632] uppercase mt-6">
+          <h3 className="text-2xl text-center font-semibold text-[#1A5632] uppercase mt-6">
             Admin Options
           </h3>
           {adminLinks.map((link) => (

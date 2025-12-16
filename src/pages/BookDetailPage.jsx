@@ -46,7 +46,10 @@ const BookDetailPage = () => {
   if (loading) {
     return (
       <div className="bg-[#1A5632] min-h-screen flex items-center justify-center">
-        <div className="text-white text-2xl">Loading...</div>
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-xl font-semibold text-white">Loading book details...</p>
+        </div>
       </div>
     );
   }

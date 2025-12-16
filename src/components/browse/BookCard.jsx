@@ -92,25 +92,28 @@ const BookCard = ({book, linkTo, showLikeButton = false, onLikeChange, disableHo
     };
 
   return (
-    <div className='group relative flex rounded-[10px] border-solid border-2 w-full max-w-[650px] h-[220px] sm:h-[250px] md:h-[280px] bg-white overflow-hidden hover:scale-105 md:hover:scale-110 transition-all duration-300'>
+    <div className={`group relative flex rounded-[10px] border-solid border-2 border-gray-200 w-full max-w-[650px] h-[220px] sm:h-[250px] md:h-[280px] bg-white overflow-hidden transition-all duration-300 shadow-md hover:shadow-xl hover:border-[#00A819] ${
+        !disableHoverScale ? 'hover:scale-105 md:hover:scale-110' : ''
+    }`}>
 
         {/* Hover Overlay with Like/Unlike button */}
         {showLikeButton && (
-            <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
+            <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 backdrop-blur-sm">
                 <button
                     onClick={handleLikeClick}
-                    className={`flex items-center gap-2 px-6 py-3 rounded-lg font-bold transition-all duration-300 ${
+                    className={`flex items-center gap-2 px-6 py-3 rounded-lg font-bold transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
                         isLiked
-                            ? 'bg-red-500 text-white hover:bg-red-600'
-                            : 'bg-white text-[#1A5632] hover:bg-[#C0FFB3]'
+                            ? 'bg-red-500 text-white hover:bg-red-600 focus:ring-red-500'
+                            : 'bg-white text-[#1A5632] hover:bg-[#C0FFB3] focus:ring-[#00A819]'
                     }`}
+                    aria-label={isLiked ? 'Unlike book' : 'Like book'}
                 >
                     <Heart size={16} fill={isLiked ? 'currentColor' : 'none'} />
                     {isLiked ? 'Liked' : 'Like'}
                 </button>
                 <Link
                     to={destination}
-                    className="bg-white text-black font-bold py-3 px-6 rounded-lg hover:bg-[#C0FFB3] transition-all duration-300"
+                    className="bg-white text-black font-bold py-3 px-6 rounded-lg hover:bg-[#C0FFB3] hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#00A819] focus:ring-offset-2"
                 >
                     View Details
                 </Link>

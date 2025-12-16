@@ -152,31 +152,33 @@ const MyAccount = () => {
             </button>
           </div>
 
-          <div className="space-y-6 text-xl">
-            <div className="flex items-center">
-              <label className="w-48 font-semibold text-black">Name:</label>
+          <div className="space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+              <label className="w-full sm:w-48 font-semibold text-gray-800 text-base">Name:</label>
               <input
                 type="text"
                 name="name"
                 value={profile.name}
                 onChange={handleChange}
-                className="flex-1 px-3 py-2 border border-black rounded-lg"
+                className="flex-1 px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#00A819] focus:ring-2 focus:ring-[#00A819] focus:ring-opacity-20 transition-all"
+                placeholder="Enter your name"
               />
             </div>
 
-            <div className="flex items-center">
-              <label className="w-48 font-semibold text-black">Email:</label>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+              <label className="w-full sm:w-48 font-semibold text-gray-800 text-base">Email:</label>
               <input
                 type="email"
                 name="email"
                 value={profile.email}
                 onChange={handleChange}
-                className="flex-1 px-3 py-2 border border-black rounded-lg"
+                className="flex-1 px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#00A819] focus:ring-2 focus:ring-[#00A819] focus:ring-opacity-20 transition-all"
+                placeholder="Enter your email"
               />
             </div>
 
-            <div className="flex items-center">
-              <label className="w-48 font-semibold text-black">Age:</label>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+              <label className="w-full sm:w-48 font-semibold text-gray-800 text-base">Age:</label>
               <input
                 type="number"
                 name="age"
@@ -184,32 +186,41 @@ const MyAccount = () => {
                 onChange={handleChange}
                 min="13"
                 max="150"
-                className="flex-1 px-3 py-2 border border-black rounded-lg"
+                className="flex-1 px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#00A819] focus:ring-2 focus:ring-[#00A819] focus:ring-opacity-20 transition-all"
+                placeholder="Enter your age"
               />
             </div>
 
-            <div className="flex items-start">
-              <label className="w-48 font-semibold text-black">Bio:</label>
+            <div className="flex flex-col sm:flex-row sm:items-start gap-2">
+              <label className="w-full sm:w-48 font-semibold text-gray-800 text-base">Bio:</label>
               <textarea
                 name="bio"
                 value={profile.bio}
                 onChange={handleChange}
-                className="flex-1 px-3 py-2 border border-black rounded-lg min-h-[120px]"
+                className="flex-1 px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#00A819] focus:ring-2 focus:ring-[#00A819] focus:ring-opacity-20 transition-all min-h-[120px] resize-none"
+                placeholder="Tell us about yourself..."
               />
             </div>
           </div>
 
-          <div className="flex gap-6 mt-12 text-black">
+          <div className="flex flex-col sm:flex-row gap-4 mt-12">
             <button
               onClick={handleSave}
-              className="px-6 py-3 border border-black rounded-lg bg-green-100 text-xl hover:bg-green-200"
+              disabled={loading}
+              className="px-6 py-3 bg-[#00A819] text-white rounded-lg font-semibold hover:bg-[#1A5632] hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 focus:outline-none focus:ring-2 focus:ring-[#00A819] focus:ring-offset-2"
             >
-              Save
+              {loading ? (
+                <span className="flex items-center justify-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  Saving...
+                </span>
+              ) : 'Save Changes'}
             </button>
 
             <button
               onClick={() => setIsEditing(false)}
-              className="px-6 py-3 border border-black rounded-lg bg-white text-xl hover:bg-gray-100"
+              disabled={loading}
+              className="px-6 py-3 bg-gray-200 text-gray-800 rounded-lg font-semibold hover:bg-gray-300 hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
             >
               Cancel
             </button>

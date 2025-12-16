@@ -64,98 +64,101 @@ function App() {
             },
           }}
         />
-        <Navbar />
-        <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/instruction" element={<InstructionPage />} />
-        <Route path="/browse" element={<BrowsePage />} />
-        <Route path="/book/:id" element={<BookDetailPage />}/>
-        <Route path="/author/:authorId" element={<AuthorProfilePage />} />
-        <Route path="/book/:bookId/chapter/:chapterNumber" element={<ReadChapterPage />} />
-        <Route path="/edit/:bookId" element={
-          <ProtectedRoute requiredRole="author">
-            <BookEditPage />
-          </ProtectedRoute>
-        }/>
-        <Route path="/edit/:bookId/chapter/:chapterNumber" element={
-          <ProtectedRoute requiredRole="author">
-            <ChapterEditorPage />
-          </ProtectedRoute>
-        } />
+        <div className="flex flex-col min-h-screen">
+          <Navbar />
+          <main className="flex-1">
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/instruction" element={<InstructionPage />} />
+              <Route path="/browse" element={<BrowsePage />} />
+              <Route path="/book/:id" element={<BookDetailPage />}/>
+              <Route path="/author/:authorId" element={<AuthorProfilePage />} />
+              <Route path="/book/:bookId/chapter/:chapterNumber" element={<ReadChapterPage />} />
+              <Route path="/edit/:bookId" element={
+                <ProtectedRoute requiredRole="author">
+                  <BookEditPage />
+                </ProtectedRoute>
+              }/>
+              <Route path="/edit/:bookId/chapter/:chapterNumber" element={
+                <ProtectedRoute requiredRole="author">
+                  <ChapterEditorPage />
+                </ProtectedRoute>
+              } />
 
-        {/* Author Dash */}
-        <Route path="/authordash" element={
-          <ProtectedRoute requiredRole="AUTHOR">
-            <AuthorDashboardPage />
-          </ProtectedRoute>
-        }>
-          <Route index element={<Navigate to="works" replace />} />
-          <Route path="works" element={<MyWorks />} />
-          <Route path="drafts" element={<MyDrafts />} />
-          <Route path="liked" element={<MyLiked />}/>
-          <Route path="analytics" element={<AuthorAnalytics />}/>
-        </Route>
+              {/* Author Dash */}
+              <Route path="/authordash" element={
+                <ProtectedRoute requiredRole="AUTHOR">
+                  <AuthorDashboardPage />
+                </ProtectedRoute>
+              }>
+                <Route index element={<Navigate to="works" replace />} />
+                <Route path="works" element={<MyWorks />} />
+                <Route path="drafts" element={<MyDrafts />} />
+                <Route path="liked" element={<MyLiked />}/>
+                <Route path="analytics" element={<AuthorAnalytics />}/>
+              </Route>
 
-        {/* Admin Dash */}
-        <Route path="/admindash" element={
-          <ProtectedRoute requiredRole="ADMIN">
-            <AdminDashboardPage />
-          </ProtectedRoute>
-        } >
-          <Route index element={<Navigate to="adminanalytics" replace />} />
-          <Route path="adminanalytics" element={<AdminAnalytics />} />
-          <Route path="allworks" element={<AllWorks />} />
-          <Route path="allusers" element={<AllUsers />} />
-          <Route path="works" element={<MyWorks />} />
-          <Route path="drafts" element={<MyDrafts />} />
-          <Route path="liked" element={<MyLiked />}/>
-          <Route path="analytics" element={<AuthorAnalytics />}/>
-        </Route>
+              {/* Admin Dash */}
+              <Route path="/admindash" element={
+                <ProtectedRoute requiredRole="ADMIN">
+                  <AdminDashboardPage />
+                </ProtectedRoute>
+              } >
+                <Route index element={<Navigate to="adminanalytics" replace />} />
+                <Route path="adminanalytics" element={<AdminAnalytics />} />
+                <Route path="allworks" element={<AllWorks />} />
+                <Route path="allusers" element={<AllUsers />} />
+                <Route path="works" element={<MyWorks />} />
+                <Route path="drafts" element={<MyDrafts />} />
+                <Route path="liked" element={<MyLiked />}/>
+                <Route path="analytics" element={<AuthorAnalytics />}/>
+              </Route>
 
-        <Route path="/profile" element={
-          <ProtectedRoute>
-            <ProfilePage />
-          </ProtectedRoute>
-        } />
-        <Route path="/liked" element={
-          <ProtectedRoute>
-            <MyLikedPage />
-          </ProtectedRoute>
-        } />
-{/*         <Route path="/settings" element={ */}
-{/*           <ProtectedRoute> */}
-{/*             <SettingsPage /> */}
-{/*           </ProtectedRoute> */}
-{/*         } /> */}
-        <Route path="/downloads" element={
-          <ProtectedRoute>
-            <DownloadHistoryPage />
-          </ProtectedRoute>
-        } />
-        <Route path="/analytics" element={
-          <ProtectedRoute requiredRole="author">
-            <AnalyticsPage />
-          </ProtectedRoute>
-        } />
-        <Route path="/signin" element={<SignInPage />} />
-        <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/verify-email" element={<VerifyEmailPage />} />
-        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/reset-password" element={<ResetPasswordPage />} />
-        <Route path="/subscribe" element={<SubscriptionPage />}/>
-        <Route path="/subscription/manage" element={
-          <ProtectedRoute>
-            <SubscriptionManagementPage />
-          </ProtectedRoute>
-        }/>
-        <Route path="/become-author" element={<BecomeAuthorPage />}/>
-{/*         <Route path="/confirm-payment" element={<ConfirmPaymentPage />}/> */}
+              <Route path="/profile" element={
+                <ProtectedRoute>
+                  <ProfilePage />
+                </ProtectedRoute>
+              } />
+              <Route path="/liked" element={
+                <ProtectedRoute>
+                  <MyLikedPage />
+                </ProtectedRoute>
+              } />
+{/*               <Route path="/settings" element={ */}
+{/*                 <ProtectedRoute> */}
+{/*                   <SettingsPage /> */}
+{/*                 </ProtectedRoute> */}
+{/*               } /> */}
+              <Route path="/downloads" element={
+                <ProtectedRoute>
+                  <DownloadHistoryPage />
+                </ProtectedRoute>
+              } />
+              <Route path="/analytics" element={
+                <ProtectedRoute requiredRole="author">
+                  <AnalyticsPage />
+                </ProtectedRoute>
+              } />
+              <Route path="/signin" element={<SignInPage />} />
+              <Route path="/signup" element={<SignUpPage />} />
+              <Route path="/verify-email" element={<VerifyEmailPage />} />
+              <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+              <Route path="/reset-password" element={<ResetPasswordPage />} />
+              <Route path="/subscribe" element={<SubscriptionPage />}/>
+              <Route path="/subscription/manage" element={
+                <ProtectedRoute>
+                  <SubscriptionManagementPage />
+                </ProtectedRoute>
+              }/>
+              <Route path="/become-author" element={<BecomeAuthorPage />}/>
+{/*               <Route path="/confirm-payment" element={<ConfirmPaymentPage />}/> */}
 
-        {/* 404 Catch-all route */}
-        <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-
-        <Footer />
+              {/* 404 Catch-all route */}
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
       </AuthProvider>
     </ErrorBoundary>
   )

@@ -41,7 +41,7 @@ const MyDrafts = () => {
     <div className='flex flex-col items-center w-full'>
         {/* Top */}
         <div className='mb-6 flex flex-col gap-6 self-start'>
-            <h1 className='geist text-[48px] font-semibold'>
+            <h1 className='geist text-4xl font-semibold'>
                 My <span className='text-[#00A819]'>Drafts</span>
             </h1>
 

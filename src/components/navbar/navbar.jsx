@@ -125,7 +125,7 @@ const Navbar = () => {
 
       {/* Mobile Menu - Dropdown */}
       {mobileMenuOpen && (
-        <div className='lg:hidden bg-[#C0FFB3] border-t border-black/10'>
+        <div className='lg:hidden bg-[#C0FFB3] border-t border-black/10 animate-fade-in'>
           {/* Mobile Search */}
           <div className='px-4 py-3 md:hidden'>
             <form onSubmit={(e) => { handleSearch(e); closeMobileMenu(); }} className='relative'>

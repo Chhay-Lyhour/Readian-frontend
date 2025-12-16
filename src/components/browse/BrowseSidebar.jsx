@@ -61,25 +61,25 @@ const BrowseSidebar = ({title,setTitle,author,setAuthor,status,setStatus,tags,se
 
         {/* Title */}
         <div className='w-full'>
-            <label>Title:</label><br />
-            <input 
+            <label className='block text-sm font-semibold text-gray-800 mb-2'>Title:</label>
+            <input
                 type="text"
                 placeholder='Search Title'
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className='bg-white rounded-[10px] p-2 w-full'
+                className='bg-white rounded-lg px-3 py-2 w-full border-2 border-gray-200 focus:outline-none focus:border-[#1A5632] focus:ring-2 focus:ring-[#1A5632] focus:ring-opacity-20 transition-all'
             />
         </div>
 
         {/* Author filter */}
         <div className='w-full'>
-            <label>Author:</label><br />
-            <input 
+            <label className='block text-sm font-semibold text-gray-800 mb-2'>Author:</label>
+            <input
                 type="text"
                 placeholder='Filter by author'
                 value={author}
                 onChange={(e) => setAuthor(e.target.value)}
-                className='bg-white rounded-[10px] p-2 w-full'
+                className='bg-white rounded-lg px-3 py-2 w-full border-2 border-gray-200 focus:outline-none focus:border-[#1A5632] focus:ring-2 focus:ring-[#1A5632] focus:ring-opacity-20 transition-all'
             />
         </div>
 
@@ -151,28 +151,28 @@ const BrowseSidebar = ({title,setTitle,author,setAuthor,status,setStatus,tags,se
         </div>
 
         {/* Genre Filter - Available to all users */}
-        <div className='w-full relative'>
-            <label>Genre:</label>
+        <div className='w-full'>
+            <label className='block text-sm font-semibold text-gray-800 mb-2'>Genre:</label>
             <input
               type="text"
               placeholder='e.g., Fantasy, Sci-Fi'
               value={genre}
               onChange={(e) => setGenre(e.target.value)}
-              className='bg-white rounded-[10px] p-2 w-full'
+              className='bg-white rounded-lg px-3 py-2 w-full border-2 border-gray-200 focus:outline-none focus:border-[#1A5632] focus:ring-2 focus:ring-[#1A5632] focus:ring-opacity-20 transition-all'
             />
         </div>
 
         {/* Tags Filter - Available to all users */}
-        <div className='w-full relative'>
-            <label>Tags:</label>
+        <div className='w-full'>
+            <label className='block text-sm font-semibold text-gray-800 mb-2'>Tags:</label>
             <input
               type="text"
               placeholder='fantasy, sci-fi, romance'
               value={tags}
               onChange={(e) => setTags(e.target.value)}
-              className='bg-white rounded-[10px] p-2 w-full'
+              className='bg-white rounded-lg px-3 py-2 w-full border-2 border-gray-200 focus:outline-none focus:border-[#1A5632] focus:ring-2 focus:ring-[#1A5632] focus:ring-opacity-20 transition-all'
             />
-            <small className='text-gray-500 text-xs block mt-1'>Separate tags with commas</small>
+            <small className='text-gray-600 text-xs block mt-1'>Separate tags with commas</small>
         </div>
 
         {/* Premium Filter */}

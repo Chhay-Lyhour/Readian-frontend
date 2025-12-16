@@ -171,37 +171,44 @@ const ContentGuardModal = ({ type, onClose, bookTitle, onContinue }) => {
   // Subscription required - Logged in but no subscription
   if (type === 'subscription_required') {
     return (
-      <div className="fixed bottom-4 left-4 z-50 animate-slide-up">
-        <div className="bg-white rounded-lg shadow-2xl p-6 border-2 border-purple-500 max-w-sm">
-          <div className="flex items-start gap-4">
-            <div className="flex-shrink-0">
-              <Lock size={32} className="text-purple-600" />
-            </div>
-            <div className="flex-1">
-              <h3 className="text-lg font-bold text-purple-600 mb-2">
-                Subscription Required
-              </h3>
-              <p className="text-sm text-gray-700 mb-4">
-                This book requires an active subscription. Upgrade now to start reading!
-              </p>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => handleAction('/subscription')}
-                  className="flex-1 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-all text-sm font-semibold"
-                >
-                  View Plans
-                </button>
-                <button
-                  onClick={onClose}
-                  className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-all text-sm font-semibold"
-                >
-                  Cancel
-                </button>
+      <>
+        <div
+          className="fixed inset-0 bg-black/30 z-40 animate-fade-in"
+          onClick={onClose}
+          aria-hidden="true"
+        />
+        <div className="fixed bottom-4 left-4 z-50 animate-slide-up">
+          <div className="bg-white rounded-lg shadow-2xl p-6 border-2 border-purple-500 max-w-sm">
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0">
+                <Lock size={32} className="text-purple-600" />
+              </div>
+              <div className="flex-1">
+                <h3 className="text-lg font-bold text-purple-600 mb-2">
+                  Subscription Required
+                </h3>
+                <p className="text-sm text-gray-700 mb-4">
+                  This book requires an active subscription. Upgrade now to start reading!
+                </p>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => handleAction('/subscription')}
+                    className="flex-1 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-all text-sm font-semibold"
+                  >
+                    View Plans
+                  </button>
+                  <button
+                    onClick={onClose}
+                    className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-all text-sm font-semibold"
+                  >
+                    Cancel
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 

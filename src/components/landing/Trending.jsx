@@ -29,7 +29,10 @@ const Trending = () => {
   if (loading) {
     return (
       <div className='bg-[#FFFDEE] min-h-[600px] flex items-center justify-center'>
-        <div className="text-2xl">Loading top books...</div>
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-16 h-16 border-4 border-[#1A5632] border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-xl font-semibold text-gray-700">Loading top books...</p>
+        </div>
       </div>
     );
   }
@@ -57,7 +60,7 @@ const Trending = () => {
                 <Link 
                   to={`/book/${book._id}`}
                   key={book._id}
-                  className='w-[210px] min-h-[420px] bg-none flex flex-col gap-2 hover:scale-110 transition-all duration-300 cursor-pointer relative z-10'
+                  className='w-[210px] min-h-[420px] bg-none flex flex-col gap-2 hover:scale-110 transition-all duration-300 cursor-pointer relative z-10 animate-fade-in focus:outline-none focus:ring-2 focus:ring-[#00A819] focus:ring-offset-2 rounded-[20px]'
                   style={{ pointerEvents: 'auto' }}
                 >
                     {/* cover img */}

@@ -208,9 +208,18 @@ const BookEditForm = ({
         />
         <label
           htmlFor="cover-upload"
-          className={`w-full p-2 bg-black text-[#FFD7DF] rounded-[10px] cursor-pointer block text-center hover:bg-gray-800 transition-all ${uploadingImage ? 'opacity-50 cursor-not-allowed' : ''}`}
+          className={`w-full px-4 py-3 bg-[#1A5632] text-white rounded-lg cursor-pointer block text-center font-semibold transition-all duration-300 ${
+            uploadingImage
+              ? 'opacity-50 cursor-not-allowed'
+              : 'hover:bg-[#00A819] hover:scale-105 focus-within:ring-2 focus-within:ring-[#00A819] focus-within:ring-offset-2'
+          }`}
         >
-          {uploadingImage ? 'Uploading...' : 'Upload Cover'}
+          {uploadingImage ? (
+            <span className="flex items-center justify-center gap-2">
+              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              Uploading...
+            </span>
+          ) : 'Upload Cover'}
         </label>
         <p className="text-xs text-gray-500 mt-2 text-center">
           JPEG, PNG, WebP or HEIC (Max 5MB)
@@ -225,7 +234,7 @@ const BookEditForm = ({
         <h2 className="geist text-xl sm:text-2xl font-bold mb-4">Story Details</h2>
 
         {/* Title */}
-        <label className="geist block font-semibold mb-1">Title *</label>
+        <label className="block text-sm font-semibold text-gray-800 mb-2">Title *</label>
         <input
           type="text"
           value={title}
@@ -233,22 +242,34 @@ const BookEditForm = ({
             setTitle(e.target.value);
             if (errors.title) setErrors({...errors, title: null});
           }}
-          className={`w-full p-2 border rounded-[10px] mb-4 bg-white ${errors.title ? 'border-red-500 border-2' : ''}`}
+          className={`w-full px-4 py-3 border-2 rounded-lg mb-4 bg-white transition-all ${
+            errors.title
+              ? 'border-red-500 focus:border-red-600 focus:ring-2 focus:ring-red-500 focus:ring-opacity-20'
+              : 'border-gray-300 focus:border-[#00A819] focus:ring-2 focus:ring-[#00A819] focus:ring-opacity-20'
+          } focus:outline-none`}
+          placeholder="Enter book title..."
           required
         />
         {errors.title && (
-          <p className="text-red-600 text-sm -mt-3 mb-3">⚠️ {errors.title}</p>
+          <p className="text-red-600 text-sm -mt-3 mb-3 flex items-center gap-1">
+            <span>⚠️</span> {errors.title}
+          </p>
         )}
 
         {/* Description */}
-        <label className="geist block font-semibold mb-1">Description</label>
+        <label className="block text-sm font-semibold text-gray-800 mb-2">Description</label>
         <textarea
           value={description}
           onChange={(e) => {
             setDescription(e.target.value);
             if (errors.description) setErrors({...errors, description: null});
           }}
-          className={`w-full p-2 border rounded-[10px] mb-2 h-32 bg-white ${errors.description ? 'border-red-500 border-2' : ''}`}
+          className={`w-full px-4 py-3 border-2 rounded-lg mb-2 h-32 bg-white resize-none transition-all ${
+            errors.description
+              ? 'border-red-500 focus:border-red-600 focus:ring-2 focus:ring-red-500 focus:ring-opacity-20'
+              : 'border-gray-300 focus:border-[#00A819] focus:ring-2 focus:ring-[#00A819] focus:ring-opacity-20'
+          } focus:outline-none`}
+          placeholder="Describe your book (10-1000 characters)..."
         />
         {description && (
           <p className={`text-xs mb-2 ${description.length > 1000 ? 'text-red-600' : 'text-gray-600'}`}>

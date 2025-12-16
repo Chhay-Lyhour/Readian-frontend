@@ -94,7 +94,7 @@ function SubscriptionPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#C0FFB3] via-white to-[#FFFDEE] py-12 px-4">
+    <div className="min-h-full bg-[#FFFDEE] py-12 px-4">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-4xl md:text-5xl font-bold text-center text-gray-800 mb-4">
           Choose Your Plan
@@ -230,7 +230,7 @@ function SubscriptionPage() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <button
             onClick={() => navigate('/')}
-            className="px-8 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors font-semibold"
+            className="px-8 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 hover:scale-105 transition-all duration-300 font-semibold focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
           >
             Back to Home
           </button>
@@ -239,16 +239,21 @@ function SubscriptionPage() {
             <button
               onClick={handleSubscribe}
               disabled={processing}
-              className="px-8 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-8 py-3 bg-[#00A819] text-white rounded-lg hover:bg-[#1A5632] hover:scale-105 transition-all duration-300 font-semibold disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 focus:outline-none focus:ring-2 focus:ring-[#00A819] focus:ring-offset-2"
             >
-              {processing ? 'Processing...' : `Subscribe to ${plans[selectedPlan].name}`}
+              {processing ? (
+                <span className="flex items-center justify-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  Processing...
+                </span>
+              ) : `Subscribe to ${plans[selectedPlan].name}`}
             </button>
           )}
 
           {user?.subscriptionStatus === 'active' && (
             <button
               onClick={() => navigate('/subscription/manage')}
-              className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold"
+              className="px-8 py-3 bg-[#1A5632] text-white rounded-lg hover:bg-[#00A819] hover:scale-105 transition-all duration-300 font-semibold focus:outline-none focus:ring-2 focus:ring-[#1A5632] focus:ring-offset-2"
             >
               Manage Subscription
             </button>

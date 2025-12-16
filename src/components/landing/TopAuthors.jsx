@@ -27,7 +27,10 @@ const TopAuthors = () => {
   if (loading) {
     return (
       <div className='bg-white min-h-[400px] flex items-center justify-center'>
-        <div className="text-2xl">Loading top authors...</div>
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-16 h-16 border-4 border-[#1A5632] border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-xl font-semibold text-gray-700">Loading top authors...</p>
+        </div>
       </div>
     );
   }
@@ -52,7 +55,7 @@ const TopAuthors = () => {
           <Link
             key={author.authorId}
             to={`/author/${author.authorId}`}
-            className='bg-[#C0FFB3] rounded-xl p-6 flex flex-col items-center gap-4 hover:scale-105 transition-all duration-300 shadow-lg cursor-pointer'
+            className='bg-[#C0FFB3] rounded-xl p-6 flex flex-col items-center gap-4 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl cursor-pointer animate-fade-in focus:outline-none focus:ring-2 focus:ring-[#00A819] focus:ring-offset-2'
           >
             {/* Avatar */}
             <div className='w-24 h-24 rounded-full overflow-hidden bg-gray-200'>

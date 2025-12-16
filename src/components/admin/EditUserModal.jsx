@@ -190,14 +190,14 @@ const EditUserModal = ({ user, onClose, onSuccess }) => {
               <button
                 type="submit"
                 disabled={loading}
-                className="flex-1 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-semibold disabled:opacity-50"
+                className="flex-1 px-6 py-3 bg-[#1A5632] text-white rounded-lg hover:bg-[#00A819] hover:scale-105 transition-all duration-300 font-semibold disabled:opacity-50 disabled:hover:scale-100 focus:outline-none focus:ring-2 focus:ring-[#00A819] focus:ring-offset-2"
               >
                 {loading ? 'Saving...' : 'Save Changes'}
               </button>
               <button
                 type="button"
                 onClick={onClose}
-                className="flex-1 px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors font-semibold"
+                className="flex-1 px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 hover:scale-105 transition-all duration-300 font-semibold focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
               >
                 Cancel
               </button>

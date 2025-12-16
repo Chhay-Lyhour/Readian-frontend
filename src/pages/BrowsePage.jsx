@@ -211,8 +211,8 @@ const BrowsePage = () => {
         return (
             <div className="bg-[#FFFDEE] min-h-screen flex items-center justify-center">
                 <div className="flex flex-col items-center gap-4">
-                    <div className="h-12 w-12 border-4 border-[#C0FFB3] border-t-[#1A5632] rounded-full animate-spin"></div>
-                    <div className="text-xl font-semibold text-gray-700">Loading books...</div>
+                    <div className="w-16 h-16 border-4 border-[#1A5632] border-t-transparent rounded-full animate-spin"></div>
+                    <p className="text-xl font-semibold text-gray-700">Loading books...</p>
                 </div>
             </div>
         );

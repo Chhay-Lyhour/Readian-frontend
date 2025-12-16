@@ -84,37 +84,48 @@ function AllUsers() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <div className="text-2xl">Loading users...</div>
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-16 h-16 border-4 border-[#1A5632] border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-xl font-semibold text-gray-700">Loading users...</p>
+        </div>
       </div>
     );
   }
 
   return (
     <div>
-      <h1 className="geist text-5xl font-bold mb-8 text-[#00A819]">All Users</h1>
+      <h1 className="geist text-4xl font-bold mb-8 text-[#00A819]">All Users</h1>
 
       {/* Filter Section */}
-      <div className="flex gap-4 mb-6">
-        <input 
-          type="text" 
-          placeholder="Filter by username..."
-          value={usernameFilter}
-          onChange={(e) => setUsernameFilter(e.target.value)}
-          className="p-2 border rounded-lg w-1/2"
-        />
-        <input 
-          type="text" 
-          placeholder="Filter by user ID..."
-          value={idFilter}
-          onChange={(e) => setIdFilter(e.target.value)}
-          className="p-2 border rounded-lg w-1/2"
-        />
+      <div className="flex flex-col sm:flex-row gap-4 mb-6">
+        <div className="flex-1 relative">
+          <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+          <input
+            type="text"
+            placeholder="Filter by username..."
+            value={usernameFilter}
+            onChange={(e) => setUsernameFilter(e.target.value)}
+            className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#00A819] focus:ring-2 focus:ring-[#00A819] focus:ring-opacity-20 transition-all"
+            aria-label="Filter by username"
+          />
+        </div>
+        <div className="flex-1 relative">
+          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+          <input
+            type="text"
+            placeholder="Filter by user ID..."
+            value={idFilter}
+            onChange={(e) => setIdFilter(e.target.value)}
+            className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#00A819] focus:ring-2 focus:ring-[#00A819] focus:ring-opacity-20 transition-all"
+            aria-label="Filter by user ID"
+          />
+        </div>
       </div>
 
       {/* User Cards - Detailed View */}
-      <div className="grid grid-cols-1 2xl:grid-cols-2 gap-6 2xl:gap-2 w-full place-items-center space-y-4">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 w-full">
         {displayUsers.map((user) => (
-          <div key={user.id} className="bg-white p-6 rounded-lg shadow-md border-2 border-green-700">
+          <div key={user.id} className="bg-white p-6 rounded-xl shadow-lg border-2 border-gray-200 hover:shadow-xl hover:border-[#00A819] transition-all duration-300 animate-fade-in">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {/* User ID */}
               <div>
@@ -186,17 +197,19 @@ function AllUsers() {
             {/* Action Buttons */}
             <div className="mt-6 pt-4 border-t border-gray-200">
               <p className="text-xs font-semibold text-gray-500 uppercase mb-3">Actions</p>
-              <div className="flex gap-3">
+              <div className="flex flex-wrap gap-3">
                 <button
                   onClick={() => setUserToEdit(user)}
-                  className="bg-blue-500 text-white text-sm py-2 px-4 rounded hover:bg-blue-600 transition-colors flex items-center gap-2"
+                  className="bg-[#1A5632] text-white text-sm py-2 px-4 rounded-lg hover:bg-[#00A819] hover:scale-105 transition-all duration-300 flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-[#00A819] focus:ring-offset-2"
+                  aria-label={`Edit ${user.name}`}
                 >
                   <Edit className="w-4 h-4" />
                   Edit
                 </button>
                 <button
                   onClick={() => handleRemoveClick(user)}
-                  className="bg-red-500 text-white text-sm py-2 px-4 rounded hover:bg-red-600 transition-colors flex items-center gap-2"
+                  className="bg-red-600 text-white text-sm py-2 px-4 rounded-lg hover:bg-red-700 hover:scale-105 transition-all duration-300 flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                  aria-label={`Remove ${user.name}`}
                 >
                   <Trash2 className="w-4 h-4" />
                   Remove

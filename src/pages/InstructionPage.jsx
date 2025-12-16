@@ -4,10 +4,9 @@ import FAQ from '../components/instructions/FAQ';
 
 const InstructionPage = () => {
   return (
-    <div className='bg-gradient-to-b from-[#C0FFB3] from-10% via-white via-20% to-[#FFFDEE] to-90%'>
-      <Guide /> 
+    <div className='bg-[#FFFDEE] min-h-full'>
+      <Guide />
       <FAQ />
-
     </div>
   )
 }

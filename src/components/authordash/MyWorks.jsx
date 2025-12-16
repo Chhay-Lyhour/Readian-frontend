@@ -39,7 +39,7 @@ function MyWorks() {
 
   return (
     <div className='flex flex-col w-full'>
-      <h1 className="geist text-[48px] font-semibold mb-6 self-start">
+      <h1 className="geist text-4xl font-semibold mb-6 self-start">
         My <span className='text-[#00A819]'>Works</span>
       </h1>
 

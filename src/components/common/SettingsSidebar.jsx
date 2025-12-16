@@ -13,7 +13,7 @@ function SettingsSidebar() {
     { to: '/become-author', label: 'Become Author', icon: Edit },
   ];
 
-  const baseLinkStyle = "flex items-center gap-3 text-[20px] md:text-[22px] lg:text-[24px] font-semibold w-full h-[50px] px-4 transition-colors";
+  const baseLinkStyle = "flex items-center gap-3 text-lg w-full h-[30px] px-6 transition-colors";
   const activeLinkStyle = `${baseLinkStyle} bg-white text-black`;
   const inactiveLinkStyle = `${baseLinkStyle} text-black hover:bg-white/50`;
 
@@ -67,7 +67,7 @@ function SettingsSidebar() {
           ×
         </button>
 
-        <h1 className="geist text-[28px] md:text-[32px] lg:text-[36px] font-semibold text-center px-2 mb-4">
+        <h1 className="geist text-4xl font-semibold text-center px-2 mb-4">
           Settings
         </h1>
 

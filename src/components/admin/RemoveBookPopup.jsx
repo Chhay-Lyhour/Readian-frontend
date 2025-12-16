@@ -2,35 +2,39 @@ import React from 'react';
 
 function RemoveBookPopup({ book, reason, setReason, onConfirm, onAbort }) {
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-white p-8 rounded-lg shadow-xl w-full max-w-sm">
-        <h2 className="text-2xl font-bold text-center mb-4">Are you sure?</h2>
-        <p className="text-center mb-4">
-          You are about to remove <strong>{book.title}</strong>. 
-          Please provide a reason before confirming.
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 animate-fade-in">
+      <div className="bg-white p-6 sm:p-8 rounded-xl shadow-2xl w-full max-w-md animate-scale-in">
+        <h2 className="text-2xl font-bold text-center mb-4 text-gray-800">⚠️ Confirm Removal</h2>
+        <p className="text-center mb-6 text-gray-700">
+          You are about to remove <strong className="text-red-600">"{book.title}"</strong>.
+          This action cannot be undone. Please provide a reason.
         </p>
         
-        <label htmlFor="reason" className="block mb-2 font-semibold">Reason</label>
+        <label htmlFor="reason" className="block mb-2 text-sm font-semibold text-gray-800">
+          Reason for Removal *
+        </label>
         <textarea
           id="reason"
           value={reason}
           onChange={(e) => setReason(e.target.value)}
-          className="w-full p-2 border rounded-lg h-24 mb-4"
+          className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg h-24 mb-6 resize-none focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500 focus:ring-opacity-20 transition-all"
           placeholder="Enter reason for removal..."
+          required
         />
         
-        <div className="flex justify-between">
-          <button 
+        <div className="flex flex-col sm:flex-row gap-3">
+          <button
             onClick={onConfirm}
-            className="bg-red-500 text-[#FFD7DF] font-bold py-2 px-6 rounded-lg hover:bg-[#FFD7DF] hover:text-[#FF0000] transition-all duration-300"
+            disabled={!reason.trim()}
+            className="flex-1 bg-red-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-red-700 hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
           >
-            Confirm
+            Confirm Removal
           </button>
           <button 
             onClick={onAbort}
-            className="bg-gray-200 text-black font-bold py-2 px-6 rounded-lg hover:bg-black hover:text-white transition-all duration-300"
+            className="flex-1 bg-gray-200 text-gray-800 font-semibold py-3 px-6 rounded-lg hover:bg-gray-300 hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
           >
-            Abort
+            Cancel
           </button>
         </div>
       </div>

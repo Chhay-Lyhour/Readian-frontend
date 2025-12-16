@@ -4,6 +4,7 @@ import RemoveBookPopup from './RemoveBookPopup';
 import BookRemovalCompletePopup from './BookRemovalCompletePopup';
 import { adminApi } from '../../services/api';
 import { handleApiError, showSuccessToast } from '../../services/utils/errorHandler';
+import { Trash2 } from 'lucide-react';
 
 function AllWorks() {
   const [books, setBooks] = useState([]);
@@ -86,7 +87,7 @@ function AllWorks() {
 
     try {
       const bookId = bookToRemove.id || bookToRemove._id;
-      console.log('🗑️ Deleting book:', bookId, 'Reason:', reason);
+      console.log('Deleting book:', bookId, 'Reason:', reason);
 
       await adminApi.deleteBook(bookId, { reason });
       showSuccessToast('Book removed successfully');
@@ -107,51 +108,62 @@ function AllWorks() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <div className="text-2xl">Loading books...</div>
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-16 h-16 border-4 border-[#1A5632] border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-xl font-semibold text-gray-700">Loading books...</p>
+        </div>
       </div>
     );
   }
 
   return (
     <div>
-      <h1 className="geist text-5xl font-bold mb-8 text-[#00A819]">All Works</h1>
+      <h1 className="geist text-4xl font-bold mb-8 text-[#00A819]">All Works</h1>
       
       {/* Filter Section */}
-      <div className="flex gap-4 mb-6">
-        <input 
-          type="text" 
-          placeholder="Filter by title..."
-          value={titleFilter}
-          onChange={(e) => setTitleFilter(e.target.value)}
-          className="p-2 border rounded-lg w-1/2"
-        />
-        <input 
-          type="text" 
-          placeholder="Filter by author..."
-          value={authorFilter}
-          onChange={(e) => setAuthorFilter(e.target.value)}
-          className="p-2 border rounded-lg w-1/2"
-        />
+      <div className="flex flex-col sm:flex-row gap-4 mb-6">
+        <div className="flex-1">
+          <input
+            type="text"
+            placeholder="Filter by title..."
+            value={titleFilter}
+            onChange={(e) => setTitleFilter(e.target.value)}
+            className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#00A819] focus:ring-2 focus:ring-[#00A819] focus:ring-opacity-20 transition-all"
+            aria-label="Filter by title"
+          />
+        </div>
+        <div className="flex-1">
+          <input
+            type="text"
+            placeholder="Filter by author..."
+            value={authorFilter}
+            onChange={(e) => setAuthorFilter(e.target.value)}
+            className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#00A819] focus:ring-2 focus:ring-[#00A819] focus:ring-opacity-20 transition-all"
+            aria-label="Filter by author"
+          />
+        </div>
       </div>
 
       {/* Grid of All Works */}
-      <div className="grid grid-cols-1 2xl:grid-cols-2 gap-6 2xl:gap-2 w-full place-items-center">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 w-full">
         {filteredBooks.length > 0 ? (
           filteredBooks.map(book => {
             const bookId = book.id || book._id;
             return (
-              <div key={bookId} className="relative w-full max-w-[650px] admin-book-card group">
+              <div key={bookId} className="relative w-full max-w-[650px] mx-auto admin-book-card group animate-fade-in">
                 <BookCard book={book} linkTo={`/book/${bookId}`} disableHoverScale={true} />
                 {/* Admin Remove Button Overlay */}
-                <div className="absolute inset-0 bg-black/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-[10px]" style={{ zIndex: 50 }}>
+                <div className="absolute inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-[10px]" style={{ zIndex: 50 }}>
                   <button
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
                       handleRemoveClick(book);
                     }}
-                    className="bg-red-500 text-white font-bold py-3 px-8 rounded-lg hover:bg-red-600 transition-all duration-300 shadow-lg"
+                    className="bg-red-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-red-700 hover:scale-105 transition-all duration-300 shadow-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 flex items-center gap-2"
+                    aria-label={`Remove ${book.title}`}
                   >
+                    <Trash2 size={18} />
                     Remove Book
                   </button>
                 </div>
@@ -159,7 +171,9 @@ function AllWorks() {
             );
           })
         ) : (
-          <p>No books match your criteria.</p>
+          <div className="col-span-full text-center py-12">
+            <p className="text-gray-500 text-lg">No books match your criteria.</p>
+          </div>
         )}
       </div>
 
@@ -189,3 +203,4 @@ function AllWorks() {
 }
 
 export default AllWorks;
+

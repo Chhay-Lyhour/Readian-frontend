@@ -53,7 +53,7 @@ function AuthorAnalytics() {
 
   return (
     <div className="space-y-8">
-      <h1 className="geist text-4xl md:text-5xl font-bold text-[#00A819]">Your Analytics</h1>
+      <h1 className="geist text-4xl font-bold text-[#00A819]">Your Analytics</h1>
 
       {/* Statistics Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
