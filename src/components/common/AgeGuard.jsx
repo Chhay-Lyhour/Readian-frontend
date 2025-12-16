@@ -53,7 +53,7 @@ const AgeGuard = ({ children, contentType, bookTitle = 'this book' }) => {
             To access adult content, please add your age to your profile.
           </p>
           <button
-            onClick={() => navigate('/settings')}
+            onClick={() => navigate('/profile')}
             className="bg-[#1A5632] text-white px-6 py-3 rounded-lg hover:bg-[#2d7a51] transition-all w-full"
           >
             Go to Settings

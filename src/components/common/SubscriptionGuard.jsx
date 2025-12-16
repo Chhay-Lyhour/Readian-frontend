@@ -88,7 +88,7 @@ const SubscriptionGuard = ({
             </p>
           )}
           <button
-            onClick={() => navigate('/subscription')}
+            onClick={() => navigate('/subscribe')}
             className="bg-[#1A5632] text-white px-6 py-3 rounded-lg hover:bg-[#2d7a51] transition-all w-full"
           >
             Renew Subscription
@@ -120,7 +120,7 @@ const SubscriptionGuard = ({
               </ul>
             </div>
             <button
-              onClick={() => navigate('/subscription')}
+              onClick={() => navigate('/subscribe')}
               className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-white px-6 py-3 rounded-lg hover:from-yellow-500 hover:to-yellow-700 transition-all w-full font-bold"
             >
               Upgrade Now
@@ -184,7 +184,7 @@ const SubscriptionGuard = ({
               </ul>
             </div>
             <button
-              onClick={() => navigate('/subscription')}
+              onClick={() => navigate('/subscribe')}
               className="bg-gradient-to-r from-purple-500 to-blue-600 text-white px-6 py-3 rounded-lg hover:from-purple-600 hover:to-blue-700 transition-all w-full font-bold"
             >
               Upgrade to Premium - $9.99/month
