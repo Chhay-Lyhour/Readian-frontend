@@ -202,16 +202,16 @@ const BookEditForm = ({
           type="file"
           accept="image/jpeg,image/png,image/webp,image/heic"
           onChange={onImageUpload}
-          disabled={uploadingImage}
+          disabled={uploadingImage || isNew}
           className="hidden"
           id="cover-upload"
         />
         <label
           htmlFor="cover-upload"
-          className={`w-full px-4 py-3 bg-[#1A5632] text-white rounded-lg cursor-pointer block text-center font-semibold transition-all duration-300 ${
-            uploadingImage
-              ? 'opacity-50 cursor-not-allowed'
-              : 'hover:bg-[#00A819] hover:scale-105 focus-within:ring-2 focus-within:ring-[#00A819] focus-within:ring-offset-2'
+          className={`w-full px-4 py-3 rounded-lg block text-center font-semibold transition-all duration-300 ${
+            uploadingImage || isNew
+              ? 'bg-gray-400 text-gray-200 cursor-not-allowed opacity-60'
+              : 'bg-[#1A5632] text-white cursor-pointer hover:bg-[#00A819] hover:scale-105 focus-within:ring-2 focus-within:ring-[#00A819] focus-within:ring-offset-2'
           }`}
         >
           {uploadingImage ? (
@@ -219,11 +219,21 @@ const BookEditForm = ({
               <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
               Uploading...
             </span>
-          ) : 'Upload Cover'}
+          ) : isNew ? (
+            'Save Book First'
+          ) : (
+            'Upload Cover'
+          )}
         </label>
-        <p className="text-xs text-gray-500 mt-2 text-center">
-          JPEG, PNG, WebP or HEIC (Max 5MB)
-        </p>
+        {isNew ? (
+          <p className="text-xs text-blue-600 mt-2 text-center font-medium">
+            Save the book before uploading a cover image
+          </p>
+        ) : (
+          <p className="text-xs text-gray-500 mt-2 text-center">
+            JPEG, PNG, WebP or HEIC (Max 5MB)
+          </p>
+        )}
       </div>
 
       {/* Story Details Form */}
@@ -342,7 +352,12 @@ const BookEditForm = ({
 
         {/* Book Status */}
         <label className="block font-semibold mb-1">Book Status *</label>
-        <div className={`mb-2 ${errors.bookStatus ? 'p-2 border-2 border-red-500 rounded-lg' : ''}`}>
+        {isNew && (
+          <div className="mb-2 p-3 bg-blue-50 border-l-4 border-blue-500 text-blue-700 text-sm rounded">
+            <p className="font-medium">Book status will be set to <strong>Ongoing</strong>. You can change it after saving.</p>
+          </div>
+        )}
+        <div className={`mb-2 ${errors.bookStatus ? 'p-2 border-2 border-red-500 rounded-lg' : ''} ${isNew ? 'opacity-60 pointer-events-none' : ''}`}>
           <label className="mr-4">
             <input
               type="radio"
@@ -353,6 +368,7 @@ const BookEditForm = ({
                 if (errors.bookStatus) setErrors({...errors, bookStatus: null});
               }}
               className="mr-1"
+              disabled={isNew}
             />
             Ongoing
           </label>
@@ -366,6 +382,7 @@ const BookEditForm = ({
                 if (errors.bookStatus) setErrors({...errors, bookStatus: null});
               }}
               className="mr-1"
+              disabled={isNew}
             />
             Finished
           </label>
@@ -374,7 +391,7 @@ const BookEditForm = ({
 {/*             Hiatus */}
 {/*           </label> */}
         </div>
-        {errors.bookStatus && (
+        {errors.bookStatus && !isNew && (
           <p className="text-red-600 text-sm mb-3">⚠️ {errors.bookStatus}</p>
         )}
 
@@ -445,30 +462,42 @@ const BookEditForm = ({
           </label>
         </div>
 
-        {/* Publication Status (for manual control) */}
-        <label className="block font-semibold mb-1 mt-4">Publication Status</label>
-        <div className="mb-4">
-          <label className="mr-4">
-            <input
-              type="radio"
-              value="draft"
-              checked={status === 'draft'}
-              onChange={(e) => setStatus(e.target.value)}
-              className="mr-1"
-            />
-            Draft
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="published"
-              checked={status === 'published'}
-              onChange={(e) => setStatus(e.target.value)}
-              className="mr-1"
-            />
-            Published
-          </label>
-        </div>
+        {/* Publication Status (only show for existing books) */}
+        {!isNew && (
+          <>
+            <label className="block font-semibold mb-1 mt-4">Publication Status</label>
+            <div className="mb-4">
+              <label className="mr-4">
+                <input
+                  type="radio"
+                  value="draft"
+                  checked={status === 'draft'}
+                  onChange={(e) => setStatus(e.target.value)}
+                  className="mr-1"
+                />
+                Draft
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  value="published"
+                  checked={status === 'published'}
+                  onChange={(e) => setStatus(e.target.value)}
+                  className="mr-1"
+                />
+                Published
+              </label>
+            </div>
+          </>
+        )}
+
+        {/* Info message for new books */}
+        {isNew && (
+          <div className="mb-4 p-3 bg-blue-50 border-l-4 border-blue-500 text-blue-700 text-sm rounded">
+            <p className="font-semibold">New Book</p>
+            <p>This book will be saved as a draft. You can publish it after saving.</p>
+          </div>
+        )}
 
         {/* Action Buttons */}
         <div className="flex gap-2 items-center">
