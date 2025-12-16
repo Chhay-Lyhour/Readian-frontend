@@ -160,9 +160,9 @@ const Guide = () => {
               <p className="text-2xl font-bold text-blue-700 mb-3">$4.99/mo</p>
               <ul className="space-y-1 text-sm text-gray-700">
                 <li>✓ All Free features</li>
-                <li>✓ Read premium books</li>
-                <li>✓ Read ongoing stories</li>
+                <li>✓ Read premium books (completed)</li>
                 <li>✓ Ad-free experience</li>
+                <li>✓ Support authors</li>
               </ul>
             </div>
             {/* Premium Plan */}
@@ -171,6 +171,7 @@ const Guide = () => {
               <p className="text-2xl font-bold text-purple-700 mb-3">$9.99/mo</p>
               <ul className="space-y-1 text-sm text-gray-700">
                 <li>✓ All Basic features</li>
+                <li>✓ Read ongoing stories</li>
                 <li>✓ Download books (10/day)</li>
                 <li>✓ Early access to new releases</li>
                 <li>✓ Priority support</li>

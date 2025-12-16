@@ -73,8 +73,8 @@ function ReadChapterPage() {
       }
     }
 
-    // Check subscription for premium content OR ongoing books
-    if (bookData.isPremium || bookData.bookStatus === 'ongoing') {
+    // Check subscription for premium content (Basic plan can access)
+    if (bookData.isPremium && bookData.bookStatus !== 'ongoing') {
       if (!isAuthenticated) {
         return 'subscription_not_logged_in';
       }
@@ -84,6 +84,19 @@ function ReadChapterPage() {
 
       if (!hasActiveSubscription) {
         return 'subscription_required';
+      }
+    }
+
+    // Check subscription for ongoing books (Premium plan ONLY)
+    if (bookData.bookStatus === 'ongoing') {
+      if (!isAuthenticated) {
+        return 'subscription_not_logged_in';
+      }
+
+      const hasPremiumSubscription = user?.subscriptionStatus === 'active' && user?.plan === 'premium';
+
+      if (!hasPremiumSubscription) {
+        return 'premium_required'; // New guard type for premium-only content
       }
     }
 

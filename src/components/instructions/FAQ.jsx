@@ -19,7 +19,7 @@ const FAQ = () => {
     {
       id: 3,
       question: "What's the difference between free, basic, and premium subscriptions?",
-      answer: "Free users can browse and read free books. Basic subscribers ($4.99/mo) can read premium books and ongoing stories with an ad-free experience. Premium subscribers ($9.99/mo) get all Basic features plus 10 downloads per day, early access to new releases, and priority support."
+      answer: "Free users can browse and read free books. Basic subscribers ($4.99/mo) can read completed premium books with an ad-free experience. Premium subscribers ($9.99/mo) get all Basic features PLUS access to ongoing stories (books still being written), 10 downloads per day, early access to new releases, and priority support."
     },
     {
       id: 4,

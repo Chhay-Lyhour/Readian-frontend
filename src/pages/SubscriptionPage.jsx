@@ -33,8 +33,9 @@ function SubscriptionPage() {
       basePrice: 4.99,
       features: [
         'All Free features',
-        'Read premium books',
-        'Ad-free experience'
+        'Read premium books (completed)',
+        'Ad-free experience',
+        'Support authors'
       ]
     },
     premium: {
@@ -42,8 +43,9 @@ function SubscriptionPage() {
       basePrice: 9.99,
       features: [
         'All Basic features',
+        'Read ongoing stories',
         '10 downloads per day',
-        'Early access to new books',
+        'Early access to new releases',
         'Priority support'
       ]
     }

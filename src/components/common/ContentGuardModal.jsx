@@ -212,6 +212,53 @@ const ContentGuardModal = ({ type, onClose, bookTitle, onContinue }) => {
     );
   }
 
+  // Premium subscription required - For ongoing books (Premium plan only)
+  if (type === 'premium_required') {
+    return (
+      <>
+        <div
+          className="fixed inset-0 bg-black/30 z-40 animate-fade-in"
+          onClick={onClose}
+          aria-hidden="true"
+        />
+        <div className="fixed bottom-4 left-4 z-50 animate-slide-up">
+          <div className="bg-white rounded-lg shadow-2xl p-6 border-2 border-yellow-500 max-w-sm">
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0">
+                <Crown size={32} className="text-yellow-600" />
+              </div>
+              <div className="flex-1">
+                <h3 className="text-lg font-bold text-yellow-600 mb-2">
+                  Premium Subscription Required
+                </h3>
+                <p className="text-sm text-gray-700 mb-2">
+                  This is an <strong>ongoing book</strong> that is still being written.
+                </p>
+                <p className="text-sm text-gray-700 mb-4">
+                  Upgrade to <strong>Premium</strong> to access ongoing stories and get early access to new chapters!
+                </p>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => handleAction('/subscribe?plan=premium')}
+                    className="flex-1 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white px-4 py-2 rounded-lg hover:from-yellow-600 hover:to-yellow-700 transition-all text-sm font-semibold"
+                  >
+                    Upgrade to Premium
+                  </button>
+                  <button
+                    onClick={onClose}
+                    className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-all text-sm font-semibold"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
+
   // Default case
   return null;
 };
