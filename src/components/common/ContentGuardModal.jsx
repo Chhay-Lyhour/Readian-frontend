@@ -192,7 +192,7 @@ const ContentGuardModal = ({ type, onClose, bookTitle, onContinue }) => {
                 </p>
                 <div className="flex gap-2">
                   <button
-                    onClick={() => handleAction('/subscription')}
+                    onClick={() => handleAction('/subscribe')}
                     className="flex-1 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-all text-sm font-semibold"
                   >
                     View Plans
